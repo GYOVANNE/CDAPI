@@ -15,27 +15,36 @@ import java.util.Calendar;
  */
 public class ClinicalDocument extends Implements{
     
-    private String fileName;
-
-    private File getFileName() {
-        return new File(local(fileName));
-    }
-
-    private void setFileName(String filename) {
-        this.fileName = filename;
-    }
+     /**
+     * Contrutor com argumento necessário para leitura do arquivo.
+     * <br>Necessário informar o arquivo ao qual será usado para leitura.
+     * <br>Exemplo de implementação:<br>
+     * ClinicalDocument cda = new ClinicalDocuement(File file);<br>
+     * @param xml
+     * @throws Exception
+     */
     
-    private String local(String filename){
-        File direct = new File("");
-        File file = new File(""+direct.getAbsolutePath()+"/XML_FILES");
-        file.mkdir();
-        return file.getAbsolutePath()+"/"+filename+".xml";
+    public ClinicalDocument(File xml) throws Exception{
+        JReadAll classRead = new JReadAll(xml,header,patient,author,authenticator,related,responsibleParty,healthHistoric,doctorHistoric,medicines,allergy,familyHistoric,exams,laboratoryExams,diagnostic,tratament);
     }
+
+    /**
+     * Contrutor com argumento necessário para leitura do arquivo.
+     * <br>Necessário informar o nome do arquivo ao qual será usado para leitura.
+     * <br>Exemplo de implementação:<br>
+     * ClinicalDocument cda = new ClinicalDocuement("12345");<br>
+     * @param fileName
+     * @throws Exception
+     */
+    public ClinicalDocument(String fileName) throws Exception{
+        this(new File(local(fileName)));
+    }
+
     /**
      * Contrutor com argumento necessário para leitura do arquivo.
      * <br>Necessário informar o Id do paciente, que será usado como identificador do arquivo
      * <br>Exemplo de implementação:<br>
-     * CDA cda = new CDA(12345);<br>
+     * ClinicalDocument cda = new ClinicalDocuement(12345);<br>
      * @param Patientid
      * @throws Exception
      */
@@ -44,22 +53,20 @@ public class ClinicalDocument extends Implements{
     }
     
     /**
-     * Contrutor com argumento necessário para leitura do arquivo.
-     * <br>Necessário informar o nome do arquivo.
+     * Contrutor sem  argumento.
+     * <br>Não é necessário informar nenhum parâmetro, pois a instância do objeto
+     * a partir deste construtor é usado para acessar os métodos de escrita do arquivo.
      * <br>Exemplo de implementação:<br>
-     * CDA cda = new CDA(12345);<br>
-     * @param Patientid
-     * @throws Exception
+     * ClinicalDocument cda = new ClinicalDocuement();<br>
      */
-    public ClinicalDocument(String Patientid) throws Exception{
-        setFileName(Patientid);
-        JReadAll classRead = new JReadAll(getFileName(),
-        header,patient,author,authentic,related,responsibleParty,
-        healthHistoric,doctorHistoric,medicines,allergy,familyHistoric,exams,
-        laboratoryExams,diagnostic,tratament);
-    }
-
     public ClinicalDocument() {
+    }
+    
+    private static String local(String filename){
+        File direct = new File("");
+        File file = new File(""+direct.getAbsolutePath()+"/XML_FILES");
+        file.mkdir();
+        return file.getAbsolutePath()+"/"+filename+".xml";
     }
 
     private static String DATE() {
@@ -67,7 +74,6 @@ public class ClinicalDocument extends Implements{
         Calendar today = Calendar.getInstance();
         return(format.format(today.getTime()));
     }
-    
     
     /**
      * Retorna uma representação Header do objeto. Em geral, o método
@@ -90,7 +96,16 @@ public class ClinicalDocument extends Implements{
     }
 
     /**
-     * 
+     * Recebe uma representação Header do objeto.
+     * O método {@code setHeader} para a classe {@code ClinicalDocument}
+     * deve receber as informações necessárias de um {@code Header} para que seja 
+     * preenchido nos campos que corresponde aos dados de cabeçario no documento CDA.
+     * Para isto, as informações devem ser válidas.
+     * O método deve ser instanciado como mostrado na implementação:
+     * <blockquote>
+     * <pre>getClass().setHeader(Header header);</pre>
+     * </blockquote>
+     *
      * @param header
      */
     public void setHeader(Header header) {
@@ -119,6 +134,15 @@ public class ClinicalDocument extends Implements{
     }
 
     /**
+     * Recebe uma representação Patient do objeto.
+     * O método {@code setPatient} para a classe {@code ClinicalDocument}
+     * deve receber as informações necessárias de um {@code Patient} para que seja 
+     * preenchido nos campos que corresponde aos dados do paciente no documento CDA.
+     * Para isto, as informações devem ser válidas.
+     * O método deve ser instanciado como mostrado na implementação:
+     * <blockquote>
+     * <pre>getClass().setPatient(Patient patient);</pre>
+     * </blockquote>
      *
      * @param patient
      */
@@ -152,6 +176,15 @@ public class ClinicalDocument extends Implements{
     }
 
     /**
+     * Recebe uma representação Author do objeto.
+     * O método {@code setAuthor} para a classe {@code ClinicalDocument}
+     * deve receber as informações necessárias de um {@code Author} para que seja 
+     * preenchido nos campos que corresponde aos dados do médico no documento CDA.
+     * Para isto, as informações devem ser válidas.
+     * O método deve ser instanciado como mostrado na implementação:
+     * <blockquote>
+     * <pre>getClass().setAuthor(Author author);</pre>
+     * </blockquote>
      *
      * @param author
      */
@@ -161,29 +194,39 @@ public class ClinicalDocument extends Implements{
     
     /**
      * Retorna uma representação Authentic do objeto. Em geral, o método
-     * {@code getAuthentic} retorna um Authentic que representa este objeto.
+     * {@code getAuthenticator} retorna um Authentic que representa este objeto.
      * <p>
-     * O método {@code getAuthentic} para a classe {@code ClinicalDocument}
+     * O método {@code getAuthenticator} para a classe {@code ClinicalDocument}
      * retorna um Authentic consistindo nos dados de autenticação do qual o
      * objeto é uma instância. Em outras palavras, este método deve retornar 
      * a informação contida no método instanciado por este objeto, como mostrado
      * na implementação:
      * <blockquote>
      * <pre>
-     * getClass().getAuthentic().getCode();
+     * getClass().getAuthenticator().getCode();
      * </pre></blockquote>
      *
      * @return  uma representação Authentic do objeto.
      */
-    public Authenticator getAuthentic() {
-        return authentic;
+    public Authenticator getAuthenticator() {
+        return authenticator;
     }
 
     /**
-     * @param authentic
+     * Recebe uma representação Authentic do objeto.
+     * O método {@code setAuthenticator} para a classe {@code ClinicalDocument}
+     * deve receber as informações necessárias de um {@code Authentic} para que seja 
+     * preenchido nos campos que corresponde aos dados de autenticação no documento CDA.
+     * Para isto, as informações devem ser válidas.
+     * O método deve ser instanciado como mostrado na implementação:
+     * <blockquote>
+     * <pre>getClass().setAuthenticator(Authenticator authenticator);</pre>
+     * </blockquote>
+     *
+     * @param authenticator
      */
-    public void setAuthentic(Authenticator authentic) {
-        this.authentic = authentic;
+    public void setAuthenticator(Authenticator authenticator) {
+        this.authenticator = authenticator;
     }
     
     /**
@@ -207,6 +250,15 @@ public class ClinicalDocument extends Implements{
     }
 
     /**
+     * Recebe uma representação Related do objeto.
+     * O método {@code setRelated} para a classe {@code ClinicalDocument}
+     * deve receber as informações necessárias de um {@code Related} para que seja 
+     * preenchido nos campos que corresponde aos dados de relacionados no documento CDA.
+     * Para isto, as informações devem ser válidas.
+     * O método deve ser instanciado como mostrado na implementação:
+     * <blockquote>
+     * <pre>getClass().setRelated(Related related);</pre>
+     * </blockquote>
      *
      * @param related
      */
@@ -235,6 +287,16 @@ public class ClinicalDocument extends Implements{
     }
 
     /**
+     * Recebe uma representação ResponsibleParty do objeto.
+     * O método {@code setResponsibleParty} para a classe {@code ClinicalDocument}
+     * deve receber as informações necessárias de um {@code ResponsibleParty} para que seja 
+     * preenchido nos campos que corresponde aos dados do responsável no documento CDA.
+     * Para isto, as informações devem ser válidas.
+     * O método deve ser instanciado como mostrado na implementação:
+     * <blockquote>
+     * <pre>getClass().setResponsibleParty(ResponsibleParty responsibleParty);</pre>
+     * </blockquote>
+     *
      * @param responsibleParty
      */
     public void setResponsibleParty(ResponsibleParty responsibleParty) {
@@ -262,6 +324,15 @@ public class ClinicalDocument extends Implements{
     }
 
     /**
+     * Recebe uma representação HealthHistoric do objeto.
+     * O método {@code setHealthHistoric} para a classe {@code ClinicalDocument}
+     * deve receber as informações necessárias de um {@code HealthHistoric} para que seja 
+     * preenchido nos campos que corresponde aos dados do histórico de saúde no documento CDA.
+     * Para isto, as informações devem ser válidas.
+     * O método deve ser instanciado como mostrado na implementação:
+     * <blockquote>
+     * <pre>getClass().setHealthHistoric(HealthHistoric healthHistoric);</pre>
+     * </blockquote>
      *
      * @param healthHistoric
      */
@@ -290,11 +361,20 @@ public class ClinicalDocument extends Implements{
     }
 
     /**
+     * Recebe uma representação DoctorHistoric do objeto.
+     * O método {@code setDoctorHistoric} para a classe {@code ClinicalDocument}
+     * deve receber as informações necessárias de um {@code DoctorHistoric} para que seja 
+     * preenchido nos campos que corresponde aos dados do histórico do médico no documento CDA.
+     * Para isto, as informações devem ser válidas.
+     * O método deve ser instanciado como mostrado na implementação:
+     * <blockquote>
+     * <pre>getClass().setDoctorHistoric(DoctorHistoric doctorHistoric);</pre>
+     * </blockquote>
      *
-     * @param dhistoric
+     * @param doctorHistoric
      */
-    public void setDoctorHistoric(DoctorHistoric dhistoric) {
-        this.doctorHistoric = dhistoric;
+    public void setDoctorHistoric(DoctorHistoric doctorHistoric) {
+        this.doctorHistoric = doctorHistoric;
     }
 
     /**
@@ -318,6 +398,15 @@ public class ClinicalDocument extends Implements{
     }
 
     /**
+     * Recebe uma representação Medicines do objeto.
+     * O método {@code setMedicines} para a classe {@code ClinicalDocument}
+     * deve receber as informações necessárias de um {@code Medicines} para que seja 
+     * preenchido nos campos que corresponde aos dados de medicamentos no documento CDA.
+     * Para isto, as informações devem ser válidas.
+     * O método deve ser instanciado como mostrado na implementação:
+     * <blockquote>
+     * <pre>getClass().setMedicines(Medicines medicines);</pre>
+     * </blockquote>
      *
      * @param medicines
      */
@@ -346,6 +435,15 @@ public class ClinicalDocument extends Implements{
     }
 
     /**
+     * Recebe uma representação Allergy do objeto.
+     * O método {@code setAllergy} para a classe {@code ClinicalDocument}
+     * deve receber as informações necessárias de um {@code Allergy} para que seja 
+     * preenchido nos campos que corresponde aos dados de alergias no documento CDA.
+     * Para isto, as informações devem ser válidas.
+     * O método deve ser instanciado como mostrado na implementação:
+     * <blockquote>
+     * <pre>getClass().setAllergy(Allergy allergy);</pre>
+     * </blockquote>
      *
      * @param allergy
      */
@@ -374,6 +472,15 @@ public class ClinicalDocument extends Implements{
     }
 
     /**
+     * Recebe uma representação FamilyHistoric do objeto.
+     * O método {@code setFamilyHistoric} para a classe {@code ClinicalDocument}
+     * deve receber as informações necessárias de um {@code FamilyHistoric} para que seja 
+     * preenchido nos campos que corresponde aos dados do histórico familizar no documento CDA.
+     * Para isto, as informações devem ser válidas.
+     * O método deve ser instanciado como mostrado na implementação:
+     * <blockquote>
+     * <pre>getClass().setFamilyHistoric(FamilyHistoric familyHistoric);</pre>
+     * </blockquote>
      *
      * @param familyHistoric
      */
@@ -402,6 +509,15 @@ public class ClinicalDocument extends Implements{
     }
 
     /**
+     * Recebe uma representação Exams do objeto.
+     * O método {@code setExams} para a classe {@code ClinicalDocument}
+     * deve receber as informações necessárias de um {@code Exams} para que seja 
+     * preenchido nos campos que corresponde aos dados de exames no documento CDA.
+     * Para isto, as informações devem ser válidas.
+     * O método deve ser instanciado como mostrado na implementação:
+     * <blockquote>
+     * <pre>getClass().setExams(Exams exams);</pre>
+     * </blockquote>
      *
      * @param exams
      */
@@ -434,6 +550,15 @@ public class ClinicalDocument extends Implements{
     }
 
     /**
+     * Recebe uma representação LaboratoryExams do objeto.
+     * O método {@code setLaboratoryExams} para a classe {@code ClinicalDocument}
+     * deve receber as informações necessárias de um {@code LaboratoryExams} para que seja 
+     * preenchido nos campos que corresponde aos dados de exames laboratoriais no documento CDA.
+     * Para isto, as informações devem ser válidas.
+     * O método deve ser instanciado como mostrado na implementação:
+     * <blockquote>
+     * <pre>getClass().setLaboratoryExams(LaboratoryExams laboratoryExams);</pre>
+     * </blockquote>
      *
      * @param laboratory
      */
@@ -462,7 +587,16 @@ public class ClinicalDocument extends Implements{
     }
 
     /**
-     * 
+     * Recebe uma representação Diagnostic do objeto.
+     * O método {@code setDiagnostic} para a classe {@code ClinicalDocument}
+     * deve receber as informações necessárias de um {@code Diagnostic} para que seja 
+     * preenchido nos campos que corresponde aos dados de diagnóstico no documento CDA.
+     * Para isto, as informações devem ser válidas.
+     * O método deve ser instanciado como mostrado na implementação:
+     * <blockquote>
+     * <pre>getClass().setDiagnostic(Diagnostic diagnostic);</pre>
+     * </blockquote>
+     *
      * @param diagnostic
      */
     public void setDiagnostic(Diagnostic diagnostic) {
@@ -490,35 +624,52 @@ public class ClinicalDocument extends Implements{
     }
 
     /**
-     * 
+     * Recebe uma representação Tratament do objeto.
+     * O método {@code setTratament} para a classe {@code ClinicalDocument}
+     * deve receber as informações necessárias de um {@code Tratament} para que seja 
+     * preenchido nos campos que corresponde aos dados de tratamento no documento CDA.
+     * Para isto, as informações devem ser válidas.
+     * O método deve ser instanciado como mostrado na implementação:
+     * <blockquote>
+     * <pre>getClass().setTratament(Tratament tratament);</pre>
+     * </blockquote>
+     *
      * @param tratament
      */
     public void setTratament(Tratament tratament) {
         this.tratament = tratament;
     }
-   
+    
     /**
-     * É necessário chamar este método ao final da implementação para que seja criado o arquivo XML no diretório.
-     * <br><br>
-     * Este método realiza a operação de escrita das informações do arquivo ClinicalDocument para o XML.
-     * @return 
+     * Retorna uma representação boolean do objeto. Em geral, o método
+     * {@code generateCDAFile} retorna um boolean, sendo true para a criação e validação
+     * bem sucedida do arquivo XML e false caso não tenha gerado ou validado com sucesso.
+     * <p>
+     * O método {@code generateCDAFile} para a classe {@code ClinicalDocument}
+     * retorna um valor booleano, que indica o resultado da criação e validação de 
+     * um documento CDA. Após o método ser chamado ele gera um documento CDA no diretório da aplicação,
+     * ao mesmo tempo que valida com o validador da própria aplicação, para que seus campos corresponda ao padrão HL7 CDA.
+     * O método deve ser instanciado como mostrado na implementação:
+     * <blockquote>
+     * <pre>getClass().generateCDAFile();</pre>
+     * </blockquote>
+     *
+     * @return  um valor booleano para fins de verificação.
      */
-    public boolean GenerateCDAFile(){
-        JContent jContent = new JContent(local(""+patient.getId()),header, patient, author, authentic, related, responsibleParty, healthHistoric, doctorHistoric, medicines, allergy, familyHistoric, exams, laboratoryExams, diagnostic, tratament);
+    public boolean generateCDAFile(){
+        JContent jContent = new JContent(local(""+patient.getId()),header, patient, author, authenticator, related, responsibleParty, healthHistoric, doctorHistoric, medicines, allergy, familyHistoric, exams, laboratoryExams, diagnostic, tratament);
         ValidateCDA validator = new ValidateCDA();
-        
+
         try {
             if(jContent.generateContent()){
-                System.out.println("Success when writing file\n");
-            
-                if(validator.validationCDAFile(local(""+patient.getId()))){
+
+                if(validator.validationCDAFile(patient.getId()))
                     System.out.println(""+validator.getNotificacao());
-                }else
+                else
                     System.err.println(""+validator.getNotificacao());
                 return true;
-            }else
-                System.err.println("Error writing file\n");
-            
+            }
+
         } catch (Exception ex) {
             System.err.println(ex);
         }

@@ -78,15 +78,28 @@ public class JContent extends Implements {
         TAG CS3 = w.xml_CREATE("id extension=\""+patient.getId()+"\" root=\""+header.getExtension2()+"\"", "");
         TAG CS4 = w.xml_CREATE("name", "MultCare");
         //==========================================================================================
+        
         TAG L0 = w.xml_CREATE("legalAuthenticator", "");
-        TAG L1 = w.xml_CREATE("time value=\""+header.getEfetiveTime()+"\"", "");
-        TAG L2 = w.xml_CREATE("signatureCode code=\""+authentic.getCode()+"\"","");
-        TAG L3 = w.xml_CREATE("assignedEntity", "");
-        TAG L4 = w.xml_CREATE("id extension=\""+patient.getIdExtension()+"\" root=\""+header.getExtension2()+"\"","");
-        TAG L5 = w.xml_CREATE("assignedPerson","");
-        TAG L6 = w.xml_CREATE("name","");
-        TAG L7 = w.xml_CREATE("given", ""+author.getName()+"");
-        TAG L8 = w.xml_CREATE("family",""+author.getFamily()+"");
+        
+        if(authenticator.getCode()!=null){
+            TAG L1 = w.xml_CREATE("time value=\""+header.getEfetiveTime()+"\"", "");
+            TAG L2 = w.xml_CREATE("signatureCode code=\""+authenticator.getCode()+"\"","");
+            TAG L3 = w.xml_CREATE("assignedEntity", "");
+            TAG L4 = w.xml_CREATE("id extension=\""+patient.getIdExtension()+"\" root=\""+header.getExtension2()+"\"","");
+            TAG L5 = w.xml_CREATE("assignedPerson","");
+            TAG L6 = w.xml_CREATE("name","");
+            TAG L7 = w.xml_CREATE("given", ""+author.getName()+"");
+            TAG L8 = w.xml_CREATE("family",""+author.getFamily()+"");
+                    //==============================
+            w.xml_INSERT(L6, L8);
+            w.xml_INSERT(L6, L7);
+            w.xml_INSERT(L5, L6);
+            w.xml_INSERT(L3, L5);
+            w.xml_INSERT(L3, L4);
+            w.xml_INSERT(L0,L3);
+            w.xml_INSERT(L0, L2);
+            w.xml_INSERT(L0, L1);
+        }
         //==========================================================================================
         TAG R0 = w.xml_CREATE("relatedDocument typeCode=\""+related.getCode()+"\"", "");
         TAG R1 = w.xml_CREATE("parentDocument","");
@@ -94,35 +107,68 @@ public class JContent extends Implements {
         TAG R3 = w.xml_CREATE("setId extension=\""+related.getExtension()+"\" root=\""+header.getExtension2()+"\"", "");
         TAG R4 = w.xml_CREATE("versionNumber value=\""+related.getVersion()+"\"", "");
         //=====================================================================================
+        
         TAG OFF0 =w.xml_CREATE("componentOf","");
-        TAG OFF1 =w.xml_CREATE("encompassingEncounter", "");
-        TAG OFF2 =w.xml_CREATE("id root=\""+responsibleParty.getIdRoot()+"\" extension=\""+responsibleParty.getExtension()+"\"", "");
-        TAG OFF3 =w.xml_CREATE("effectiveTime value=\""+responsibleParty.getDate()+"\"","");
-        TAG OFF4 =w.xml_CREATE("responsibleParty","");
-        TAG OFF5 =w.xml_CREATE("assignedEntity", "");
-        TAG OFF6 =w.xml_CREATE("id nullFlavor=\""+responsibleParty.getId()+"\"", "");
-        TAG OFF7 =w.xml_CREATE("addr","");
-        TAG OFF8 =w.xml_CREATE("state", ""+responsibleParty.getState()+"");
-        TAG OFF9 =w.xml_CREATE("city",""+responsibleParty.getCity()+"");
-        TAG OFF10 =w.xml_CREATE("postalCode", ""+responsibleParty.getPostal()+"");
-        TAG OFF11 =w.xml_CREATE("streetAddressLine", ""+responsibleParty.getStreet()+"");
-        TAG OFF12 =w.xml_CREATE("telecom value=\"tel:"+responsibleParty.getPhone()+"\" use=\""+responsibleParty.getUse()+"\"", "");
-        TAG OFF13 =w.xml_CREATE("assignedPerson", "");
-        TAG OFF14 =w.xml_CREATE("name","");
-        TAG OFF15 =w.xml_CREATE("family", ""+responsibleParty.getFamily()+"");
-        TAG OFF16 =w.xml_CREATE("given", ""+responsibleParty.getName1()+"");
-        TAG OFF17 =w.xml_CREATE("given", ""+responsibleParty.getName2()+"");
-        TAG OFF18 =w.xml_CREATE("suffix", ""+responsibleParty.getSuffixe()+"");
-        TAG OFF19 =w.xml_CREATE("location","");
-        TAG OFF20 =w.xml_CREATE("healthCareFacility", "");
-        TAG OFF21 =w.xml_CREATE("id root=\""+responsibleParty.getIdRoot()+"\" extension=\""+responsibleParty.getExtension()+"\"", "");
-        TAG OFF22 =w.xml_CREATE("location","");
-        TAG OFF23 =w.xml_CREATE("name", ""+responsibleParty.getLocation()+"");
-        TAG OFF24 =w.xml_CREATE("addr", "");
-        TAG OFF25 =w.xml_CREATE("state", ""+responsibleParty.getState()+"");
-        TAG OFF26 =w.xml_CREATE("city",""+responsibleParty.getCity()+"");
-        TAG OFF27 =w.xml_CREATE("postalCode", ""+responsibleParty.getPostal()+"");
-        TAG OFF28 =w.xml_CREATE("streetAddressLine",""+responsibleParty.getStreet()+"");
+        
+        if(responsibleParty.getIdRoot()!=null){
+            TAG OFF1 =w.xml_CREATE("encompassingEncounter", "");
+            TAG OFF2 =w.xml_CREATE("id root=\""+responsibleParty.getIdRoot()+"\" extension=\""+responsibleParty.getExtension()+"\"", "");
+            TAG OFF3 =w.xml_CREATE("effectiveTime value=\""+responsibleParty.getDate()+"\"","");
+            TAG OFF4 =w.xml_CREATE("responsibleParty","");
+            TAG OFF5 =w.xml_CREATE("assignedEntity", "");
+            TAG OFF6 =w.xml_CREATE("id nullFlavor=\""+responsibleParty.getId()+"\"", "");
+            TAG OFF7 =w.xml_CREATE("addr","");
+            TAG OFF8 =w.xml_CREATE("state", ""+responsibleParty.getState()+"");
+            TAG OFF9 =w.xml_CREATE("city",""+responsibleParty.getCity()+"");
+            TAG OFF10 =w.xml_CREATE("postalCode", ""+responsibleParty.getPostal()+"");
+            TAG OFF11 =w.xml_CREATE("streetAddressLine", ""+responsibleParty.getStreet()+"");
+            TAG OFF12 =w.xml_CREATE("telecom value=\"tel:"+responsibleParty.getPhone()+"\" use=\""+responsibleParty.getUse()+"\"", "");
+            TAG OFF13 =w.xml_CREATE("assignedPerson", "");
+            TAG OFF14 =w.xml_CREATE("name","");
+            TAG OFF15 =w.xml_CREATE("family", ""+responsibleParty.getFamily()+"");
+            TAG OFF16 =w.xml_CREATE("given", ""+responsibleParty.getName1()+"");
+            TAG OFF17 =w.xml_CREATE("given", ""+responsibleParty.getName2()+"");
+            TAG OFF18 =w.xml_CREATE("suffix", ""+responsibleParty.getSuffixe()+"");
+            TAG OFF19 =w.xml_CREATE("location","");
+            TAG OFF20 =w.xml_CREATE("healthCareFacility", "");
+            TAG OFF21 =w.xml_CREATE("id root=\""+responsibleParty.getIdRoot()+"\" extension=\""+responsibleParty.getExtension()+"\"", "");
+            TAG OFF22 =w.xml_CREATE("location","");
+            TAG OFF23 =w.xml_CREATE("name", ""+responsibleParty.getLocation()+"");
+            TAG OFF24 =w.xml_CREATE("addr", "");
+            TAG OFF25 =w.xml_CREATE("state", ""+responsibleParty.getState()+"");
+            TAG OFF26 =w.xml_CREATE("city",""+responsibleParty.getCity()+"");
+            TAG OFF27 =w.xml_CREATE("postalCode", ""+responsibleParty.getPostal()+"");
+            TAG OFF28 =w.xml_CREATE("streetAddressLine",""+responsibleParty.getStreet()+"");
+
+            w.xml_INSERT(OFF24,OFF28);
+            w.xml_INSERT(OFF24,OFF27);
+            w.xml_INSERT(OFF24,OFF26);
+            w.xml_INSERT(OFF24,OFF25);
+            w.xml_INSERT(OFF22,OFF24);
+            w.xml_INSERT(OFF22,OFF23);
+            w.xml_INSERT(OFF20,OFF22);
+            w.xml_INSERT(OFF20,OFF21);
+            w.xml_INSERT(OFF19,OFF20);
+            w.xml_INSERT(OFF14,OFF18);
+            w.xml_INSERT(OFF14,OFF17);
+            w.xml_INSERT(OFF14,OFF16);
+            w.xml_INSERT(OFF14,OFF15);
+            w.xml_INSERT(OFF13,OFF14);
+            w.xml_INSERT(OFF7, OFF11);
+            w.xml_INSERT(OFF7, OFF10);
+            w.xml_INSERT(OFF7, OFF9);
+            w.xml_INSERT(OFF7, OFF8);
+            w.xml_INSERT(OFF5, OFF13);
+            w.xml_INSERT(OFF5, OFF12);
+            w.xml_INSERT(OFF5, OFF7);
+            w.xml_INSERT(OFF5, OFF6);
+            w.xml_INSERT(OFF4, OFF5);
+            w.xml_INSERT(OFF1, OFF19);
+            w.xml_INSERT(OFF1, OFF4);
+            w.xml_INSERT(OFF1, OFF3);
+            w.xml_INSERT(OFF1, OFF2);
+            w.xml_INSERT(OFF0, OFF1);
+        }
         //==========================================================================================
         //STRUCTURE DOCTOR HISTORIC
         TAG CO0 =	w.xml_CREATE("component", "");
@@ -281,34 +327,7 @@ public class JContent extends Implements {
 
         w.xml_INSERT(CO1, CO2);
 
-        w.xml_INSERT(OFF24,OFF28);
-        w.xml_INSERT(OFF24,OFF27);
-        w.xml_INSERT(OFF24,OFF26);
-        w.xml_INSERT(OFF24,OFF25);
-        w.xml_INSERT(OFF22,OFF24);
-        w.xml_INSERT(OFF22,OFF23);
-        w.xml_INSERT(OFF20,OFF22);
-        w.xml_INSERT(OFF20,OFF21);
-        w.xml_INSERT(OFF19,OFF20);
-        w.xml_INSERT(OFF14,OFF18);
-        w.xml_INSERT(OFF14,OFF17);
-        w.xml_INSERT(OFF14,OFF16);
-        w.xml_INSERT(OFF14,OFF15);
-        w.xml_INSERT(OFF13,OFF14);
-        w.xml_INSERT(OFF7, OFF11);
-        w.xml_INSERT(OFF7, OFF10);
-        w.xml_INSERT(OFF7, OFF9);
-        w.xml_INSERT(OFF7, OFF8);
-        w.xml_INSERT(OFF5, OFF13);
-        w.xml_INSERT(OFF5, OFF12);
-        w.xml_INSERT(OFF5, OFF7);
-        w.xml_INSERT(OFF5, OFF6);
-        w.xml_INSERT(OFF4, OFF5);
-        w.xml_INSERT(OFF1, OFF19);
-        w.xml_INSERT(OFF1, OFF4);
-        w.xml_INSERT(OFF1, OFF3);
-        w.xml_INSERT(OFF1, OFF2);
-        w.xml_INSERT(OFF0, OFF1);
+        
         //==============================
         w.xml_INSERT(P15,P16);
         w.xml_INSERT(P20,P15);
@@ -346,15 +365,6 @@ public class JContent extends Implements {
         w.xml_INSERT(CS1, CS2);
         w.xml_INSERT(CS0, CS1);
         //==============================
-        w.xml_INSERT(L6, L8);
-        w.xml_INSERT(L6, L7);
-        w.xml_INSERT(L5, L6);
-        w.xml_INSERT(L3, L5);
-        w.xml_INSERT(L3, L4);
-        w.xml_INSERT(L0,L3);
-        w.xml_INSERT(L0, L2);
-        w.xml_INSERT(L0, L1);
-        //==============================
         w.xml_INSERT(R1, R4);
         w.xml_INSERT(R1, R3);
         w.xml_INSERT(R1, R2);
@@ -387,9 +397,10 @@ public class JContent extends Implements {
             //GENERATES XML FILE
             w.xml_PRINT(CD,fw);
             fw.close();
+            System.out.println("Success when writing file\n");
             return true;
         }catch(Exception ex){
-            System.err.println(ex);
+            System.err.println("Error writing file:\n"+ex);
             return false;
         }
     }

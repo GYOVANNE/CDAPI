@@ -1,7 +1,6 @@
 package controller;
 
 import br.com.multcare.bean.*;
-import java.io.File;
 
 /**
  *
@@ -12,7 +11,7 @@ public class Implements {
     protected Header header = new Header();
     protected Patient patient = new Patient();
     protected Author author = new Author();
-    protected Authenticator authentic = new Authenticator();
+    protected Authenticator authenticator = new Authenticator();
     protected Related related = new Related();
     protected ResponsibleParty responsibleParty = new ResponsibleParty();
     protected HealthHistoric healthHistoric = new HealthHistoric();
@@ -25,12 +24,12 @@ public class Implements {
     protected Diagnostic diagnostic = new Diagnostic();
     protected Tratament tratament =  new Tratament();
     
-    public Implements(String local,Header header, Patient patient, Author author, Authenticator authentic, Related related, ResponsibleParty responsible, HealthHistoric historic, DoctorHistoric dhistoric, Medicines medicines, Allergy allergy, FamilyHistoric fhistoric, Exams exams, LaboratoryExams laboratory, Diagnostic diagnostic, Tratament tratament) {
+    public Implements(String local,Header header, Patient patient, Author author, Authenticator authenticator, Related related, ResponsibleParty responsible, HealthHistoric historic, DoctorHistoric doctorHistoric, Medicines medicines, Allergy allergy, FamilyHistoric fhistoric, Exams exams, LaboratoryExams laboratory, Diagnostic diagnostic, Tratament tratament) {
         this.local = local;
         this.allergy = allergy;
-        this.authentic = authentic;
+        this.authenticator = authenticator;
         this.author = author;
-        this.doctorHistoric = dhistoric;
+        this.doctorHistoric = doctorHistoric;
         this.diagnostic = diagnostic;
         this.exams = exams;
         this.familyHistoric = fhistoric;
