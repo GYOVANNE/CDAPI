@@ -96,13 +96,13 @@ public class XMLTree {
 
     /**
      * Deleta o arquivo ao qual foi passado como nome no parâmetro do método.
-     * @param FILENAME
+     * @param xml
      */
-    public void xml_CLEAN(String FILENAME) {
+    public void xml_CLEAN(File xml) {
             try {
-                boolean del = (new File(FILENAME)).delete();
+                boolean del = xml.delete();
             }catch(Exception ex) {
-                    System.out.println("ErroR: "+ex);
+                System.out.println("ErroR: "+ex);
             }
     }
 

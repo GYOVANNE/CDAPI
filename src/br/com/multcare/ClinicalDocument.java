@@ -2,7 +2,7 @@ package br.com.multcare;
 
 import br.com.multcare.bean.*;
 import br.com.multcare.validator.ValidateCDA;
-import controller.Implements;
+import controller.jObjects;
 import controller.JContent;
 import controller.JReadAll;
 import java.io.File;
@@ -13,8 +13,8 @@ import java.util.Calendar;
  *
  * @author Gyovanne
  */
-public class ClinicalDocument extends Implements{
-    
+public class ClinicalDocument extends jObjects{
+
      /**
      * Contrutor com argumento necessário para leitura do arquivo.
      * <br>Necessário informar o arquivo ao qual será usado para leitura.
@@ -646,18 +646,25 @@ public class ClinicalDocument extends Implements{
      * bem sucedida do arquivo XML e false caso não tenha gerado ou validado com sucesso.
      * <p>
      * O método {@code generateCDAFile} para a classe {@code ClinicalDocument}
-     * retorna um valor booleano, que indica o resultado da criação e validação de 
+     * recebe um diretório onde será salvo o arquivo gerado e retorna um valor booleano, 
+     * que indica o resultado da criação e validação de 
      * um documento CDA. Após o método ser chamado ele gera um documento CDA no diretório da aplicação,
      * ao mesmo tempo que valida com o validador da própria aplicação, para que seus campos corresponda ao padrão HL7 CDA.
      * O método deve ser instanciado como mostrado na implementação:
      * <blockquote>
-     * <pre>getClass().generateCDAFile();</pre>
+     * <pre>getClass().generateCDAFile(String local);</pre>
      * </blockquote>
      *
+     * @param local
      * @return  um valor booleano para fins de verificação.
      */
-    public boolean generateCDAFile(){
-        JContent jContent = new JContent(local(""+patient.getId()),header, patient, author, authenticator, related, responsibleParty, healthHistoric, doctorHistoric, medicines, allergy, familyHistoric, exams, laboratoryExams, diagnostic, tratament);
+    public boolean generateCDAFile(String local){
+        File xmlfile;
+        if(local != null) {
+            xmlfile = new File(local+""+patient.getId());
+        }else xmlfile = new File(local(""+patient.getId()));
+        
+        JContent jContent = new JContent(xmlfile,header, patient, author, authenticator, related, responsibleParty, healthHistoric, doctorHistoric, medicines, allergy, familyHistoric, exams, laboratoryExams, diagnostic, tratament);
         ValidateCDA validator = new ValidateCDA();
 
         try {
@@ -674,5 +681,24 @@ public class ClinicalDocument extends Implements{
             System.err.println(ex);
         }
         return false;
+    }
+    /**
+     * Retorna uma representação boolean do objeto. Em geral, o método
+     * {@code generateCDAFile} retorna um boolean, sendo true para a criação e validação
+     * bem sucedida do arquivo XML e false caso não tenha gerado ou validado com sucesso.
+     * <p>
+     * O método {@code generateCDAFile} para a classe {@code ClinicalDocument}
+     * retorna um valor booleano, que indica o resultado da criação e validação de 
+     * um documento CDA. Após o método ser chamado ele gera um documento CDA no diretório da aplicação,
+     * ao mesmo tempo que valida com o validador da própria aplicação, para que seus campos corresponda ao padrão HL7 CDA.
+     * O método deve ser instanciado como mostrado na implementação:
+     * <blockquote>
+     * <pre>getClass().generateCDAFile();</pre>
+     * </blockquote>
+     *
+     * @return  um valor booleano para fins de verificação.
+     */
+    public boolean generateCDAFile(){
+        return generateCDAFile(null);
     }
 }

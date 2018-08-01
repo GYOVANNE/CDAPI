@@ -2,18 +2,19 @@ package controller;
 
 import br.com.multcare.bean.*;
 import controller.XMLTree.TAG;
+import java.io.File;
 import java.io.FileWriter;
 
 /**
  * Classe que contém a interface do documento CDA, representado em XML.
  * @author Gyovanne
  */
-public class JContent extends Implements {
+public class JContent extends jObjects {
 
     private final XMLTree w;
 
-    public JContent(String local, Header header, Patient patient, Author author, Authenticator authentic, Related related, ResponsibleParty responsible, HealthHistoric historic, DoctorHistoric dhistoric, Medicines medicines, Allergy allergy, FamilyHistoric fhistoric, Exams exams, LaboratoryExams laboratory, Diagnostic diagnostic, Tratament tratament) {
-        super(local, header, patient, author, authentic, related, responsible, historic, dhistoric, medicines, allergy, fhistoric, exams, laboratory, diagnostic, tratament);
+    public JContent(File xml, Header header, Patient patient, Author author, Authenticator authenticator, Related related, ResponsibleParty responsible, HealthHistoric historic, DoctorHistoric doctorHistoric, Medicines medicines, Allergy allergy, FamilyHistoric fhistoric, Exams exams, LaboratoryExams laboratory, Diagnostic diagnostic, Tratament tratament) {
+        super(xml, header, patient, author, authenticator, related, responsible, historic, doctorHistoric, medicines, allergy, fhistoric, exams, laboratory, diagnostic, tratament);
         this.w = new XMLTree();
     }
 
@@ -390,9 +391,9 @@ public class JContent extends Implements {
         w.xml_INSERT(CD,C1);
 
         //DELETES FILE CDA TO OVERWRITE A NEW
-        w.xml_CLEAN(local);
-        
-        try (FileWriter fw = new FileWriter(local,true);){
+        w.xml_CLEAN(xml);
+
+        try (FileWriter fw = new FileWriter(xml,true);){
             fw.write("<?xml version='1.0' encoding='UTF-8'?>");
             //GENERATES XML FILE
             w.xml_PRINT(CD,fw);
