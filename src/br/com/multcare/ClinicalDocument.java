@@ -2,7 +2,6 @@ package br.com.multcare;
 
 import br.com.multcare.bean.*;
 import br.com.multcare.validator.ValidateCDA;
-import controller.jObjects;
 import controller.JContent;
 import controller.JReadAll;
 import java.io.File;
@@ -13,8 +12,25 @@ import java.util.Calendar;
  *
  * @author Gyovanne
  */
-public class ClinicalDocument extends jObjects{
+public class ClinicalDocument {
 
+    private File xml;
+    private Header header;
+    private Patient patient;
+    private Author author;
+    private Authenticator authenticator;
+    private Related related;
+    private ResponsibleParty responsibleParty;
+    private HealthHistoric healthHistoric;
+    private DoctorHistoric doctorHistoric;
+    private Medicines medicines;
+    private Allergy allergy;
+    private FamilyHistoric familyHistoric;
+    private Exams exams;
+    private LaboratoryExams laboratoryExams;
+    private Diagnostic diagnostic;
+    private Tratament tratament;
+    
      /**
      * Contrutor com argumento necessário para leitura do arquivo.
      * <br>Necessário informar o arquivo ao qual será usado para leitura.
@@ -23,9 +39,8 @@ public class ClinicalDocument extends jObjects{
      * @param xml
      * @throws Exception
      */
-    
     public ClinicalDocument(File xml) throws Exception{
-        JReadAll classRead = new JReadAll(xml,header,patient,author,authenticator,related,responsibleParty,healthHistoric,doctorHistoric,medicines,allergy,familyHistoric,exams,laboratoryExams,diagnostic,tratament);
+          new JReadAll(this,xml).read();
     }
 
     /**
@@ -646,7 +661,7 @@ public class ClinicalDocument extends jObjects{
      * bem sucedida do arquivo XML e false caso não tenha gerado ou validado com sucesso.
      * <p>
      * O método {@code generateCDAFile} para a classe {@code ClinicalDocument}
-     * recebe um diretório onde será salvo o arquivo gerado e retorna um valor booleano, 
+     * recebe um diretório como parâmetro onde será salvo o arquivo gerado no local indicado e retorna um valor booleano, 
      * que indica o resultado da criação e validação de 
      * um documento CDA. Após o método ser chamado ele gera um documento CDA no diretório da aplicação,
      * ao mesmo tempo que valida com o validador da própria aplicação, para que seus campos corresponda ao padrão HL7 CDA.
@@ -663,17 +678,17 @@ public class ClinicalDocument extends jObjects{
         if(local != null) {
             xmlfile = new File(local+""+patient.getId());
         }else xmlfile = new File(local(""+patient.getId()));
-        
-        JContent jContent = new JContent(xmlfile,header, patient, author, authenticator, related, responsibleParty, healthHistoric, doctorHistoric, medicines, allergy, familyHistoric, exams, laboratoryExams, diagnostic, tratament);
+
+        JContent jContent = new JContent(xmlfile,this);
         ValidateCDA validator = new ValidateCDA();
 
         try {
             if(jContent.generateContent()){
 
                 if(validator.validationCDAFile(patient.getId()))
-                    System.out.println(""+validator.getNotificacao());
+                    System.out.println(""+validator.getNotification());
                 else
-                    System.err.println(""+validator.getNotificacao());
+                    System.err.println(""+validator.getNotification());
                 return true;
             }
 

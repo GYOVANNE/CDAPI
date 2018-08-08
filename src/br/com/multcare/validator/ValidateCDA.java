@@ -22,26 +22,26 @@ public class ValidateCDA {
     
     /**
      * Retorna uma representação String do objeto. Em geral, o método
-     * {@code getNotificacao} retorna uma String representando o resultado do processamento 
+     * {@code getNotification} retorna uma String representando o resultado do processamento 
      * de validação do arquivo, se foi bem sucedida ou não.
      * <p>
-     * O método {@code getNotificacao} para a classe {@code ValidateCDA}
+     * O método {@code getNotification} para a classe {@code ValidateCDA}
      * retorna uma String, que indica o resultado da validação de 
      * um documento CDA, conforme o padrão HL7 CDA.
      * O método deve ser instanciado como mostrado na implementação:
      * <blockquote>
-     * <pre>getClass().getNotificacao();</pre>
+     * <pre>getClass().getNotification();</pre>
      * </blockquote>
      *
      * @return  uma String para fins de representação.
      */
-    public String getNotificacao() {
+    public String getNotification() {
         return notificacao;
     }
     private File getXmlFile() {
         return xmlFile;
     }
-    
+
     private void setXmlFile(File xmlFile) {
         this.xmlFile = xmlFile;
     }
@@ -69,11 +69,11 @@ public class ValidateCDA {
             Source source = new StreamSource(xml);
 
             validator.validate(source);
-            setNotificacao(xml,true,null,null);
+            setNotification(xml,true,null,null);
             return true;
 
         } catch (SAXException | IOException ex) {
-            setNotificacao(xml,false,ex.getLocalizedMessage(),ex.toString());
+            setNotification(xml,false,ex.getLocalizedMessage(),ex.toString());
             return false;
         }
     }
@@ -81,7 +81,7 @@ public class ValidateCDA {
     private static Date getValidationDate(){
         return new Date();
     }
-    
+
     /**
      * Retorna uma representação boolean do objeto. Em geral, o método
      * {@code validationCDAFile} retorna um boolean, sendo true para uma validação
@@ -103,7 +103,7 @@ public class ValidateCDA {
     public boolean validationCDAFile(File xml){
         return validate(xml);
     }
-    
+
     /**
      * Retorna uma representação boolean do objeto. Em geral, o método
      * {@code validationCDAFile} retorna um boolean, sendo true para uma validação
@@ -126,7 +126,7 @@ public class ValidateCDA {
         setXmlFile(new File(local(xmlFileName)));
         return validationCDAFile(getXmlFile()); 
     }
-    
+
     /**
      * Retorna uma representação boolean do objeto. Em geral, o método
      * {@code validationCDAFile} retorna um boolean, sendo true para uma validação
@@ -149,7 +149,7 @@ public class ValidateCDA {
         return validationCDAFile(IdPatient+".xml");
     }
 
-    private void setNotificacao(File xml,boolean value,String menssage,String detail) {
+    private void setNotification(File xml,boolean value,String menssage,String detail) {
         this.notificacao = "Relatório de validação para "+xml.toString()+
                            "\nValidando: esquema XML CDA"+
                            "\nData de validação: "+getValidationDate()+
@@ -159,7 +159,7 @@ public class ValidateCDA {
         else this.notificacao += "\n\nErro de Validação!\n\nMensagem:\n"+menssage+
                                  "\n"+detail;
     }
-    
+
     private String local(String filename){
         File direct = new File("");
         File file = new File(""+direct.getAbsolutePath()+"/XML_FILES");

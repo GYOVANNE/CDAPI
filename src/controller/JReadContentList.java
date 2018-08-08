@@ -36,7 +36,7 @@ public ArrayList <String> TAG (File file,String Title,String content) throws Exc
             br.close();
             return null;
         }catch(IOException ex){
-            System.out.println("Erro interno: "+ex);
+            System.out.println(ex);
         }
     return null;
 }

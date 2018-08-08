@@ -1,20 +1,31 @@
 package controller;
 
-import br.com.multcare.bean.*;
+import br.com.multcare.ClinicalDocument;
 import controller.XMLTree.TAG;
 import java.io.File;
 import java.io.FileWriter;
 
 /**
- * Classe que contém a interface do documento CDA, representado em XML.
+ * Classe que contém o conteúdo do documento CDA, representado em XML.
  * @author Gyovanne
  */
-public class JContent extends jObjects {
+public class JContent {
 
     private final XMLTree w;
+    private final File file; 
+    private final ClinicalDocument clinicalDocument;
 
-    public JContent(File xml, Header header, Patient patient, Author author, Authenticator authenticator, Related related, ResponsibleParty responsible, HealthHistoric historic, DoctorHistoric doctorHistoric, Medicines medicines, Allergy allergy, FamilyHistoric fhistoric, Exams exams, LaboratoryExams laboratory, Diagnostic diagnostic, Tratament tratament) {
-        super(xml, header, patient, author, authenticator, related, responsible, historic, doctorHistoric, medicines, allergy, fhistoric, exams, laboratory, diagnostic, tratament);
+    public File getFile() {
+        return file;
+    }
+
+    public ClinicalDocument getClinicalDocument() {
+        return clinicalDocument;
+    }
+    
+    public JContent(File file, ClinicalDocument clinicalDocument) {
+        this.file = file;
+        this.clinicalDocument = clinicalDocument;
         this.w = new XMLTree();
     }
 
@@ -27,70 +38,70 @@ public class JContent extends jObjects {
         //STRUCTURE HEADER
         //==========================================================================================
         TAG CD = w.xml_CREATE("ClinicalDocument xmlns=\"urn:hl7-org:v3\" xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' classCode='DOCCLIN'","");
-        TAG C1 = w.xml_CREATE("realmCode code='"+header.getRealmCode()+"'","");
+        TAG C1 = w.xml_CREATE("realmCode code='"+getClinicalDocument().getHeader().getRealmCode()+"'","");
         TAG C2 = w.xml_CREATE("typeId root='2.16.840.1.113883.1.3' extension='POCD_HD000040'","");/*+h.getTypeid()+*/	/*+h.getExtension1()+*/
         TAG C3 = w.xml_CREATE("templateId root='2.16.840.1.113883.10.20.1'","");/*+h.getTemplate()+*/
-        TAG C4 = w.xml_CREATE("id root='"+header.getIdRoot()+"' extension='"+header.getExtension2()+"'","");
-        TAG C5 = w.xml_CREATE("code code='"+header.getCode()+"' displayName='Diagnostico utilizando Multcare' codeSystem='2.16.840.1.113883.6.103' codeSystemName='ICD-9-CM'","");
-        TAG C6 = w.xml_CREATE("effectiveTime value=\""+header.getEfetiveTime()+"\"","");
+        TAG C4 = w.xml_CREATE("id root='"+getClinicalDocument().getHeader().getIdRoot()+"' extension='"+getClinicalDocument().getHeader().getExtension2()+"'","");
+        TAG C5 = w.xml_CREATE("code code='"+getClinicalDocument().getHeader().getCode()+"' displayName='Diagnostico utilizando Multcare' codeSystem='2.16.840.1.113883.6.103' codeSystemName='ICD-9-CM'","");
+        TAG C6 = w.xml_CREATE("effectiveTime value=\""+getClinicalDocument().getHeader().getEfetiveTime()+"\"","");
         TAG C7 = w.xml_CREATE("confidentialityCode code=\"N\" displayName='Normal' codeSystem='2.16.840.1.113883.5.25' codeSystemName='Confidentiality'","");
-        TAG C8 = w.xml_CREATE("setId extension=\""+header.getId()+"\" root=\""+header.getExtension2()+"\"","");
-        TAG C9 = w.xml_CREATE("versionNumber value=\""+header.getVersion()+"\"","");
-        TAG C10 =w.xml_CREATE("copyTime value='"+header.getEfetiveTime()+"'","");
+        TAG C8 = w.xml_CREATE("setId extension=\""+getClinicalDocument().getHeader().getId()+"\" root=\""+getClinicalDocument().getHeader().getExtension2()+"\"","");
+        TAG C9 = w.xml_CREATE("versionNumber value=\""+getClinicalDocument().getHeader().getVersion()+"\"","");
+        TAG C10 =w.xml_CREATE("copyTime value='"+getClinicalDocument().getHeader().getEfetiveTime()+"'","");
         //==========================================================================================
         //STRUCTURE PATIENT
         TAG P19 =w.xml_CREATE("recordTarget","");
         TAG P20 =w.xml_CREATE("patientRole","");
-        TAG P0 = w.xml_CREATE("id extension=\""+patient.getId()+"\" root=\""+header.getExtension2()+"\"","");
-        TAG P1 = w.xml_CREATE("addr",""+patient.getAddr()+"");
-        TAG P2 = w.xml_CREATE("telecom value=\""+patient.getPhone()+"\"","");
+        TAG P0 = w.xml_CREATE("id extension=\""+getClinicalDocument().getPatient().getId()+"\" root=\""+getClinicalDocument().getHeader().getExtension2()+"\"","");
+        TAG P1 = w.xml_CREATE("addr",""+getClinicalDocument().getPatient().getAddr()+"");
+        TAG P2 = w.xml_CREATE("telecom value=\""+getClinicalDocument().getPatient().getPhone()+"\"","");
         TAG P3 = w.xml_CREATE("patient","");
         TAG P4 = w.xml_CREATE("name","");
-        TAG P17 =w.xml_CREATE("given",""+patient.getName()+"");
-        TAG P18 =w.xml_CREATE("family",""+patient.getFamily()+"");
-        TAG P5 = w.xml_CREATE("administrativeGenderCode code=\""+patient.getAdmin()+"\" codeSystem=\""+patient.getCodeSystem()+"\"",""); 
-        TAG P6 = w.xml_CREATE("birthTime value=\""+patient.getBirth()+"\"","");
-        TAG P7 = w.xml_CREATE("maritalStatusCode code='"+patient.getMaritalStatus()+"'","");
-        TAG P8 = w.xml_CREATE("religiousAffiliationCode code='"+patient.getReligious()+"'","");
-        TAG P9 = w.xml_CREATE("raceCode code='"+patient.getRace()+"'","");
-        TAG P10 =w.xml_CREATE("ethnicGroupCode code='"+patient.getEthnicGroup()+"'","");
+        TAG P17 =w.xml_CREATE("given",""+getClinicalDocument().getPatient().getName()+"");
+        TAG P18 =w.xml_CREATE("family",""+getClinicalDocument().getPatient().getFamily()+"");
+        TAG P5 = w.xml_CREATE("administrativeGenderCode code=\""+getClinicalDocument().getPatient().getAdmin()+"\" codeSystem=\""+getClinicalDocument().getPatient().getCodeSystem()+"\"",""); 
+        TAG P6 = w.xml_CREATE("birthTime value=\""+getClinicalDocument().getPatient().getBirth()+"\"","");
+        TAG P7 = w.xml_CREATE("maritalStatusCode code='"+getClinicalDocument().getPatient().getMaritalStatus()+"'","");
+        TAG P8 = w.xml_CREATE("religiousAffiliationCode code='"+getClinicalDocument().getPatient().getReligious()+"'","");
+        TAG P9 = w.xml_CREATE("raceCode code='"+getClinicalDocument().getPatient().getRace()+"'","");
+        TAG P10 =w.xml_CREATE("ethnicGroupCode code='"+getClinicalDocument().getPatient().getEthnicGroup()+"'","");
         TAG P11 =w.xml_CREATE("birthplace","");
         TAG P12 =w.xml_CREATE("place","");
-        TAG P13 =w.xml_CREATE("name",""+patient.getBirthPlace()+"");
-        TAG P14 =w.xml_CREATE("addr", ""+patient.getAddrBirthPlace()+"");
+        TAG P13 =w.xml_CREATE("name",""+getClinicalDocument().getPatient().getBirthPlace()+"");
+        TAG P14 =w.xml_CREATE("addr", ""+getClinicalDocument().getPatient().getAddrBirthPlace()+"");
         TAG P15 =w.xml_CREATE("providerOrganization","");
-        TAG P16 =w.xml_CREATE("id extension=\""+patient.getIdExtension()+"\" root=\""+header.getExtension2()+"\"","");
+        TAG P16 =w.xml_CREATE("id extension=\""+getClinicalDocument().getPatient().getIdExtension()+"\" root=\""+getClinicalDocument().getHeader().getExtension2()+"\"","");
         //STRUCTURE AUTHOR
         //==========================================================================================
         TAG A0 = w.xml_CREATE("author","");
-        TAG A1 = w.xml_CREATE("time value = \""+header.getEfetiveTime()+"\"", "");
+        TAG A1 = w.xml_CREATE("time value = \""+getClinicalDocument().getHeader().getEfetiveTime()+"\"", "");
         TAG A2 = w.xml_CREATE("assignedAuthor","");
-        TAG A3 = w.xml_CREATE("id root='"+header.getExtension2()+"' extension='"+author.getCrm()+"'", "");
-        TAG A4 = w.xml_CREATE("addr", ""+author.getAddr()+"");
-        TAG A5 = w.xml_CREATE("telecom value = '"+author.getPhone()+"'","");
+        TAG A3 = w.xml_CREATE("id root='"+getClinicalDocument().getHeader().getExtension2()+"' extension='"+getClinicalDocument().getAuthor().getCrm()+"'", "");
+        TAG A4 = w.xml_CREATE("addr", ""+getClinicalDocument().getAuthor().getAddr()+"");
+        TAG A5 = w.xml_CREATE("telecom value = '"+getClinicalDocument().getAuthor().getPhone()+"'","");
         TAG A6 = w.xml_CREATE("assignedPerson", "");
         TAG A7 = w.xml_CREATE("name","");
-        TAG A8 = w.xml_CREATE("given",""+author.getName()+"");
-        TAG A9 = w.xml_CREATE("family",""+author.getFamily()+"");
+        TAG A8 = w.xml_CREATE("given",""+getClinicalDocument().getAuthor().getName()+"");
+        TAG A9 = w.xml_CREATE("family",""+getClinicalDocument().getAuthor().getFamily()+"");
         //==========================================================================================
         TAG CS0 = w.xml_CREATE("custodian", "");
         TAG CS1 = w.xml_CREATE("assignedCustodian","");
         TAG CS2 = w.xml_CREATE("representedCustodianOrganization","");
-        TAG CS3 = w.xml_CREATE("id extension=\""+patient.getId()+"\" root=\""+header.getExtension2()+"\"", "");
+        TAG CS3 = w.xml_CREATE("id extension=\""+getClinicalDocument().getPatient().getId()+"\" root=\""+getClinicalDocument().getHeader().getExtension2()+"\"", "");
         TAG CS4 = w.xml_CREATE("name", "MultCare");
         //==========================================================================================
         
         TAG L0 = w.xml_CREATE("legalAuthenticator", "");
         
-        if(authenticator.getCode()!=null){
-            TAG L1 = w.xml_CREATE("time value=\""+header.getEfetiveTime()+"\"", "");
-            TAG L2 = w.xml_CREATE("signatureCode code=\""+authenticator.getCode()+"\"","");
+        if(getClinicalDocument().getAuthenticator().getCode()!=null){
+            TAG L1 = w.xml_CREATE("time value=\""+getClinicalDocument().getHeader().getEfetiveTime()+"\"", "");
+            TAG L2 = w.xml_CREATE("signatureCode code=\""+getClinicalDocument().getAuthenticator().getCode()+"\"","");
             TAG L3 = w.xml_CREATE("assignedEntity", "");
-            TAG L4 = w.xml_CREATE("id extension=\""+patient.getIdExtension()+"\" root=\""+header.getExtension2()+"\"","");
+            TAG L4 = w.xml_CREATE("id extension=\""+getClinicalDocument().getPatient().getIdExtension()+"\" root=\""+getClinicalDocument().getHeader().getExtension2()+"\"","");
             TAG L5 = w.xml_CREATE("assignedPerson","");
             TAG L6 = w.xml_CREATE("name","");
-            TAG L7 = w.xml_CREATE("given", ""+author.getName()+"");
-            TAG L8 = w.xml_CREATE("family",""+author.getFamily()+"");
+            TAG L7 = w.xml_CREATE("given", ""+getClinicalDocument().getAuthor().getName()+"");
+            TAG L8 = w.xml_CREATE("family",""+getClinicalDocument().getAuthor().getFamily()+"");
                     //==============================
             w.xml_INSERT(L6, L8);
             w.xml_INSERT(L6, L7);
@@ -102,44 +113,44 @@ public class JContent extends jObjects {
             w.xml_INSERT(L0, L1);
         }
         //==========================================================================================
-        TAG R0 = w.xml_CREATE("relatedDocument typeCode=\""+related.getCode()+"\"", "");
+        TAG R0 = w.xml_CREATE("relatedDocument typeCode=\""+getClinicalDocument().getRelated().getCode()+"\"", "");
         TAG R1 = w.xml_CREATE("parentDocument","");
-        TAG R2 = w.xml_CREATE("id extension=\""+related.getId()+"\" root=\""+header.getExtension2()+"\"", "");
-        TAG R3 = w.xml_CREATE("setId extension=\""+related.getExtension()+"\" root=\""+header.getExtension2()+"\"", "");
-        TAG R4 = w.xml_CREATE("versionNumber value=\""+related.getVersion()+"\"", "");
+        TAG R2 = w.xml_CREATE("id extension=\""+getClinicalDocument().getRelated().getId()+"\" root=\""+getClinicalDocument().getHeader().getExtension2()+"\"", "");
+        TAG R3 = w.xml_CREATE("setId extension=\""+getClinicalDocument().getRelated().getExtension()+"\" root=\""+getClinicalDocument().getHeader().getExtension2()+"\"", "");
+        TAG R4 = w.xml_CREATE("versionNumber value=\""+getClinicalDocument().getRelated().getVersion()+"\"", "");
         //=====================================================================================
         
         TAG OFF0 =w.xml_CREATE("componentOf","");
         
-        if(responsibleParty.getIdRoot()!=null){
+        if(getClinicalDocument().getResponsibleParty().getIdRoot()!=null){
             TAG OFF1 =w.xml_CREATE("encompassingEncounter", "");
-            TAG OFF2 =w.xml_CREATE("id root=\""+responsibleParty.getIdRoot()+"\" extension=\""+responsibleParty.getExtension()+"\"", "");
-            TAG OFF3 =w.xml_CREATE("effectiveTime value=\""+responsibleParty.getDate()+"\"","");
+            TAG OFF2 =w.xml_CREATE("id root=\""+getClinicalDocument().getResponsibleParty().getIdRoot()+"\" extension=\""+getClinicalDocument().getResponsibleParty().getExtension()+"\"", "");
+            TAG OFF3 =w.xml_CREATE("effectiveTime value=\""+getClinicalDocument().getResponsibleParty().getDate()+"\"","");
             TAG OFF4 =w.xml_CREATE("responsibleParty","");
             TAG OFF5 =w.xml_CREATE("assignedEntity", "");
-            TAG OFF6 =w.xml_CREATE("id nullFlavor=\""+responsibleParty.getId()+"\"", "");
+            TAG OFF6 =w.xml_CREATE("id nullFlavor=\""+getClinicalDocument().getResponsibleParty().getId()+"\"", "");
             TAG OFF7 =w.xml_CREATE("addr","");
-            TAG OFF8 =w.xml_CREATE("state", ""+responsibleParty.getState()+"");
-            TAG OFF9 =w.xml_CREATE("city",""+responsibleParty.getCity()+"");
-            TAG OFF10 =w.xml_CREATE("postalCode", ""+responsibleParty.getPostal()+"");
-            TAG OFF11 =w.xml_CREATE("streetAddressLine", ""+responsibleParty.getStreet()+"");
-            TAG OFF12 =w.xml_CREATE("telecom value=\"tel:"+responsibleParty.getPhone()+"\" use=\""+responsibleParty.getUse()+"\"", "");
+            TAG OFF8 =w.xml_CREATE("state", ""+getClinicalDocument().getResponsibleParty().getState()+"");
+            TAG OFF9 =w.xml_CREATE("city",""+getClinicalDocument().getResponsibleParty().getCity()+"");
+            TAG OFF10 =w.xml_CREATE("postalCode", ""+getClinicalDocument().getResponsibleParty().getPostal()+"");
+            TAG OFF11 =w.xml_CREATE("streetAddressLine", ""+getClinicalDocument().getResponsibleParty().getStreet()+"");
+            TAG OFF12 =w.xml_CREATE("telecom value=\"tel:"+getClinicalDocument().getResponsibleParty().getPhone()+"\" use=\""+getClinicalDocument().getResponsibleParty().getUse()+"\"", "");
             TAG OFF13 =w.xml_CREATE("assignedPerson", "");
             TAG OFF14 =w.xml_CREATE("name","");
-            TAG OFF15 =w.xml_CREATE("family", ""+responsibleParty.getFamily()+"");
-            TAG OFF16 =w.xml_CREATE("given", ""+responsibleParty.getName1()+"");
-            TAG OFF17 =w.xml_CREATE("given", ""+responsibleParty.getName2()+"");
-            TAG OFF18 =w.xml_CREATE("suffix", ""+responsibleParty.getSuffixe()+"");
+            TAG OFF15 =w.xml_CREATE("family", ""+getClinicalDocument().getResponsibleParty().getFamily()+"");
+            TAG OFF16 =w.xml_CREATE("given", ""+getClinicalDocument().getResponsibleParty().getName1()+"");
+            TAG OFF17 =w.xml_CREATE("given", ""+getClinicalDocument().getResponsibleParty().getName2()+"");
+            TAG OFF18 =w.xml_CREATE("suffix", ""+getClinicalDocument().getResponsibleParty().getSuffixe()+"");
             TAG OFF19 =w.xml_CREATE("location","");
             TAG OFF20 =w.xml_CREATE("healthCareFacility", "");
-            TAG OFF21 =w.xml_CREATE("id root=\""+responsibleParty.getIdRoot()+"\" extension=\""+responsibleParty.getExtension()+"\"", "");
+            TAG OFF21 =w.xml_CREATE("id root=\""+getClinicalDocument().getResponsibleParty().getIdRoot()+"\" extension=\""+getClinicalDocument().getResponsibleParty().getExtension()+"\"", "");
             TAG OFF22 =w.xml_CREATE("location","");
-            TAG OFF23 =w.xml_CREATE("name", ""+responsibleParty.getLocation()+"");
+            TAG OFF23 =w.xml_CREATE("name", ""+getClinicalDocument().getResponsibleParty().getLocation()+"");
             TAG OFF24 =w.xml_CREATE("addr", "");
-            TAG OFF25 =w.xml_CREATE("state", ""+responsibleParty.getState()+"");
-            TAG OFF26 =w.xml_CREATE("city",""+responsibleParty.getCity()+"");
-            TAG OFF27 =w.xml_CREATE("postalCode", ""+responsibleParty.getPostal()+"");
-            TAG OFF28 =w.xml_CREATE("streetAddressLine",""+responsibleParty.getStreet()+"");
+            TAG OFF25 =w.xml_CREATE("state", ""+getClinicalDocument().getResponsibleParty().getState()+"");
+            TAG OFF26 =w.xml_CREATE("city",""+getClinicalDocument().getResponsibleParty().getCity()+"");
+            TAG OFF27 =w.xml_CREATE("postalCode", ""+getClinicalDocument().getResponsibleParty().getPostal()+"");
+            TAG OFF28 =w.xml_CREATE("streetAddressLine",""+getClinicalDocument().getResponsibleParty().getStreet()+"");
 
             w.xml_INSERT(OFF24,OFF28);
             w.xml_INSERT(OFF24,OFF27);
@@ -176,13 +187,13 @@ public class JContent extends jObjects {
         TAG CO1 =	w.xml_CREATE("structuredBody", "");
         TAG CO2 =	w.xml_CREATE("languageCode code=\'pt-BR\'","");
 
-        if(healthHistoric.getCode() != null) {
+        if(getClinicalDocument().getHealthHistoric().getCode() != null) {
             TAG CO3 = 	w.xml_CREATE("component", "");
-            TAG CO4 = 	w.xml_CREATE("section classCode=\""+healthHistoric.getSection()+"\" moodCode=\""+healthHistoric.getMoodCode()+"\"","");
-            TAG CO5 = 	w.xml_CREATE("templateId root=\""+healthHistoric.getTemplateId()+"\"", ""); 
-            TAG CO6 = 	w.xml_CREATE("code code=\""+healthHistoric.getCode()+"\" codeSystem=\""+healthHistoric.getCodeSystem()+"\" codeSystemName=\""+healthHistoric.getCodeName()+"\" displayName=\"Problema atual\"","");
+            TAG CO4 = 	w.xml_CREATE("section classCode=\""+getClinicalDocument().getHealthHistoric().getSection()+"\" moodCode=\""+getClinicalDocument().getHealthHistoric().getMoodCode()+"\"","");
+            TAG CO5 = 	w.xml_CREATE("templateId root=\""+getClinicalDocument().getHealthHistoric().getTemplateId()+"\"", ""); 
+            TAG CO6 = 	w.xml_CREATE("code code=\""+getClinicalDocument().getHealthHistoric().getCode()+"\" codeSystem=\""+getClinicalDocument().getHealthHistoric().getCodeSystem()+"\" codeSystemName=\""+getClinicalDocument().getHealthHistoric().getCodeName()+"\" displayName=\"Problema atual\"","");
             TAG CO7 =	w.xml_CREATE("title", "Histórico da doença atual"); 
-            TAG CO8 =	w.xml_CREATE("text", ""+healthHistoric.getText()+"");
+            TAG CO8 =	w.xml_CREATE("text", ""+getClinicalDocument().getHealthHistoric().getText()+"");
             //==============================
             w.xml_INSERT(CO4, CO8);
             w.xml_INSERT(CO4, CO7);
@@ -192,13 +203,13 @@ public class JContent extends jObjects {
             w.xml_INSERT(CO1, CO3);
         }
         //==========================================================================================
-        if(doctorHistoric.getContent() != null) {
+        if(getClinicalDocument().getDoctorHistoric().getContent() != null) {
             TAG COMP10 = w.xml_CREATE("component","");
             TAG COMP11 = w.xml_CREATE("section","");
             TAG COMP12 = w.xml_CREATE("title","Histórico médico passado");
             TAG COMP13 = w.xml_CREATE("text","");
             TAG COMP14 = w.xml_CREATE("list","");
-            TAG COMP15 = w.xml_CREATE("",w.xml_content(doctorHistoric.getContent()));
+            TAG COMP15 = w.xml_CREATE("",w.xml_content(getClinicalDocument().getDoctorHistoric().getContent()));
             //==============================
             w.xml_INSERT(COMP14, COMP15);
             w.xml_INSERT(COMP13, COMP14);
@@ -208,13 +219,13 @@ public class JContent extends jObjects {
             w.xml_INSERT(CO1,    COMP10);
         }
         //==========================================================================================
-        if(medicines.getContent() != null) {
+        if(getClinicalDocument().getMedicines().getContent() != null) {
             TAG COMP20 = w.xml_CREATE("component","");
             TAG COMP21 = w.xml_CREATE("section","");
             TAG COMP22 = w.xml_CREATE("title","Medicamentos");
             TAG COMP23 = w.xml_CREATE("text","");
             TAG COMP24 = w.xml_CREATE("list","");
-            TAG COMP25 = w.xml_CREATE("",w.xml_content(medicines.getContent()));
+            TAG COMP25 = w.xml_CREATE("",w.xml_content(getClinicalDocument().getMedicines().getContent()));
             //==============================
             w.xml_INSERT(COMP24, COMP25);
             w.xml_INSERT(COMP23, COMP24);
@@ -224,13 +235,13 @@ public class JContent extends jObjects {
             w.xml_INSERT(CO1,    COMP20);
         }
         //==========================================================================================
-        if(allergy.getContent() != null) {
+        if(getClinicalDocument().getAllergy().getContent() != null) {
             TAG COMP30 = w.xml_CREATE("component","");
-            TAG COMP31 = w.xml_CREATE("section classCode=\""+healthHistoric.getSection()+"\" moodCode=\""+healthHistoric.getMoodCode()+"\"","");
+            TAG COMP31 = w.xml_CREATE("section classCode=\""+getClinicalDocument().getHealthHistoric().getSection()+"\" moodCode=\""+getClinicalDocument().getHealthHistoric().getMoodCode()+"\"","");
             TAG COMP32 = w.xml_CREATE("title","Alergias");
             TAG COMP33 = w.xml_CREATE("text","");
             TAG COMP34 = w.xml_CREATE("list","");
-            TAG COMP35 = w.xml_CREATE("",w.xml_content(allergy.getContent()));
+            TAG COMP35 = w.xml_CREATE("",w.xml_content(getClinicalDocument().getAllergy().getContent()));
             //==============================
             w.xml_INSERT(COMP34, COMP35);
             w.xml_INSERT(COMP33, COMP34);
@@ -240,13 +251,13 @@ public class JContent extends jObjects {
             w.xml_INSERT(CO1, COMP30);
         }
         //==========================================================================================
-        if(familyHistoric.getContent() != null) {
+        if(getClinicalDocument().getFamilyHistoric().getContent() != null) {
             TAG COMP40 = w.xml_CREATE("component","");
             TAG COMP41 = w.xml_CREATE("section","");
             TAG COMP42 = w.xml_CREATE("title","Histórico familiar");
             TAG COMP43 = w.xml_CREATE("text","");
             TAG COMP44 = w.xml_CREATE("list","");
-            TAG COMP45 = w.xml_CREATE("",w.xml_content(familyHistoric.getContent()));
+            TAG COMP45 = w.xml_CREATE("",w.xml_content(getClinicalDocument().getFamilyHistoric().getContent()));
             //==============================
             w.xml_INSERT(COMP44, COMP45);
             w.xml_INSERT(COMP43, COMP44);
@@ -256,13 +267,13 @@ public class JContent extends jObjects {
             w.xml_INSERT(CO1,    COMP40);
         }
         //==========================================================================================
-        if(exams.getContent() != null) {
+        if(getClinicalDocument().getExams().getContent() != null) {
             TAG COMP50 = w.xml_CREATE("component","");
             TAG COMP51 = w.xml_CREATE("section","");
             TAG COMP52 = w.xml_CREATE("title","Exame/Métrica físico");
             TAG COMP53 = w.xml_CREATE("text","");
             TAG COMP54 = w.xml_CREATE("list","");
-            TAG COMP55 = w.xml_CREATE("",w.xml_content(exams.getContent()));
+            TAG COMP55 = w.xml_CREATE("",w.xml_content(getClinicalDocument().getExams().getContent()));
             //==============================
             w.xml_INSERT(COMP54, COMP55);
             w.xml_INSERT(COMP53, COMP54);
@@ -272,15 +283,15 @@ public class JContent extends jObjects {
             w.xml_INSERT(CO1,    COMP50);
         }
         //==========================================================================================
-        if(laboratoryExams.getContent() != null) {
+        if(getClinicalDocument().getLaboratoryExams().getContent() != null) {
             TAG COMP60 = w.xml_CREATE("component","");
-            TAG COMP61 = w.xml_CREATE("section classCode=\""+healthHistoric.getSection()+"\" moodCode=\""+healthHistoric.getMoodCode()+"\"","");
-            TAG COMP62 = w.xml_CREATE("templateId root=\"2.16.840.1.113883."+laboratoryExams.getId()+"\"","");  
-            TAG COMP63 = w.xml_CREATE("code code=\""+laboratoryExams.getCode()+"\" codeSystem=\""+healthHistoric.getCodeSystem()+"\" codeSystemName=\""+healthHistoric.getCodeName()+"\" displayName=\"Exames de laboratório\"",""); 
+            TAG COMP61 = w.xml_CREATE("section classCode=\""+getClinicalDocument().getHealthHistoric().getSection()+"\" moodCode=\""+getClinicalDocument().getHealthHistoric().getMoodCode()+"\"","");
+            TAG COMP62 = w.xml_CREATE("templateId root=\"2.16.840.1.113883."+getClinicalDocument().getLaboratoryExams().getId()+"\"","");  
+            TAG COMP63 = w.xml_CREATE("code code=\""+getClinicalDocument().getLaboratoryExams().getCode()+"\" codeSystem=\""+getClinicalDocument().getHealthHistoric().getCodeSystem()+"\" codeSystemName=\""+getClinicalDocument().getHealthHistoric().getCodeName()+"\" displayName=\"Exames de laboratório\"",""); 
             TAG COMP64 =  w.xml_CREATE("title","Exames de laboratório");
             TAG COMP65 =  w.xml_CREATE("text","");
             TAG COMP66 =  w.xml_CREATE("list","");
-            TAG COMP67 =  w.xml_CREATE("",w.xml_content(laboratoryExams.getContent()));
+            TAG COMP67 =  w.xml_CREATE("",w.xml_content(getClinicalDocument().getLaboratoryExams().getContent()));
             //==============================
             w.xml_INSERT(COMP66, COMP67);
             w.xml_INSERT(COMP65, COMP66);
@@ -292,13 +303,13 @@ public class JContent extends jObjects {
             w.xml_INSERT(CO1,	COMP60);
         }
         //==========================================================================================
-        if(diagnostic.getContent() != null) {
+        if(getClinicalDocument().getDiagnostic().getContent() != null) {
             TAG COMP70 = w.xml_CREATE("component","");
             TAG COMP71 = w.xml_CREATE("section","");
             TAG COMP72 = w.xml_CREATE("title","Diagnóstico");
             TAG COMP73 = w.xml_CREATE("text","");
             TAG COMP74 = w.xml_CREATE("list","");
-            TAG COMP75 = w.xml_CREATE("",w.xml_content(diagnostic.getContent()));
+            TAG COMP75 = w.xml_CREATE("",w.xml_content(getClinicalDocument().getDiagnostic().getContent()));
             //==============================
             w.xml_INSERT(COMP74, COMP75);
             w.xml_INSERT(COMP73, COMP74);
@@ -308,13 +319,13 @@ public class JContent extends jObjects {
             w.xml_INSERT(CO1,    COMP70);
         }
         //==========================================================================================
-        if(tratament.getContent() != null) {
+        if(getClinicalDocument().getTratament().getContent() != null) {
             TAG COMP80 = w.xml_CREATE("component","");
             TAG COMP81 = w.xml_CREATE("section","");
             TAG COMP82 = w.xml_CREATE("title","Tratamento");
             TAG COMP83 = w.xml_CREATE("text","");
             TAG COMP84 = w.xml_CREATE("list","");
-            TAG COMP85 = w.xml_CREATE("",w.xml_content(tratament.getContent()));
+            TAG COMP85 = w.xml_CREATE("",w.xml_content(getClinicalDocument().getTratament().getContent()));
             //==============================
             w.xml_INSERT(COMP84, COMP85);
             w.xml_INSERT(COMP83, COMP84);
@@ -391,9 +402,9 @@ public class JContent extends jObjects {
         w.xml_INSERT(CD,C1);
 
         //DELETES FILE CDA TO OVERWRITE A NEW
-        w.xml_CLEAN(xml);
+        w.xml_CLEAN(getFile());
 
-        try (FileWriter fw = new FileWriter(xml,true);){
+        try (FileWriter fw = new FileWriter(getFile(),true);){
             fw.write("<?xml version='1.0' encoding='UTF-8'?>");
             //GENERATES XML FILE
             w.xml_PRINT(CD,fw);

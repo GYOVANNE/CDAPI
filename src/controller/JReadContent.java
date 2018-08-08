@@ -34,7 +34,7 @@ public class JReadContent {
     String linha;
     StringTokenizer st;
     try(FileReader fr = new FileReader(file);BufferedReader br = new BufferedReader(new FileReader(file));){
-        
+
     while((linha = br.readLine()) != null){
         if(linha.contains("<"+TagBegin+""))
         {
@@ -75,7 +75,7 @@ public class JReadContent {
     fr.close();
     br.close();
     }catch(IOException ex){
-            System.out.println("Erro interno: "+ex);
+        System.out.println(ex);
     }
     return null;
     }

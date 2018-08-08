@@ -7,7 +7,6 @@ import java.awt.Color;
 import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -335,14 +334,14 @@ public class DemoApp extends javax.swing.JFrame {
 
     private void ValidarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ValidarMouseClicked
         ValidateCDA v = new ValidateCDA();
-        
+
         if(getArquivoXml()!=null){
             if(v.validationCDAFile(getArquivoXml())){
                 setColor(0);
-                AreaDeAviso.setText(v.getNotificacao());
+                AreaDeAviso.setText(v.getNotification());
             }else{
                 setColor(1);
-                AreaDeAviso.setText(v.getNotificacao());
+                AreaDeAviso.setText(v.getNotification());
             }
         }
     }//GEN-LAST:event_ValidarMouseClicked
@@ -392,7 +391,7 @@ public class DemoApp extends javax.swing.JFrame {
             String conteudo;
             try {
                 ClinicalDocument cda = new ClinicalDocument(getArquivoXml());
-                
+
                 conteudo= "Nome: "+cda.getPatient().getName();
                 conteudo += "\nSobrenome: "+cda.getPatient().getFamily();
                 conteudo += "\nEndereço: "+cda.getPatient().getAddr();
