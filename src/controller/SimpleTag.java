@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
  * 
  * @author Gyovanne
  */
-public class JReadContent {
+public class SimpleTag {
 
     /**
      * Declaração necessária para capturar o conteúdo de uma TAG, que retornará uma string contendo sua informação.

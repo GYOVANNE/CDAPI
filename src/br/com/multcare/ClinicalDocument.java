@@ -2,8 +2,8 @@ package br.com.multcare;
 
 import br.com.multcare.bean.*;
 import br.com.multcare.validator.ValidateCDA;
-import controller.JContent;
-import controller.JReadAll;
+import controller.DocumentStructure;
+import controller.ReadTag;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -13,8 +13,7 @@ import java.util.Calendar;
  * @author Gyovanne
  */
 public class ClinicalDocument {
-
-    private File xml;
+    private File xmlFile;
     private Header header;
     private Patient patient;
     private Author author;
@@ -30,24 +29,36 @@ public class ClinicalDocument {
     private LaboratoryExams laboratoryExams;
     private Diagnostic diagnostic;
     private Tratament tratament;
-    
+
      /**
      * Contrutor com argumento necessário para leitura do arquivo.
      * <br>Necessário informar o arquivo ao qual será usado para leitura.
      * <br>Exemplo de implementação:<br>
-     * ClinicalDocument cda = new ClinicalDocuement(File file);<br>
+     * <blockquote>
+     * <pre>
+     * ClinicalDocument cda = new ClinicalDocuement(File file);
+     * </pre>
+     * </blockquote>
      * @param xml
      * @throws Exception
      */
     public ClinicalDocument(File xml) throws Exception{
-          new JReadAll(this,xml).read();
+        if(xml.exists()) {
+            new ReadTag(this,xml).read();
+        } else {
+            System.err.println("File not found");
+        }
     }
 
     /**
      * Contrutor com argumento necessário para leitura do arquivo.
      * <br>Necessário informar o nome do arquivo ao qual será usado para leitura.
      * <br>Exemplo de implementação:<br>
-     * ClinicalDocument cda = new ClinicalDocuement("12345");<br>
+     * <blockquote>
+     * <pre>
+     * ClinicalDocument cda = new ClinicalDocuement("12345");
+     * </pre>
+     * </blockquote>
      * @param fileName
      * @throws Exception
      */
@@ -59,7 +70,11 @@ public class ClinicalDocument {
      * Contrutor com argumento necessário para leitura do arquivo.
      * <br>Necessário informar o Id do paciente, que será usado como identificador do arquivo
      * <br>Exemplo de implementação:<br>
-     * ClinicalDocument cda = new ClinicalDocuement(12345);<br>
+     * <blockquote>
+     * <pre>
+     * ClinicalDocument cda = new ClinicalDocuement(12345);
+     * </pre>
+     * </blockquote>
      * @param Patientid
      * @throws Exception
      */
@@ -72,11 +87,23 @@ public class ClinicalDocument {
      * <br>Não é necessário informar nenhum parâmetro, pois a instância do objeto
      * a partir deste construtor é usado para acessar os métodos de escrita do arquivo.
      * <br>Exemplo de implementação:<br>
-     * ClinicalDocument cda = new ClinicalDocuement();<br>
+     * <blockquote>
+     * <pre>
+     * ClinicalDocument cda = new ClinicalDocuement();
+     * </pre>
+     * </blockquote>
      */
     public ClinicalDocument() {
     }
-    
+
+    private File getXmlFile() {
+        return xmlFile;
+    }
+
+    private void setXmlFile(File xmlFile) {
+        this.xmlFile = xmlFile;
+    }
+
     private static String local(String filename){
         File direct = new File("");
         File file = new File(""+direct.getAbsolutePath()+"/XML_FILES");
@@ -89,7 +116,7 @@ public class ClinicalDocument {
         Calendar today = Calendar.getInstance();
         return(format.format(today.getTime()));
     }
-    
+
     /**
      * Retorna uma representação Header do objeto. Em geral, o método
      * {@code getHeader} retorna um Header que representa este objeto.
@@ -166,10 +193,9 @@ public class ClinicalDocument {
         if(patient.getReligious()==null)        patient.setReligious("nullFlavor");
         if(patient.getRace()==null)             patient.setRace("nullFlavor");
         if(patient.getEthnicGroup()==null)      patient.setEthnicGroup("nullFlavor");
-        
         this.patient = patient;
     }
-    
+
     /**
      * Retorna uma representação Author do objeto. Em geral, o método
      * {@code getAuthor} retorna um Author que representa este objeto.
@@ -654,7 +680,7 @@ public class ClinicalDocument {
     public void setTratament(Tratament tratament) {
         this.tratament = tratament;
     }
-    
+
     /**
      * Retorna uma representação boolean do objeto. Em geral, o método
      * {@code generateCDAFile} retorna um boolean, sendo true para a criação e validação
@@ -674,15 +700,15 @@ public class ClinicalDocument {
      * @return  um valor booleano para fins de verificação.
      */
     public boolean generateCDAFile(String local){
-        File xmlfile;
         if(local != null) {
-            xmlfile = new File(local+""+patient.getId());
-        }else xmlfile = new File(local(""+patient.getId()));
-
-        JContent jContent = new JContent(xmlfile,this);
-        ValidateCDA validator = new ValidateCDA();
+            setXmlFile(new File(local+""+patient.getId()));
+        }else setXmlFile(new File(local(""+patient.getId())));
 
         try {
+            
+        DocumentStructure jContent = new DocumentStructure(getXmlFile(),this);
+        ValidateCDA validator = new ValidateCDA();
+
             if(jContent.generateContent()){
 
                 if(validator.validationCDAFile(patient.getId()))

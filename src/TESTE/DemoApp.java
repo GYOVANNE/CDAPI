@@ -5,6 +5,7 @@ import br.com.multcare.validator.ValidateCDA;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.io.File;
+import java.io.PrintStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;

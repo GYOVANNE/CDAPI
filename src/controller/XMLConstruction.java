@@ -9,9 +9,9 @@ import java.util.ArrayList;
  *
  * @author Gyovanne
  */
-public class XMLTree {
+public class XMLConstruction {
 
-    public XMLTree() {
+    public XMLConstruction() {
 
     }
 
