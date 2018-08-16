@@ -1,36 +1,32 @@
 # CDA
-# Cliente CDA Orientação Validador
-
+# Cliente HL7 CDA Orientação
+=========
 Introdução
+=========
 
-Esta API cliente pretende mostrar um simples exemplo  do CDA Orientação Validador.
-É um conjunto de bibliotecas simples de usar, que irá validar um documento XML baseado em CDA.
+Esta API cliente pretende mostrar um simples exemplo  do Hl7 CDA Orientação.
 
+É uma API simples de usar, que irá gerar, ler e  validar um documento XML baseado em CDA.
+===========
 Configuração
+===========
  
 O arquivo .jar está localizado no diretório dist. Se você preferir usar suas próprias cópias desses pacotes, certifique-se de que esse arquivo .jar está
 localizado no classpath Java, junto com a pasta lib de dependencias.
 
-A lista completa dos arquivos .jar necessários é:
-
-- AbsoluteLayout.jar
+Não há  arquivos .jar necessários.
+É necessário incluir o arquivo DocumentaçãoHL7CDA.zip junto ao arquivo executável e setar na aplicação para fazer uso da documentação da API.
 
 O cliente é um .jar executável simples. Não há etapas de configuração adicionais que são necessárias.
-
+========
 Execução
-
-Este cliente é liberado como um arquivo .jar Java executável. É necessário pelo menos ter o Java 2 SDK (versão
-1.5 ou posterior). Para executar o cliente, certifique-se de que o arquivo java executável está em seu caminho e execute o seguinte:
-
+========
+Este cliente é liberado com um arquivo .jar Java não executável. É necessário pelo menos ter o Java 2 SDK (versão
+1.5 ou posterior). Para utilizar o cliente, certifique-se de que o arquivo java não-executável está em seu caminho.
 
 =================================
 DESCRIÇÃO DE SAÍDA DA CONSTRUÇÃO
 =================================
-
-Para executar o projeto a partir da linha de comando, vá para a pasta dist e
-escreva o seguinte:
-
-java -jar "HL7CDA.jar"
 
 Para distribuir este projeto, feche a pasta dist (incluindo a pasta lib)
 e distribua o arquivo ZIP.
@@ -51,7 +47,7 @@ nome da classe no campo Classe Principal. Como alternativa, você pode digitar m
 nome da classe no elemento manifest Main-Class.
 
 
-aviso Legal 
+!aviso Legal! 
 
 AVISO DE RECONHECIMENTO DE SOFTWARE E REDISTRIBUIÇÃO:
 
