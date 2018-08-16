@@ -166,7 +166,7 @@ public class ValidateCDA {
                            "\nValidando: esquema XML CDA"+
                            "\nData de validação: "+getValidationDate()+
                            "\nResultado do teste: "+value;
-                           
+         
         if(value)this.notificacao += "\n\nValidado\nNenhum problema encontrado!";
         else this.notificacao += "\n\nErro de Validação!\n\nMensagem:\n"+menssage+
                                  "\n"+detail;
