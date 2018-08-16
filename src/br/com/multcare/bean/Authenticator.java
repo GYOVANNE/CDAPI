@@ -2,11 +2,14 @@ package br.com.multcare.bean;
 
 /**
  *
- * @author android
+ * @author Gyovanne
  */
 public class Authenticator {
-	private String code;
-	
+    private String code;
+
+    public Authenticator() {
+        this.code = "nullFlavor";
+    }
     /**
      *
      * @param code

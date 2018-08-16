@@ -2,10 +2,14 @@ package br.com.multcare.bean;
 
 /**
  *
- * @author android
+ * @author Gyovanne
  */
 public class Author extends Patient{
-	private String crm;
+    private String crm;
+
+    public Author() {
+        this.crm = "nullFlavor";
+    }
         
     /**
      *

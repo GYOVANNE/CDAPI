@@ -2,7 +2,7 @@ package br.com.multcare.bean;
 
 /**
  *
- * @author android
+ * @author Gyovanne
  */
 public class Header {
 	private String realmCode;
@@ -15,6 +15,19 @@ public class Header {
 	private String efetiveTime;
 	private String id;
 	private int version;
+
+    public Header() {
+        this.realmCode = "nullFlavor";
+        this.typeId = "nullFlavor";
+        this.extension1 = "nullFlavor";
+        this.template = "nullFlavor";
+        this.idRoot = "nullFlavor";
+        this.extension2 = "nullFlavor";
+        this.code = "nullFlavor";
+        this.efetiveTime = "nullFlavor";
+        this.id = "nullFlavor";
+        this.version = 0;
+    }
 
     /**
      *

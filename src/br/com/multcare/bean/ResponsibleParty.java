@@ -2,7 +2,7 @@ package br.com.multcare.bean;
 
 /**
  *
- * @author android
+ * @author Gyovanne
  */
 public class ResponsibleParty {
 	
@@ -21,7 +21,25 @@ public class ResponsibleParty {
 	private String name2;
 	private String suffixe;
 	private String location;
-	
+
+    public ResponsibleParty() {
+        this.idRoot = "nullFlavor";
+        this.extension = "nullFlavor";
+        this.date = "nullFlavor";
+        this.id = "nullFlavor";
+        this.state = "nullFlavor";
+        this.city = "nullFlavor";
+        this.postal = "nullFlavor";
+        this.street = "nullFlavor";
+        this.phone = "nullFlavor";
+        this.use = "nullFlavor";
+        this.family = "nullFlavor";
+        this.name1 = "nullFlavor";
+        this.name2 = "nullFlavor";
+        this.suffixe = "nullFlavor";
+        this.location = "nullFlavor";
+    }
+
     /**
      *
      * @param id

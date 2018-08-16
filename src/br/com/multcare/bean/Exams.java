@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author android
+ * @author Gyovanne
  */
 public class Exams extends LaboratoryExams{
 

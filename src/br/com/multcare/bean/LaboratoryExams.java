@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author android
+ * @author Gyovanne
  */
 public class LaboratoryExams {
 	private String id;
@@ -14,7 +14,13 @@ public class LaboratoryExams {
      *
      */
     protected ArrayList <String> content;
-        
+
+    public LaboratoryExams() {
+        this.id = null;
+        this.code = null;
+        this.content = null;
+    }
+    
     /**
      *
      * @param id

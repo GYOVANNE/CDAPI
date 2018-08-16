@@ -2,7 +2,7 @@ package br.com.multcare.bean;
 
 /**
  *
- * @author android
+ * @author Gyovanne
  */
 public class Patient {
     
@@ -37,6 +37,24 @@ public class Patient {
     private String birthPlace;
     private String addrBirthPlace;
     private String idExtension;
+
+    public Patient() {
+        this.id = 0;
+        this.addr = "nullFlavor";
+        this.phone = "nullFlavor";
+        this.name = "nullFlavor";
+        this.family = "nullFlavor";
+        this.admin = "nullFlavor";
+        this.codeSystem = "nullFlavor";
+        this.birth = "nullFlavor";
+        this.maritalStatus = "nullFlavor";
+        this.religious = "nullFlavor";
+        this.race = "nullFlavor";
+        this.ethnicGroup = "nullFlavor";
+        this.birthPlace = "nullFlavor";
+        this.addrBirthPlace = "nullFlavor";
+        this.idExtension = "nullFlavor";
+    }
 
     /**
      *

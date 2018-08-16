@@ -2,7 +2,7 @@ package br.com.multcare.bean;
 
 /**
  *
- * @author android
+ * @author Gyovanne
  */
 public class HealthHistoric {
 	private String section;
@@ -14,6 +14,18 @@ public class HealthHistoric {
 	private String display;
 	private String title;
 	private String text;
+
+    public HealthHistoric() {
+        this.section = "nullFlavor";
+        this.moodCode = "nullFlavor";
+        this.templateId = "nullFlavor";
+        this.code = "nullFlavor";
+        this.codeSystem = "nullFlavor";
+        this.codeName = "nullFlavor";
+        this.display = "nullFlavor";
+        this.title = "nullFlavor";
+        this.text = "nullFlavor";
+    }
 
     /**
      *

@@ -2,13 +2,20 @@ package br.com.multcare.bean;
 
 /**
  *
- * @author android
+ * @author Gyovanne
  */
 public class Related {
 	private String code;
 	private String id;
 	private String extension;
 	private String version;
+
+    public Related() {
+        this.code = "nullFlavor";
+        this.id = "nullFlavor";
+        this.extension = "nullFlavor";
+        this.version = "nullFlavor";
+    }
 	
     /**
      *

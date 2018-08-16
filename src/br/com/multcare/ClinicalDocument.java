@@ -94,6 +94,22 @@ public class ClinicalDocument {
      * </blockquote>
      */
     public ClinicalDocument() {
+        this.xmlFile = null;
+        this.header = null;
+        this.patient = null;
+        this.author = null;
+        this.authenticator = null;
+        this.related = null;
+        this.responsibleParty = null;
+        this.healthHistoric = null;
+        this.doctorHistoric = null;
+        this.medicines = null;
+        this.allergy = null;
+        this.familyHistoric = null;
+        this.exams = null;
+        this.laboratoryExams = null;
+        this.diagnostic = null;
+        this.tratament = null;
     }
 
     private File getXmlFile() {
@@ -189,10 +205,6 @@ public class ClinicalDocument {
      * @param patient
      */
     public void setPatient(Patient patient) {
-        if(patient.getMaritalStatus()==null)    patient.setMaritalStatus("nullFlavor");
-        if(patient.getReligious()==null)        patient.setReligious("nullFlavor");
-        if(patient.getRace()==null)             patient.setRace("nullFlavor");
-        if(patient.getEthnicGroup()==null)      patient.setEthnicGroup("nullFlavor");
         this.patient = patient;
     }
 
@@ -700,9 +712,16 @@ public class ClinicalDocument {
      * @return  um valor booleano para fins de verificação.
      */
     public boolean generateCDAFile(String local){
+        InitializeObjects();
+        String idFile;
+        if(patient==null)
+            idFile= "ArquivoSemNome.xml";
+        else 
+            idFile = "" + patient.getId();
+
         if(local != null) {
-            setXmlFile(new File(local+""+patient.getId()));
-        }else setXmlFile(new File(local(""+patient.getId())));
+            setXmlFile(new File(local+idFile));
+        }else setXmlFile(new File(local(idFile)));
 
         try {
             
@@ -711,7 +730,7 @@ public class ClinicalDocument {
 
             if(jContent.generateContent()){
 
-                if(validator.validationCDAFile(patient.getId()))
+                if(validator.validationCDAFile(idFile+".xml"))
                     System.out.println(""+validator.getNotification());
                 else
                     System.err.println(""+validator.getNotification());
@@ -741,5 +760,23 @@ public class ClinicalDocument {
      */
     public boolean generateCDAFile(){
         return generateCDAFile(null);
+    }
+    
+    private void InitializeObjects(){
+        if(this.header == null)this.header = new Header();
+        if(this.patient == null)this.patient = new Patient();
+        if(this.author == null)this.author = new Author();
+        if(this.authenticator == null)this.authenticator = new Authenticator();
+        if(this.related == null) this.related = new Related();
+        if(this.responsibleParty == null)this.responsibleParty = new ResponsibleParty();
+        if(this.healthHistoric == null)this.healthHistoric = new HealthHistoric();
+        if(this.doctorHistoric == null)this.doctorHistoric = new DoctorHistoric();
+        if(this.medicines == null)this.medicines = new Medicines();
+        if(this.allergy == null)this.allergy = new Allergy();
+        if(this.familyHistoric == null)this.familyHistoric = new FamilyHistoric();
+        if(this.exams == null)this.exams = new Exams();
+        if(this.laboratoryExams == null)this.laboratoryExams = new LaboratoryExams();
+        if(this.diagnostic == null)this.diagnostic = new Diagnostic();
+        if(this.tratament == null)this.tratament = new Tratament();
     }
 }
