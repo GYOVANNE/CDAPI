@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import org.xml.sax.SAXException;
-
 /**
  *
  * @author Gyovanne
@@ -46,20 +45,33 @@ public class ValidateCDA {
         this.xmlFile = xmlFile;
     }
 
-    private File getXsdFile() {
-        return xsdFile;
-    }
-
-    private void setXsdFile(File xsdFile) {
+    public void setXsdFile(File xsdFile) {
         this.xsdFile = xsdFile;
     }
 
+    private File getXsdFile() {
+       return xsdFile; 
+    }
+    private File localFile(){
+        File file ;
+        try {
+            return new File("lib/CDA.xsd");
+        } catch (Exception ex) {
+            return null;
+        }
+    }
     private boolean validate(File xml) {
-        setXsdFile(new File("CDA.xsd"));
-        
+        setXsdFile(localFile());
+
+        if(getXsdFile()==null && !getXsdFile().exists()){
+            setNotification(xml,false,"Arquivo XSD não encontrado!","Não foi possivel encontrar o arquivo XSD de origem."
+                                     +"\nVerifique se o arquivo está na pasta lib da aplicação.");
+            return false;
+        }
+
+        try {
         File f = new File(xml.getAbsolutePath());
  
-        try {
             SchemaFactory schemafactory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
 
             File schemaLocation = getXsdFile();
@@ -150,7 +162,7 @@ public class ValidateCDA {
     }
 
     private void setNotification(File xml,boolean value,String menssage,String detail) {
-        this.notificacao = "Relatório de validação para "+xml.toString()+
+        this.notificacao = "Relatório de validação para "+xml.getName()+
                            "\nValidando: esquema XML CDA"+
                            "\nData de validação: "+getValidationDate()+
                            "\nResultado do teste: "+value;
@@ -165,5 +177,9 @@ public class ValidateCDA {
         File file = new File(""+direct.getAbsolutePath()+"/XML_FILES");
         file.mkdir();
         return file.getAbsolutePath()+"/"+filename;
+    }
+
+    private String getResource(String cdAxsd) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
