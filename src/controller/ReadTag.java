@@ -15,10 +15,18 @@ public class ReadTag{
     private final SimpleTag simpleTag;
     private final ListTag listTag;
 
+    /**
+     *
+     * @return
+     */
     public ClinicalDocument getClinicalDocument() {
         return clinicalDocument;
     }
 
+    /**
+     *
+     * @return
+     */
     public File getFile() {
         return file;
     }
@@ -35,6 +43,10 @@ public class ReadTag{
         this.listTag = new ListTag();
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     public void read() throws Exception{
 
         try{

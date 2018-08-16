@@ -1,5 +1,9 @@
 package br.com.multcare.bean;
 
+/**
+ *
+ * @author android
+ */
 public class ResponsibleParty {
 	
 	private String idRoot;
@@ -18,94 +22,243 @@ public class ResponsibleParty {
 	private String suffixe;
 	private String location;
 	
-	public void setIdRoot(String id) {
+    /**
+     *
+     * @param id
+     */
+    public void setIdRoot(String id) {
 		this.idRoot = id;
 	}
-	public String getIdRoot() {
+
+    /**
+     *
+     * @return
+     */
+    public String getIdRoot() {
 		return idRoot;
 	}
-	public void setExtension(String extension) {
+
+    /**
+     *
+     * @param extension
+     */
+    public void setExtension(String extension) {
 		this.extension = extension;
 	}
-	public String getExtension() {
+
+    /**
+     *
+     * @return
+     */
+    public String getExtension() {
 		return extension;
 	}
-	public void setDate(String date) {
+
+    /**
+     *
+     * @param date
+     */
+    public void setDate(String date) {
 		this.date= date;
 	}
-	public String getDate() {
+
+    /**
+     *
+     * @return
+     */
+    public String getDate() {
 		return date;
 	}
-	public void setId(String id) {
+
+    /**
+     *
+     * @param id
+     */
+    public void setId(String id) {
 		this.id = id;
 	}
-	public String getId() {
+
+    /**
+     *
+     * @return
+     */
+    public String getId() {
 		return id;
 	}
-	public void setState(String state) {
+
+    /**
+     *
+     * @param state
+     */
+    public void setState(String state) {
 		this.state = state;
 	}
-	public String getState() {
+
+    /**
+     *
+     * @return
+     */
+    public String getState() {
 		return state;
 	}
-	public void setCity(String city) {
+
+    /**
+     *
+     * @param city
+     */
+    public void setCity(String city) {
 		this.city= city;
 	}
-	public String getCity() {
+
+    /**
+     *
+     * @return
+     */
+    public String getCity() {
 		return city;
 	}
-	public void setPostal(String postal) {
+
+    /**
+     *
+     * @param postal
+     */
+    public void setPostal(String postal) {
 		this.postal= postal;
 	}
-	public String getPostal() {
+
+    /**
+     *
+     * @return
+     */
+    public String getPostal() {
 		return postal;
 	}
-	public void setStreet(String street) {
+
+    /**
+     *
+     * @param street
+     */
+    public void setStreet(String street) {
 		this.street = street;
 	}
-	public String getStreet() {
+
+    /**
+     *
+     * @return
+     */
+    public String getStreet() {
 		return street;
 	}
-	public void setPhone(String phone) {
+
+    /**
+     *
+     * @param phone
+     */
+    public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getPhone() {
+
+    /**
+     *
+     * @return
+     */
+    public String getPhone() {
 		return phone;
 	}
-	public void setUse(String use) {
+
+    /**
+     *
+     * @param use
+     */
+    public void setUse(String use) {
 		this.use = use;
 	}
-	public String getUse() {
+
+    /**
+     *
+     * @return
+     */
+    public String getUse() {
 		return use;
 	}
-	public void setFamily(String family) {
+
+    /**
+     *
+     * @param family
+     */
+    public void setFamily(String family) {
 		this.family = family;
 	}
-	public String getFamily() {
+
+    /**
+     *
+     * @return
+     */
+    public String getFamily() {
 		return family;
 	}
-	public void setName1(String name1) {
+
+    /**
+     *
+     * @param name1
+     */
+    public void setName1(String name1) {
 		this.name1 = name1;
 	}
-	public String getName1() {
+
+    /**
+     *
+     * @return
+     */
+    public String getName1() {
 		return name1;
 	}
-	public void setName2(String name2) {
+
+    /**
+     *
+     * @param name2
+     */
+    public void setName2(String name2) {
 		this.name2 = name2;
 	}
-	public String getName2() {
+
+    /**
+     *
+     * @return
+     */
+    public String getName2() {
 		return name2;
 	}
-	public void setSuffixe(String suffixe) {
+
+    /**
+     *
+     * @param suffixe
+     */
+    public void setSuffixe(String suffixe) {
 		this.suffixe= suffixe;
 	}
-	public String getSuffixe() {
+
+    /**
+     *
+     * @return
+     */
+    public String getSuffixe() {
 		return suffixe;
 	}
-	public void setLocation(String location) {
+
+    /**
+     *
+     * @param location
+     */
+    public void setLocation(String location) {
 		this.location = location;
 	}
-	public String getLocation() {
+
+    /**
+     *
+     * @return
+     */
+    public String getLocation() {
 		return location;
 	}
 }

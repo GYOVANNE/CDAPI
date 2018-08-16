@@ -45,6 +45,10 @@ public class ValidateCDA {
         this.xmlFile = xmlFile;
     }
 
+    /**
+     *
+     * @param xsdFile
+     */
     public void setXsdFile(File xsdFile) {
         this.xsdFile = xsdFile;
     }

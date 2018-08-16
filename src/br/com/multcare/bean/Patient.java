@@ -1,11 +1,31 @@
 package br.com.multcare.bean;
 
+/**
+ *
+ * @author android
+ */
 public class Patient {
     
     private int      id;
+
+    /**
+     *
+     */
     protected String addr;
+
+    /**
+     *
+     */
     protected String phone;
+
+    /**
+     *
+     */
     protected String name;
+
+    /**
+     *
+     */
     protected String family;
     private String admin;
     private String codeSystem;
@@ -18,122 +38,242 @@ public class Patient {
     private String addrBirthPlace;
     private String idExtension;
 
+    /**
+     *
+     * @return
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getAddr() {
         return addr;
     }
 
+    /**
+     *
+     * @param addr
+     */
     public void setAddr(String addr) {
         this.addr = addr;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getPhone() {
         return phone;
     }
 
+    /**
+     *
+     * @param phone
+     */
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     *
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFamily() {
         return family;
     }
 
+    /**
+     *
+     * @param family
+     */
     public void setFamily(String family) {
         this.family = family;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getAdmin() {
         return admin;
     }
 
+    /**
+     *
+     * @param admin
+     */
     public void setAdmin(String admin) {
         this.admin = admin;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getCodeSystem() {
         return codeSystem;
     }
 
+    /**
+     *
+     * @param codeSystem
+     */
     public void setCodeSystem(String codeSystem) {
         this.codeSystem = codeSystem;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getBirth() {
         return birth;
     }
 
+    /**
+     *
+     * @param birth
+     */
     public void setBirth(String birth) {
         this.birth = birth;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getMaritalStatus() {
         return maritalStatus;
     }
 
+    /**
+     *
+     * @param maritalStatus
+     */
     public void setMaritalStatus(String maritalStatus) {
         this.maritalStatus = maritalStatus;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getReligious() {
         return religious;
     }
 
+    /**
+     *
+     * @param religious
+     */
     public void setReligious(String religious) {
         this.religious = religious;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getRace() {
         return race;
     }
 
+    /**
+     *
+     * @param race
+     */
     public void setRace(String race) {
         this.race = race;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getEthnicGroup() {
         return ethnicGroup;
     }
 
+    /**
+     *
+     * @param ethnicGroup
+     */
     public void setEthnicGroup(String ethnicGroup) {
         this.ethnicGroup = ethnicGroup;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getBirthPlace() {
         return birthPlace;
     }
 
+    /**
+     *
+     * @param birthPlace
+     */
     public void setBirthPlace(String birthPlace) {
         this.birthPlace = birthPlace;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getAddrBirthPlace() {
         return addrBirthPlace;
     }
 
+    /**
+     *
+     * @param addrBirthPlace
+     */
     public void setAddrBirthPlace(String addrBirthPlace) {
         this.addrBirthPlace = addrBirthPlace;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getIdExtension() {
         return idExtension;
     }
 
+    /**
+     *
+     * @param idExtension
+     */
     public void setIdExtension(String idExtension) {
         this.idExtension = idExtension;
     }

@@ -2,12 +2,26 @@ package br.com.multcare.bean;
 
 import java.util.ArrayList;
 
+/**
+ *
+ * @author android
+ */
 public class FamilyHistoric extends LaboratoryExams {
-        @Override
+
+    /**
+     *
+     * @param content
+     */
+    @Override
     	public void setContent(ArrayList <String> content) {
 		this.content = content;
 	}
-        @Override
+
+    /**
+     *
+     * @return
+     */
+    @Override
 	public ArrayList <String> getContent() {
 		return content;
 	}

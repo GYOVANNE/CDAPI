@@ -15,14 +15,27 @@ public class DocumentStructure {
     private final File file; 
     private final ClinicalDocument clinicalDocument;
 
+    /**
+     *
+     * @return
+     */
     public File getFile() {
         return file;
     }
 
+    /**
+     *
+     * @return
+     */
     public ClinicalDocument getClinicalDocument() {
         return clinicalDocument;
     }
 
+    /**
+     *
+     * @param file
+     * @param clinicalDocument
+     */
     public DocumentStructure(File file, ClinicalDocument clinicalDocument) {
         this.file = file;
         this.clinicalDocument = clinicalDocument;

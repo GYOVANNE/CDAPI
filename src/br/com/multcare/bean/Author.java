@@ -1,12 +1,25 @@
 package br.com.multcare.bean;
 
+/**
+ *
+ * @author android
+ */
 public class Author extends Patient{
 	private String crm;
         
-	public void setCrm(String crm) {
+    /**
+     *
+     * @param crm
+     */
+    public void setCrm(String crm) {
 		this.crm = crm;
 	}
-	public String getCrm() {
+
+    /**
+     *
+     * @return
+     */
+    public String getCrm() {
 		return crm;
 	}
 }

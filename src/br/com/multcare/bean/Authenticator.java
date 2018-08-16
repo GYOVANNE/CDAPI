@@ -1,12 +1,25 @@
 package br.com.multcare.bean;
 
+/**
+ *
+ * @author android
+ */
 public class Authenticator {
 	private String code;
 	
-	public void setCode(String code) {
+    /**
+     *
+     * @param code
+     */
+    public void setCode(String code) {
 		this.code = code;
 	}
-	public String getCode() {
+
+    /**
+     *
+     * @return
+     */
+    public String getCode() {
 		return code;
 	}
 }
