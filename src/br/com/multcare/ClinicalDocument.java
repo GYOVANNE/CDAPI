@@ -46,7 +46,17 @@ public class ClinicalDocument {
     public ClinicalDocument(File xml) {
         this.status = true;
         if(xml.exists()) {
-            new ReadTag(this,xml).read();
+            ValidateCDA vcda = new ValidateCDA();
+            try {
+                if(vcda.validationCDAFile(xml)){
+                    new ReadTag(this,xml).read();
+                }else{
+                    System.err.println("Arquivo nao pode ser lido, pois ocorreu um erro de validacao!\n");
+                    System.err.println(vcda.getNotification());
+                }
+            } catch (IOException ex) {
+                System.err.println(ex.getLocalizedMessage());
+            }
         } else {
             System.err.println("File not found");
         }
@@ -697,11 +707,12 @@ public class ClinicalDocument {
      * @return  um valor booleano para fins de verificação.
      */
     public boolean generateCDAFile(String local){
+        boolean value = false;
         if(this.status==false){
             InitializeObjects();
             String idFile;
-            if(patient==null)
-                idFile= "ArquivoSemNome.xml";
+            if(patient.getId()==0)
+                idFile= "ArquivoSemNome";
             else 
                 idFile = "" + patient.getId();
 
@@ -709,24 +720,22 @@ public class ClinicalDocument {
                 setXmlFile(new File(local+idFile));
             }else setXmlFile(new File(local(idFile)));
 
-            try {
-
-            DocumentStructure structure = new DocumentStructure(getXmlFile(),this);
-            ValidateCDA validator = new ValidateCDA();
-
-                if(structure.generateContent()){
-
-                    if(validator.validationCDAFile(idFile+".xml"))
-                        System.out.println(""+validator.getNotification());
-                    else
-                        System.err.println(""+validator.getNotification());
-                    return true;
-                }
-            } catch (IOException ex) {
-                System.err.println(ex.getLocalizedMessage());
-            }
-        }else System.err.println("Para gerar o arquivo o contrutor da classe ClinicalDocument nao pode haver parametros!");
-        return false;
+                if(new DocumentStructure(getXmlFile(),this).generateContent()){
+                    ValidateCDA vcda = new ValidateCDA();
+                    try {
+                        if(vcda.validationCDAFile(getXmlFile())){
+                            value = true;
+                        }else System.err.println(vcda.getNotification());
+                    } catch (IOException ex) {
+                        System.err.println(ex.getLocalizedMessage());
+                        value = false;
+                    }
+                }else value = false;
+        }else{
+            System.err.println("Para gerar o arquivo o contrutor da classe ClinicalDocument nao pode haver parametros!");
+            value = false;
+        }
+        return value;
     }
     /**
      * Retorna uma representação boolean do objeto. Em geral, o método
