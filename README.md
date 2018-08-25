@@ -7,20 +7,19 @@ Introdução
 Esta API cliente pretende mostrar um simples exemplo  do Hl7 CDA Orientação.
 
 É uma API simples de usar, que irá gerar, ler e  validar um documento XML baseado em CDA.
-===========
+
 Configuração
-===========
  
 O arquivo .jar está localizado no diretório dist. Se você preferir usar suas próprias cópias desses pacotes, certifique-se de que esse arquivo .jar está
 localizado no classpath Java, junto com a pasta lib de dependencias.
 
 Não há  arquivos .jar necessários.
-É necessário incluir o arquivo DocumentaçãoHL7CDA.zip junto ao arquivo executável e setar na aplicação para fazer uso da documentação da API.
+É necessário incluir o arquivo DocumentaçãoHL7CDA.zip junto ao arquivo não executável e setar na aplicação para fazer uso da documentação da API.
 
 O cliente é um .jar executável simples. Não há etapas de configuração adicionais que são necessárias.
-========
+
 Execução
-========
+
 Este cliente é liberado com um arquivo .jar Java não executável. É necessário pelo menos ter o Java 2 SDK (versão
 1.5 ou posterior). Para utilizar o cliente, certifique-se de que o arquivo java não-executável está em seu caminho.
 
