@@ -6,23 +6,22 @@ import java.util.ArrayList;
  *
  * @author Gyovanne
  */
-public class Allergy extends LaboratoryExams{
+public class Allergy {
 
+    protected ArrayList <String> content;
     /**
      *
      * @param content
      */
-    @Override
-    	public void setContent(ArrayList <String> content) {
-		this.content = content;
-	}
+    public void setContent(ArrayList <String> content) {
+            this.content = content;
+    }
 
     /**
      *
      * @return
      */
-    @Override
-	public ArrayList <String> getContent() {
-		return content;
-	}
+    public ArrayList <String> getContent() {
+            return content;
+    }
 }

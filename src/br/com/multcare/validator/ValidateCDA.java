@@ -49,22 +49,18 @@ public class ValidateCDA {
      *
      * @param xsdFile
      */
-    public void setXsdFile(File xsdFile) {
+    private void setXsdFile(File xsdFile) {
         this.xsdFile = xsdFile;
     }
 
     private File getXsdFile() {
        return xsdFile; 
     }
-    private File localFile(){
+    private File localFile() throws IOException {
         File file ;
-        try {
-            return new File("lib/CDA.xsd");
-        } catch (Exception ex) {
-            return null;
-        }
+        return new File("lib/CDA.xsd");
     }
-    private boolean validate(File xml) {
+    private boolean validate(File xml) throws IOException{
         setXsdFile(localFile());
 
         if(getXsdFile()==null && !getXsdFile().exists()){
@@ -115,8 +111,9 @@ public class ValidateCDA {
      *
      * @param xml
      * @return  um valor booleano para fins de verificação.
+     * @throws java.io.IOException
      */
-    public boolean validationCDAFile(File xml){
+    public boolean validationCDAFile(File xml) throws IOException{
         return validate(xml);
     }
 
@@ -137,8 +134,9 @@ public class ValidateCDA {
      *
      * @param xmlFileName
      * @return  um valor booleano para fins de verificação.
+     * @throws java.io.IOException
      */
-    public boolean validationCDAFile(String xmlFileName){
+    public boolean validationCDAFile(String xmlFileName) throws IOException{
         setXmlFile(new File(local(xmlFileName)));
         return validationCDAFile(getXmlFile()); 
     }
@@ -160,8 +158,9 @@ public class ValidateCDA {
      *
      * @param IdPatient
      * @return  um valor booleano para fins de verificação.
+     * @throws java.io.IOException
      */
-    public boolean validationCDAFile(int IdPatient){
+    public boolean validationCDAFile(int IdPatient) throws IOException{
         return validationCDAFile(IdPatient+".xml");
     }
 
@@ -181,9 +180,5 @@ public class ValidateCDA {
         File file = new File(""+direct.getAbsolutePath()+"/XML_FILES");
         file.mkdir();
         return file.getAbsolutePath()+"/"+filename;
-    }
-
-    private String getResource(String cdAxsd) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -28,9 +28,8 @@ public class SimpleTag {
      * @param info
      * @param op
      * @return
-     * @throws Exception
      */
-    public String TAG (File file,String TagBegin,String TagFinish,String info,int op) throws Exception {
+    public String TAG (File file,String TagBegin,String TagFinish,String info,int op){
     String linha;
     StringTokenizer st;
     try(FileReader fr = new FileReader(file);BufferedReader br = new BufferedReader(new FileReader(file));){
@@ -75,7 +74,7 @@ public class SimpleTag {
     fr.close();
     br.close();
     }catch(IOException ex){
-        System.out.println(ex);
+        System.err.println(ex.getLocalizedMessage());
     }
     return null;
     }

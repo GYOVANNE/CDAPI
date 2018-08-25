@@ -213,11 +213,15 @@ public class XMLConstruction {
     public String xml_content(ArrayList <String> info) {
         String list ="";
         setTagSpace(7);
-        for(int i =0; i< info.size();i++) {
-            list +=getSpace()+"<item>"
-                 +"\n"+getSpace()+"  <content>"+info.get(i)+"</content>\n"
-                 +((i!=info.size()-1)?getSpace()+"</item>\n":getSpace()+"</item>");
-        }
+        if(info!=null){
+            for(int i =0; i< info.size();i++) {
+                list +=getSpace()+"<item>"
+                     +"\n"+getSpace()+"  <content>"+info.get(i)+"</content>\n"
+                     +((i!=info.size()-1)?getSpace()+"</item>\n":getSpace()+"</item>");
+            }
+        }else list = getSpace()+"<item>"+
+                "\n"+getSpace()+"  <content>nullFlavor</content>\n"
+                    +getSpace()+"</item>";
         setTagSpace(0);
         return list;
     }

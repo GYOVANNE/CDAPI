@@ -4,6 +4,7 @@ import br.com.multcare.ClinicalDocument;
 import controller.XMLConstruction.TAG;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * Classe que contém o conteúdo do documento CDA, representado em XML.
@@ -19,7 +20,7 @@ public class DocumentStructure {
      *
      * @return
      */
-    public File getFile() {
+    private File getFile() {
         return file;
     }
 
@@ -27,7 +28,7 @@ public class DocumentStructure {
      *
      * @return
      */
-    public ClinicalDocument getClinicalDocument() {
+    private ClinicalDocument getClinicalDocument() {
         return clinicalDocument;
     }
 
@@ -45,9 +46,8 @@ public class DocumentStructure {
     /**
      *
      * @return
-     * @throws Exception
      */
-    public boolean generateContent() throws Exception {
+    public boolean generateContent() {
         //STRUCTURE HEADER
         //==========================================================================================
         TAG rootTag = xmlc.xml_CREATE("ClinicalDocument xmlns=\"urn:hl7-org:v3\" xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' classCode='DOCCLIN'","");
@@ -108,25 +108,23 @@ public class DocumentStructure {
 
         TAG L0 = xmlc.xml_CREATE("legalAuthenticator", "");
 
-        if(getClinicalDocument().getAuthenticator().getCode()!=null){
-            TAG L1 = xmlc.xml_CREATE("time value=\""+getClinicalDocument().getHeader().getEfetiveTime()+"\"", "");
-            TAG L2 = xmlc.xml_CREATE("signatureCode code=\""+getClinicalDocument().getAuthenticator().getCode()+"\"","");
-            TAG L3 = xmlc.xml_CREATE("assignedEntity", "");
-            TAG L4 = xmlc.xml_CREATE("id extension=\""+getClinicalDocument().getPatient().getIdExtension()+"\" root=\""+getClinicalDocument().getHeader().getExtension2()+"\"","");
-            TAG L5 = xmlc.xml_CREATE("assignedPerson","");
-            TAG L6 = xmlc.xml_CREATE("name","");
-            TAG L7 = xmlc.xml_CREATE("given", ""+getClinicalDocument().getAuthor().getName()+"");
-            TAG L8 = xmlc.xml_CREATE("family",""+getClinicalDocument().getAuthor().getFamily()+"");
-                    //==============================
-            xmlc.xml_INSERT(L6, L8);
-            xmlc.xml_INSERT(L6, L7);
-            xmlc.xml_INSERT(L5, L6);
-            xmlc.xml_INSERT(L3, L5);
-            xmlc.xml_INSERT(L3, L4);
-            xmlc.xml_INSERT(L0,L3);
-            xmlc.xml_INSERT(L0, L2);
-            xmlc.xml_INSERT(L0, L1);
-        }
+        TAG L1 = xmlc.xml_CREATE("time value=\""+getClinicalDocument().getHeader().getEfetiveTime()+"\"", "");
+        TAG L2 = xmlc.xml_CREATE("signatureCode code=\""+getClinicalDocument().getAuthenticator().getCode()+"\"","");
+        TAG L3 = xmlc.xml_CREATE("assignedEntity", "");
+        TAG L4 = xmlc.xml_CREATE("id extension=\""+getClinicalDocument().getPatient().getIdExtension()+"\" root=\""+getClinicalDocument().getHeader().getExtension2()+"\"","");
+        TAG L5 = xmlc.xml_CREATE("assignedPerson","");
+        TAG L6 = xmlc.xml_CREATE("name","");
+        TAG L7 = xmlc.xml_CREATE("given", ""+getClinicalDocument().getAuthor().getName()+"");
+        TAG L8 = xmlc.xml_CREATE("family",""+getClinicalDocument().getAuthor().getFamily()+"");
+                //==============================
+        xmlc.xml_INSERT(L6, L8);
+        xmlc.xml_INSERT(L6, L7);
+        xmlc.xml_INSERT(L5, L6);
+        xmlc.xml_INSERT(L3, L5);
+        xmlc.xml_INSERT(L3, L4);
+        xmlc.xml_INSERT(L0,L3);
+        xmlc.xml_INSERT(L0, L2);
+        xmlc.xml_INSERT(L0, L1);
         //==========================================================================================
         TAG R0 = xmlc.xml_CREATE("relatedDocument typeCode=\""+getClinicalDocument().getRelated().getCode()+"\"", "");
         TAG R1 = xmlc.xml_CREATE("parentDocument","");
@@ -137,86 +135,82 @@ public class DocumentStructure {
 
         TAG OFF0 =xmlc.xml_CREATE("componentOf","");
 
-        if(getClinicalDocument().getResponsibleParty().getIdRoot()!=null){
-            TAG OFF1 =xmlc.xml_CREATE("encompassingEncounter", "");
-            TAG OFF2 =xmlc.xml_CREATE("id root=\""+getClinicalDocument().getResponsibleParty().getIdRoot()+"\" extension=\""+getClinicalDocument().getResponsibleParty().getExtension()+"\"", "");
-            TAG OFF3 =xmlc.xml_CREATE("effectiveTime value=\""+getClinicalDocument().getResponsibleParty().getDate()+"\"","");
-            TAG OFF4 =xmlc.xml_CREATE("responsibleParty","");
-            TAG OFF5 =xmlc.xml_CREATE("assignedEntity", "");
-            TAG OFF6 =xmlc.xml_CREATE("id nullFlavor=\""+getClinicalDocument().getResponsibleParty().getId()+"\"", "");
-            TAG OFF7 =xmlc.xml_CREATE("addr","");
-            TAG OFF8 =xmlc.xml_CREATE("state", ""+getClinicalDocument().getResponsibleParty().getState()+"");
-            TAG OFF9 =xmlc.xml_CREATE("city",""+getClinicalDocument().getResponsibleParty().getCity()+"");
-            TAG OFF10 =xmlc.xml_CREATE("postalCode", ""+getClinicalDocument().getResponsibleParty().getPostal()+"");
-            TAG OFF11 =xmlc.xml_CREATE("streetAddressLine", ""+getClinicalDocument().getResponsibleParty().getStreet()+"");
-            TAG OFF12 =xmlc.xml_CREATE("telecom value=\"tel:"+getClinicalDocument().getResponsibleParty().getPhone()+"\" use=\""+getClinicalDocument().getResponsibleParty().getUse()+"\"", "");
-            TAG OFF13 =xmlc.xml_CREATE("assignedPerson", "");
-            TAG OFF14 =xmlc.xml_CREATE("name","");
-            TAG OFF15 =xmlc.xml_CREATE("family", ""+getClinicalDocument().getResponsibleParty().getFamily()+"");
-            TAG OFF16 =xmlc.xml_CREATE("given", ""+getClinicalDocument().getResponsibleParty().getName1()+"");
-            TAG OFF17 =xmlc.xml_CREATE("given", ""+getClinicalDocument().getResponsibleParty().getName2()+"");
-            TAG OFF18 =xmlc.xml_CREATE("suffix", ""+getClinicalDocument().getResponsibleParty().getSuffixe()+"");
-            TAG OFF19 =xmlc.xml_CREATE("location","");
-            TAG OFF20 =xmlc.xml_CREATE("healthCareFacility", "");
-            TAG OFF21 =xmlc.xml_CREATE("id root=\""+getClinicalDocument().getResponsibleParty().getIdRoot()+"\" extension=\""+getClinicalDocument().getResponsibleParty().getExtension()+"\"", "");
-            TAG OFF22 =xmlc.xml_CREATE("location","");
-            TAG OFF23 =xmlc.xml_CREATE("name", ""+getClinicalDocument().getResponsibleParty().getLocation()+"");
-            TAG OFF24 =xmlc.xml_CREATE("addr", "");
-            TAG OFF25 =xmlc.xml_CREATE("state", ""+getClinicalDocument().getResponsibleParty().getState()+"");
-            TAG OFF26 =xmlc.xml_CREATE("city",""+getClinicalDocument().getResponsibleParty().getCity()+"");
-            TAG OFF27 =xmlc.xml_CREATE("postalCode", ""+getClinicalDocument().getResponsibleParty().getPostal()+"");
-            TAG OFF28 =xmlc.xml_CREATE("streetAddressLine",""+getClinicalDocument().getResponsibleParty().getStreet()+"");
+        TAG OFF1 =xmlc.xml_CREATE("encompassingEncounter", "");
+        TAG OFF2 =xmlc.xml_CREATE("id root=\""+getClinicalDocument().getResponsibleParty().getIdRoot()+"\" extension=\""+getClinicalDocument().getResponsibleParty().getExtension()+"\"", "");
+        TAG OFF3 =xmlc.xml_CREATE("effectiveTime value=\""+getClinicalDocument().getResponsibleParty().getDate()+"\"","");
+        TAG OFF4 =xmlc.xml_CREATE("responsibleParty","");
+        TAG OFF5 =xmlc.xml_CREATE("assignedEntity", "");
+        TAG OFF6 =xmlc.xml_CREATE("id nullFlavor=\""+getClinicalDocument().getResponsibleParty().getId()+"\"", "");
+        TAG OFF7 =xmlc.xml_CREATE("addr","");
+        TAG OFF8 =xmlc.xml_CREATE("state", ""+getClinicalDocument().getResponsibleParty().getState()+"");
+        TAG OFF9 =xmlc.xml_CREATE("city",""+getClinicalDocument().getResponsibleParty().getCity()+"");
+        TAG OFF10 =xmlc.xml_CREATE("postalCode", ""+getClinicalDocument().getResponsibleParty().getPostal()+"");
+        TAG OFF11 =xmlc.xml_CREATE("streetAddressLine", ""+getClinicalDocument().getResponsibleParty().getStreet()+"");
+        TAG OFF12 =xmlc.xml_CREATE("telecom value=\"tel:"+getClinicalDocument().getResponsibleParty().getPhone()+"\" use=\""+getClinicalDocument().getResponsibleParty().getUse()+"\"", "");
+        TAG OFF13 =xmlc.xml_CREATE("assignedPerson", "");
+        TAG OFF14 =xmlc.xml_CREATE("name","");
+        TAG OFF15 =xmlc.xml_CREATE("family", ""+getClinicalDocument().getResponsibleParty().getFamily()+"");
+        TAG OFF16 =xmlc.xml_CREATE("given", ""+getClinicalDocument().getResponsibleParty().getName1()+"");
+        TAG OFF17 =xmlc.xml_CREATE("given", ""+getClinicalDocument().getResponsibleParty().getName2()+"");
+        TAG OFF18 =xmlc.xml_CREATE("suffix", ""+getClinicalDocument().getResponsibleParty().getSuffixe()+"");
+        TAG OFF19 =xmlc.xml_CREATE("location","");
+        TAG OFF20 =xmlc.xml_CREATE("healthCareFacility", "");
+        TAG OFF21 =xmlc.xml_CREATE("id root=\""+getClinicalDocument().getResponsibleParty().getIdRoot()+"\" extension=\""+getClinicalDocument().getResponsibleParty().getExtension()+"\"", "");
+        TAG OFF22 =xmlc.xml_CREATE("location","");
+        TAG OFF23 =xmlc.xml_CREATE("name", ""+getClinicalDocument().getResponsibleParty().getLocation()+"");
+        TAG OFF24 =xmlc.xml_CREATE("addr", "");
+        TAG OFF25 =xmlc.xml_CREATE("state", ""+getClinicalDocument().getResponsibleParty().getState()+"");
+        TAG OFF26 =xmlc.xml_CREATE("city",""+getClinicalDocument().getResponsibleParty().getCity()+"");
+        TAG OFF27 =xmlc.xml_CREATE("postalCode", ""+getClinicalDocument().getResponsibleParty().getPostal()+"");
+        TAG OFF28 =xmlc.xml_CREATE("streetAddressLine",""+getClinicalDocument().getResponsibleParty().getStreet()+"");
 
-            xmlc.xml_INSERT(OFF24,OFF28);
-            xmlc.xml_INSERT(OFF24,OFF27);
-            xmlc.xml_INSERT(OFF24,OFF26);
-            xmlc.xml_INSERT(OFF24,OFF25);
-            xmlc.xml_INSERT(OFF22,OFF24);
-            xmlc.xml_INSERT(OFF22,OFF23);
-            xmlc.xml_INSERT(OFF20,OFF22);
-            xmlc.xml_INSERT(OFF20,OFF21);
-            xmlc.xml_INSERT(OFF19,OFF20);
-            xmlc.xml_INSERT(OFF14,OFF18);
-            xmlc.xml_INSERT(OFF14,OFF17);
-            xmlc.xml_INSERT(OFF14,OFF16);
-            xmlc.xml_INSERT(OFF14,OFF15);
-            xmlc.xml_INSERT(OFF13,OFF14);
-            xmlc.xml_INSERT(OFF7, OFF11);
-            xmlc.xml_INSERT(OFF7, OFF10);
-            xmlc.xml_INSERT(OFF7, OFF9);
-            xmlc.xml_INSERT(OFF7, OFF8);
-            xmlc.xml_INSERT(OFF5, OFF13);
-            xmlc.xml_INSERT(OFF5, OFF12);
-            xmlc.xml_INSERT(OFF5, OFF7);
-            xmlc.xml_INSERT(OFF5, OFF6);
-            xmlc.xml_INSERT(OFF4, OFF5);
-            xmlc.xml_INSERT(OFF1, OFF19);
-            xmlc.xml_INSERT(OFF1, OFF4);
-            xmlc.xml_INSERT(OFF1, OFF3);
-            xmlc.xml_INSERT(OFF1, OFF2);
-            xmlc.xml_INSERT(OFF0, OFF1);
-        }
+        xmlc.xml_INSERT(OFF24,OFF28);
+        xmlc.xml_INSERT(OFF24,OFF27);
+        xmlc.xml_INSERT(OFF24,OFF26);
+        xmlc.xml_INSERT(OFF24,OFF25);
+        xmlc.xml_INSERT(OFF22,OFF24);
+        xmlc.xml_INSERT(OFF22,OFF23);
+        xmlc.xml_INSERT(OFF20,OFF22);
+        xmlc.xml_INSERT(OFF20,OFF21);
+        xmlc.xml_INSERT(OFF19,OFF20);
+        xmlc.xml_INSERT(OFF14,OFF18);
+        xmlc.xml_INSERT(OFF14,OFF17);
+        xmlc.xml_INSERT(OFF14,OFF16);
+        xmlc.xml_INSERT(OFF14,OFF15);
+        xmlc.xml_INSERT(OFF13,OFF14);
+        xmlc.xml_INSERT(OFF7, OFF11);
+        xmlc.xml_INSERT(OFF7, OFF10);
+        xmlc.xml_INSERT(OFF7, OFF9);
+        xmlc.xml_INSERT(OFF7, OFF8);
+        xmlc.xml_INSERT(OFF5, OFF13);
+        xmlc.xml_INSERT(OFF5, OFF12);
+        xmlc.xml_INSERT(OFF5, OFF7);
+        xmlc.xml_INSERT(OFF5, OFF6);
+        xmlc.xml_INSERT(OFF4, OFF5);
+        xmlc.xml_INSERT(OFF1, OFF19);
+        xmlc.xml_INSERT(OFF1, OFF4);
+        xmlc.xml_INSERT(OFF1, OFF3);
+        xmlc.xml_INSERT(OFF1, OFF2);
+        xmlc.xml_INSERT(OFF0, OFF1);
         //==========================================================================================
         //STRUCTURE DOCTOR HISTORIC
         TAG CO0 =	xmlc.xml_CREATE("component", "");
         TAG CO1 =	xmlc.xml_CREATE("structuredBody", "");
         TAG CO2 =	xmlc.xml_CREATE("languageCode code=\'pt-BR\'","");
 
-        if(getClinicalDocument().getHealthHistoric().getCode() != null) {
-            TAG CO3 = 	xmlc.xml_CREATE("component", "");
-            TAG CO4 = 	xmlc.xml_CREATE("section classCode=\""+getClinicalDocument().getHealthHistoric().getSection()+"\" moodCode=\""+getClinicalDocument().getHealthHistoric().getMoodCode()+"\"","");
-            TAG CO5 = 	xmlc.xml_CREATE("templateId root=\""+getClinicalDocument().getHealthHistoric().getTemplateId()+"\"", ""); 
-            TAG CO6 = 	xmlc.xml_CREATE("code code=\""+getClinicalDocument().getHealthHistoric().getCode()+"\" codeSystem=\""+getClinicalDocument().getHealthHistoric().getCodeSystem()+"\" codeSystemName=\""+getClinicalDocument().getHealthHistoric().getCodeName()+"\" displayName=\"Problema atual\"","");
-            TAG CO7 =	xmlc.xml_CREATE("title", "Histórico da doença atual"); 
-            TAG CO8 =	xmlc.xml_CREATE("text", ""+getClinicalDocument().getHealthHistoric().getText()+"");
-            //==============================
-            xmlc.xml_INSERT(CO4, CO8);
-            xmlc.xml_INSERT(CO4, CO7);
-            xmlc.xml_INSERT(CO4, CO6);
-            xmlc.xml_INSERT(CO4, CO5);
-            xmlc.xml_INSERT(CO3, CO4);
-            xmlc.xml_INSERT(CO1, CO3);
-        }
+        TAG CO3 = 	xmlc.xml_CREATE("component", "");
+        TAG CO4 = 	xmlc.xml_CREATE("section classCode=\""+getClinicalDocument().getHealthHistoric().getSection()+"\" moodCode=\""+getClinicalDocument().getHealthHistoric().getMoodCode()+"\"","");
+        TAG CO5 = 	xmlc.xml_CREATE("templateId root=\""+getClinicalDocument().getHealthHistoric().getTemplateId()+"\"", ""); 
+        TAG CO6 = 	xmlc.xml_CREATE("code code=\""+getClinicalDocument().getHealthHistoric().getCode()+"\" codeSystem=\""+getClinicalDocument().getHealthHistoric().getCodeSystem()+"\" codeSystemName=\""+getClinicalDocument().getHealthHistoric().getCodeName()+"\" displayName=\"Problema atual\"","");
+        TAG CO7 =	xmlc.xml_CREATE("title", "Histórico da doença atual"); 
+        TAG CO8 =	xmlc.xml_CREATE("text", ""+getClinicalDocument().getHealthHistoric().getText()+"");
+        //==============================
+        xmlc.xml_INSERT(CO4, CO8);
+        xmlc.xml_INSERT(CO4, CO7);
+        xmlc.xml_INSERT(CO4, CO6);
+        xmlc.xml_INSERT(CO4, CO5);
+        xmlc.xml_INSERT(CO3, CO4);
+        xmlc.xml_INSERT(CO1, CO3);
         //==========================================================================================
         if(getClinicalDocument().getDoctorHistoric().getContent() != null) {
             TAG COMP10 = xmlc.xml_CREATE("component","");
@@ -234,121 +228,107 @@ public class DocumentStructure {
             xmlc.xml_INSERT(CO1,    COMP10);
         }
         //==========================================================================================
-        if(getClinicalDocument().getMedicines().getContent() != null) {
-            TAG COMP20 = xmlc.xml_CREATE("component","");
-            TAG COMP21 = xmlc.xml_CREATE("section","");
-            TAG COMP22 = xmlc.xml_CREATE("title","Medicamentos");
-            TAG COMP23 = xmlc.xml_CREATE("text","");
-            TAG COMP24 = xmlc.xml_CREATE("list","");
-            TAG COMP25 = xmlc.xml_CREATE("",xmlc.xml_content(getClinicalDocument().getMedicines().getContent()));
-            //==============================
-            xmlc.xml_INSERT(COMP24, COMP25);
-            xmlc.xml_INSERT(COMP23, COMP24);
-            xmlc.xml_INSERT(COMP21, COMP23);
-            xmlc.xml_INSERT(COMP21, COMP22);
-            xmlc.xml_INSERT(COMP20, COMP21);
-            xmlc.xml_INSERT(CO1,    COMP20);
-        }
+        TAG COMP20 = xmlc.xml_CREATE("component","");
+        TAG COMP21 = xmlc.xml_CREATE("section","");
+        TAG COMP22 = xmlc.xml_CREATE("title","Medicamentos");
+        TAG COMP23 = xmlc.xml_CREATE("text","");
+        TAG COMP24 = xmlc.xml_CREATE("list","");
+        TAG COMP25 = xmlc.xml_CREATE("",xmlc.xml_content(getClinicalDocument().getMedicines().getContent()));
+        //==============================
+        xmlc.xml_INSERT(COMP24, COMP25);
+        xmlc.xml_INSERT(COMP23, COMP24);
+        xmlc.xml_INSERT(COMP21, COMP23);
+        xmlc.xml_INSERT(COMP21, COMP22);
+        xmlc.xml_INSERT(COMP20, COMP21);
+        xmlc.xml_INSERT(CO1,    COMP20);
         //==========================================================================================
-        if(getClinicalDocument().getAllergy().getContent() != null) {
-            TAG COMP30 = xmlc.xml_CREATE("component","");
-            TAG COMP31 = xmlc.xml_CREATE("section classCode=\""+getClinicalDocument().getHealthHistoric().getSection()+"\" moodCode=\""+getClinicalDocument().getHealthHistoric().getMoodCode()+"\"","");
-            TAG COMP32 = xmlc.xml_CREATE("title","Alergias");
-            TAG COMP33 = xmlc.xml_CREATE("text","");
-            TAG COMP34 = xmlc.xml_CREATE("list","");
-            TAG COMP35 = xmlc.xml_CREATE("",xmlc.xml_content(getClinicalDocument().getAllergy().getContent()));
-            //==============================
-            xmlc.xml_INSERT(COMP34, COMP35);
-            xmlc.xml_INSERT(COMP33, COMP34);
-            xmlc.xml_INSERT(COMP31, COMP33);
-            xmlc.xml_INSERT(COMP31, COMP32);
-            xmlc.xml_INSERT(COMP30, COMP31);
-            xmlc.xml_INSERT(CO1, COMP30);
-        }
+        TAG COMP30 = xmlc.xml_CREATE("component","");
+        TAG COMP31 = xmlc.xml_CREATE("section classCode=\""+getClinicalDocument().getHealthHistoric().getSection()+"\" moodCode=\""+getClinicalDocument().getHealthHistoric().getMoodCode()+"\"","");
+        TAG COMP32 = xmlc.xml_CREATE("title","Alergias");
+        TAG COMP33 = xmlc.xml_CREATE("text","");
+        TAG COMP34 = xmlc.xml_CREATE("list","");
+        TAG COMP35 = xmlc.xml_CREATE("",xmlc.xml_content(getClinicalDocument().getAllergy().getContent()));
+        //==============================
+        xmlc.xml_INSERT(COMP34, COMP35);
+        xmlc.xml_INSERT(COMP33, COMP34);
+        xmlc.xml_INSERT(COMP31, COMP33);
+        xmlc.xml_INSERT(COMP31, COMP32);
+        xmlc.xml_INSERT(COMP30, COMP31);
+        xmlc.xml_INSERT(CO1, COMP30);
         //==========================================================================================
-        if(getClinicalDocument().getFamilyHistoric().getContent() != null) {
-            TAG COMP40 = xmlc.xml_CREATE("component","");
-            TAG COMP41 = xmlc.xml_CREATE("section","");
-            TAG COMP42 = xmlc.xml_CREATE("title","Histórico familiar");
-            TAG COMP43 = xmlc.xml_CREATE("text","");
-            TAG COMP44 = xmlc.xml_CREATE("list","");
-            TAG COMP45 = xmlc.xml_CREATE("",xmlc.xml_content(getClinicalDocument().getFamilyHistoric().getContent()));
-            //==============================
-            xmlc.xml_INSERT(COMP44, COMP45);
-            xmlc.xml_INSERT(COMP43, COMP44);
-            xmlc.xml_INSERT(COMP41, COMP43);
-            xmlc.xml_INSERT(COMP41, COMP42);
-            xmlc.xml_INSERT(COMP40, COMP41);
-            xmlc.xml_INSERT(CO1,    COMP40);
-        }
+        TAG COMP40 = xmlc.xml_CREATE("component","");
+        TAG COMP41 = xmlc.xml_CREATE("section","");
+        TAG COMP42 = xmlc.xml_CREATE("title","Histórico familiar");
+        TAG COMP43 = xmlc.xml_CREATE("text","");
+        TAG COMP44 = xmlc.xml_CREATE("list","");
+        TAG COMP45 = xmlc.xml_CREATE("",xmlc.xml_content(getClinicalDocument().getFamilyHistoric().getContent()));
+        //==============================
+        xmlc.xml_INSERT(COMP44, COMP45);
+        xmlc.xml_INSERT(COMP43, COMP44);
+        xmlc.xml_INSERT(COMP41, COMP43);
+        xmlc.xml_INSERT(COMP41, COMP42);
+        xmlc.xml_INSERT(COMP40, COMP41);
+        xmlc.xml_INSERT(CO1,    COMP40);
         //==========================================================================================
-        if(getClinicalDocument().getExams().getContent() != null) {
-            TAG COMP50 = xmlc.xml_CREATE("component","");
-            TAG COMP51 = xmlc.xml_CREATE("section","");
-            TAG COMP52 = xmlc.xml_CREATE("title","Exame/Métrica físico");
-            TAG COMP53 = xmlc.xml_CREATE("text","");
-            TAG COMP54 = xmlc.xml_CREATE("list","");
-            TAG COMP55 = xmlc.xml_CREATE("",xmlc.xml_content(getClinicalDocument().getExams().getContent()));
-            //==============================
-            xmlc.xml_INSERT(COMP54, COMP55);
-            xmlc.xml_INSERT(COMP53, COMP54);
-            xmlc.xml_INSERT(COMP51, COMP53);
-            xmlc.xml_INSERT(COMP51, COMP52);
-            xmlc.xml_INSERT(COMP50, COMP51);
-            xmlc.xml_INSERT(CO1,    COMP50);
-        }
+        TAG COMP50 = xmlc.xml_CREATE("component","");
+        TAG COMP51 = xmlc.xml_CREATE("section","");
+        TAG COMP52 = xmlc.xml_CREATE("title","Exame/Métrica físico");
+        TAG COMP53 = xmlc.xml_CREATE("text","");
+        TAG COMP54 = xmlc.xml_CREATE("list","");
+        TAG COMP55 = xmlc.xml_CREATE("",xmlc.xml_content(getClinicalDocument().getExams().getContent()));
+        //==============================
+        xmlc.xml_INSERT(COMP54, COMP55);
+        xmlc.xml_INSERT(COMP53, COMP54);
+        xmlc.xml_INSERT(COMP51, COMP53);
+        xmlc.xml_INSERT(COMP51, COMP52);
+        xmlc.xml_INSERT(COMP50, COMP51);
+        xmlc.xml_INSERT(CO1,    COMP50);
         //==========================================================================================
-        if(getClinicalDocument().getLaboratoryExams().getContent() != null) {
-            TAG COMP60 = xmlc.xml_CREATE("component","");
-            TAG COMP61 = xmlc.xml_CREATE("section classCode=\""+getClinicalDocument().getHealthHistoric().getSection()+"\" moodCode=\""+getClinicalDocument().getHealthHistoric().getMoodCode()+"\"","");
-            TAG COMP62 = xmlc.xml_CREATE("templateId root=\"2.16.840.1.113883."+getClinicalDocument().getLaboratoryExams().getId()+"\"","");  
-            TAG COMP63 = xmlc.xml_CREATE("code code=\""+getClinicalDocument().getLaboratoryExams().getCode()+"\" codeSystem=\""+getClinicalDocument().getHealthHistoric().getCodeSystem()+"\" codeSystemName=\""+getClinicalDocument().getHealthHistoric().getCodeName()+"\" displayName=\"Exames de laboratório\"",""); 
-            TAG COMP64 =  xmlc.xml_CREATE("title","Exames de laboratório");
-            TAG COMP65 =  xmlc.xml_CREATE("text","");
-            TAG COMP66 =  xmlc.xml_CREATE("list","");
-            TAG COMP67 =  xmlc.xml_CREATE("",xmlc.xml_content(getClinicalDocument().getLaboratoryExams().getContent()));
-            //==============================
-            xmlc.xml_INSERT(COMP66, COMP67);
-            xmlc.xml_INSERT(COMP65, COMP66);
-            xmlc.xml_INSERT(COMP61, COMP65);
-            xmlc.xml_INSERT(COMP61, COMP64);
-            xmlc.xml_INSERT(COMP61, COMP63);
-            xmlc.xml_INSERT(COMP61, COMP62);
-            xmlc.xml_INSERT(COMP60, COMP61);
-            xmlc.xml_INSERT(CO1,    COMP60);
-        }
+        TAG COMP60 = xmlc.xml_CREATE("component","");
+        TAG COMP61 = xmlc.xml_CREATE("section classCode=\""+getClinicalDocument().getHealthHistoric().getSection()+"\" moodCode=\""+getClinicalDocument().getHealthHistoric().getMoodCode()+"\"","");
+        TAG COMP62 = xmlc.xml_CREATE("templateId root=\"2.16.840.1.113883."+getClinicalDocument().getLaboratoryExams().getId()+"\"","");  
+        TAG COMP63 = xmlc.xml_CREATE("code code=\""+getClinicalDocument().getLaboratoryExams().getCode()+"\" codeSystem=\""+getClinicalDocument().getHealthHistoric().getCodeSystem()+"\" codeSystemName=\""+getClinicalDocument().getHealthHistoric().getCodeName()+"\" displayName=\"Exames de laboratório\"",""); 
+        TAG COMP64 =  xmlc.xml_CREATE("title","Exames de laboratório");
+        TAG COMP65 =  xmlc.xml_CREATE("text","");
+        TAG COMP66 =  xmlc.xml_CREATE("list","");
+        TAG COMP67 =  xmlc.xml_CREATE("",xmlc.xml_content(getClinicalDocument().getLaboratoryExams().getContent()));
+        //==============================
+        xmlc.xml_INSERT(COMP66, COMP67);
+        xmlc.xml_INSERT(COMP65, COMP66);
+        xmlc.xml_INSERT(COMP61, COMP65);
+        xmlc.xml_INSERT(COMP61, COMP64);
+        xmlc.xml_INSERT(COMP61, COMP63);
+        xmlc.xml_INSERT(COMP61, COMP62);
+        xmlc.xml_INSERT(COMP60, COMP61);
+        xmlc.xml_INSERT(CO1,    COMP60);
         //==========================================================================================
-        if(getClinicalDocument().getDiagnostic().getContent() != null) {
-            TAG COMP70 = xmlc.xml_CREATE("component","");
-            TAG COMP71 = xmlc.xml_CREATE("section","");
-            TAG COMP72 = xmlc.xml_CREATE("title","Diagnóstico");
-            TAG COMP73 = xmlc.xml_CREATE("text","");
-            TAG COMP74 = xmlc.xml_CREATE("list","");
-            TAG COMP75 = xmlc.xml_CREATE("",xmlc.xml_content(getClinicalDocument().getDiagnostic().getContent()));
-            //==============================
-            xmlc.xml_INSERT(COMP74, COMP75);
-            xmlc.xml_INSERT(COMP73, COMP74);
-            xmlc.xml_INSERT(COMP71, COMP73);
-            xmlc.xml_INSERT(COMP71, COMP72);
-            xmlc.xml_INSERT(COMP70, COMP71);
-            xmlc.xml_INSERT(CO1,    COMP70);
-        }
+        TAG COMP70 = xmlc.xml_CREATE("component","");
+        TAG COMP71 = xmlc.xml_CREATE("section","");
+        TAG COMP72 = xmlc.xml_CREATE("title","Diagnóstico");
+        TAG COMP73 = xmlc.xml_CREATE("text","");
+        TAG COMP74 = xmlc.xml_CREATE("list","");
+        TAG COMP75 = xmlc.xml_CREATE("",xmlc.xml_content(getClinicalDocument().getDiagnostic().getContent()));
+        //==============================
+        xmlc.xml_INSERT(COMP74, COMP75);
+        xmlc.xml_INSERT(COMP73, COMP74);
+        xmlc.xml_INSERT(COMP71, COMP73);
+        xmlc.xml_INSERT(COMP71, COMP72);
+        xmlc.xml_INSERT(COMP70, COMP71);
+        xmlc.xml_INSERT(CO1,    COMP70);
         //==========================================================================================
-        if(getClinicalDocument().getTratament().getContent() != null) {
-            TAG COMP80 = xmlc.xml_CREATE("component","");
-            TAG COMP81 = xmlc.xml_CREATE("section","");
-            TAG COMP82 = xmlc.xml_CREATE("title","Tratamento");
-            TAG COMP83 = xmlc.xml_CREATE("text","");
-            TAG COMP84 = xmlc.xml_CREATE("list","");
-            TAG COMP85 = xmlc.xml_CREATE("",xmlc.xml_content(getClinicalDocument().getTratament().getContent()));
-            //==============================
-            xmlc.xml_INSERT(COMP84, COMP85);
-            xmlc.xml_INSERT(COMP83, COMP84);
-            xmlc.xml_INSERT(COMP81, COMP83);
-            xmlc.xml_INSERT(COMP81, COMP82);
-            xmlc.xml_INSERT(COMP80, COMP81);
-            xmlc.xml_INSERT(CO1,    COMP80);
-        }
+        TAG COMP80 = xmlc.xml_CREATE("component","");
+        TAG COMP81 = xmlc.xml_CREATE("section","");
+        TAG COMP82 = xmlc.xml_CREATE("title","Tratamento");
+        TAG COMP83 = xmlc.xml_CREATE("text","");
+        TAG COMP84 = xmlc.xml_CREATE("list","");
+        TAG COMP85 = xmlc.xml_CREATE("",xmlc.xml_content(getClinicalDocument().getTratament().getContent()));
+        //==============================
+        xmlc.xml_INSERT(COMP84, COMP85);
+        xmlc.xml_INSERT(COMP83, COMP84);
+        xmlc.xml_INSERT(COMP81, COMP83);
+        xmlc.xml_INSERT(COMP81, COMP82);
+        xmlc.xml_INSERT(COMP80, COMP81);
+        xmlc.xml_INSERT(CO1,    COMP80);
         //==============================
         xmlc.xml_INSERT(CO0, CO1);
         xmlc.xml_INSERT(CO1, CO2);
@@ -415,8 +395,8 @@ public class DocumentStructure {
             fw.close();
             System.out.println("Success when writing file\n");
             return true;
-        }catch(Exception ex){
-            System.err.println("Error writing file:\n"+ex);
+        }catch(IOException ex){
+            System.err.println("Error writing file:\n"+ex.getLocalizedMessage());
             return false;
         }
     }

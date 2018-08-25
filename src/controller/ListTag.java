@@ -18,9 +18,9 @@ public class ListTag {
      * @param Title
      * @param content
      * @return Retorna um ArrayList com conteúdo da TAG.
-     * @throws Exception
+     * @throws java.io.IOException
      */
-    public ArrayList <String> TAG (File file,String Title,String content) throws Exception{
+    public ArrayList <String> TAG (File file,String Title,String content) throws IOException{
         ArrayList <String> list = new ArrayList <>();
         String line;
             StringTokenizer st;
@@ -49,7 +49,7 @@ public class ListTag {
                 br.close();
                 return null;
             }catch(IOException ex){
-                System.out.println(ex);
+                System.out.println(ex.getLocalizedMessage());
             }
         return null;
     }

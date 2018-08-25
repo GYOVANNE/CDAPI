@@ -3,6 +3,7 @@ package controller;
 import br.com.multcare.ClinicalDocument;
 import br.com.multcare.bean.*;
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Classe responsável por ler o conteúdo do arquivo XML.
@@ -19,7 +20,7 @@ public class ReadTag{
      *
      * @return
      */
-    public ClinicalDocument getClinicalDocument() {
+    private ClinicalDocument getClinicalDocument() {
         return clinicalDocument;
     }
 
@@ -27,7 +28,7 @@ public class ReadTag{
      *
      * @return
      */
-    public File getFile() {
+    private File getFile() {
         return file;
     }
 
@@ -45,9 +46,8 @@ public class ReadTag{
 
     /**
      *
-     * @throws Exception
      */
-    public void read() throws Exception{
+    public void read(){
 
         try{
         Header header = new Header();
@@ -161,8 +161,8 @@ public class ReadTag{
 
         getClinicalDocument().setHealthHistoric(healthHistoric);
 
-        }catch(Exception ex){
-             System.err.println(ex);
+        }catch(IOException | NumberFormatException ex){
+            System.err.println(ex.getLocalizedMessage());
         }
     }
 }

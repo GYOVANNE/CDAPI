@@ -5,14 +5,16 @@ import br.com.multcare.validator.ValidateCDA;
 import controller.DocumentStructure;
 import controller.ReadTag;
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
- *
+ * Classe responsavel pela escrita, leitura e validaçao do arquivo.
  * @author Gyovanne
  */
 public class ClinicalDocument {
+    private boolean status;
     private File xmlFile;
     private Header header;
     private Patient patient;
@@ -40,9 +42,9 @@ public class ClinicalDocument {
      * </pre>
      * </blockquote>
      * @param xml
-     * @throws Exception
      */
-    public ClinicalDocument(File xml) throws Exception{
+    public ClinicalDocument(File xml) {
+        this.status = true;
         if(xml.exists()) {
             new ReadTag(this,xml).read();
         } else {
@@ -60,9 +62,8 @@ public class ClinicalDocument {
      * </pre>
      * </blockquote>
      * @param fileName
-     * @throws Exception
      */
-    public ClinicalDocument(String fileName) throws Exception{
+    public ClinicalDocument(String fileName){
         this(new File(local(fileName)));
     }
 
@@ -76,9 +77,8 @@ public class ClinicalDocument {
      * </pre>
      * </blockquote>
      * @param Patientid
-     * @throws Exception
      */
-    public ClinicalDocument(int Patientid) throws Exception{
+    public ClinicalDocument(int Patientid) {
         this(""+Patientid);
     }
     
@@ -94,24 +94,9 @@ public class ClinicalDocument {
      * </blockquote>
      */
     public ClinicalDocument() {
-        this.xmlFile = null;
-        this.header = null;
-        this.patient = null;
-        this.author = null;
-        this.authenticator = null;
-        this.related = null;
-        this.responsibleParty = null;
-        this.healthHistoric = null;
-        this.doctorHistoric = null;
-        this.medicines = null;
-        this.allergy = null;
-        this.familyHistoric = null;
-        this.exams = null;
-        this.laboratoryExams = null;
-        this.diagnostic = null;
-        this.tratament = null;
+        this.status = false;
     }
-
+    
     private File getXmlFile() {
         return xmlFile;
     }
@@ -712,34 +697,35 @@ public class ClinicalDocument {
      * @return  um valor booleano para fins de verificação.
      */
     public boolean generateCDAFile(String local){
-        InitializeObjects();
-        String idFile;
-        if(patient==null)
-            idFile= "ArquivoSemNome.xml";
-        else 
-            idFile = "" + patient.getId();
+        if(this.status==false){
+            InitializeObjects();
+            String idFile;
+            if(patient==null)
+                idFile= "ArquivoSemNome.xml";
+            else 
+                idFile = "" + patient.getId();
 
-        if(local != null) {
-            setXmlFile(new File(local+idFile));
-        }else setXmlFile(new File(local(idFile)));
+            if(local != null) {
+                setXmlFile(new File(local+idFile));
+            }else setXmlFile(new File(local(idFile)));
 
-        try {
-            
-        DocumentStructure jContent = new DocumentStructure(getXmlFile(),this);
-        ValidateCDA validator = new ValidateCDA();
+            try {
 
-            if(jContent.generateContent()){
+            DocumentStructure structure = new DocumentStructure(getXmlFile(),this);
+            ValidateCDA validator = new ValidateCDA();
 
-                if(validator.validationCDAFile(idFile+".xml"))
-                    System.out.println(""+validator.getNotification());
-                else
-                    System.err.println(""+validator.getNotification());
-                return true;
+                if(structure.generateContent()){
+
+                    if(validator.validationCDAFile(idFile+".xml"))
+                        System.out.println(""+validator.getNotification());
+                    else
+                        System.err.println(""+validator.getNotification());
+                    return true;
+                }
+            } catch (IOException ex) {
+                System.err.println(ex.getLocalizedMessage());
             }
-
-        } catch (Exception ex) {
-            System.err.println(ex);
-        }
+        }else System.err.println("Para gerar o arquivo o contrutor da classe ClinicalDocument nao pode haver parametros!");
         return false;
     }
     /**
@@ -761,22 +747,22 @@ public class ClinicalDocument {
     public boolean generateCDAFile(){
         return generateCDAFile(null);
     }
-    
+
     private void InitializeObjects(){
-        if(this.header == null)this.header = new Header();
-        if(this.patient == null)this.patient = new Patient();
-        if(this.author == null)this.author = new Author();
-        if(this.authenticator == null)this.authenticator = new Authenticator();
-        if(this.related == null) this.related = new Related();
+        if(this.header == null)         this.header = new Header();
+        if(this.patient == null)        this.patient = new Patient();
+        if(this.author == null)         this.author = new Author();
+        if(this.authenticator == null)  this.authenticator = new Authenticator();
+        if(this.related == null)        this.related = new Related();
         if(this.responsibleParty == null)this.responsibleParty = new ResponsibleParty();
-        if(this.healthHistoric == null)this.healthHistoric = new HealthHistoric();
-        if(this.doctorHistoric == null)this.doctorHistoric = new DoctorHistoric();
-        if(this.medicines == null)this.medicines = new Medicines();
-        if(this.allergy == null)this.allergy = new Allergy();
-        if(this.familyHistoric == null)this.familyHistoric = new FamilyHistoric();
-        if(this.exams == null)this.exams = new Exams();
+        if(this.healthHistoric == null) this.healthHistoric = new HealthHistoric();
+        if(this.doctorHistoric == null) this.doctorHistoric = new DoctorHistoric();
+        if(this.medicines == null)      this.medicines = new Medicines();
+        if(this.allergy == null)        this.allergy = new Allergy();
+        if(this.familyHistoric == null) this.familyHistoric = new FamilyHistoric();
+        if(this.exams == null)          this.exams = new Exams();
         if(this.laboratoryExams == null)this.laboratoryExams = new LaboratoryExams();
-        if(this.diagnostic == null)this.diagnostic = new Diagnostic();
-        if(this.tratament == null)this.tratament = new Tratament();
+        if(this.diagnostic == null)     this.diagnostic = new Diagnostic();
+        if(this.tratament == null)      this.tratament = new Tratament();
     }
 }
