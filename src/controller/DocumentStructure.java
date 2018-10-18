@@ -212,21 +212,19 @@ public class DocumentStructure {
         xmlc.xml_INSERT(CO3, CO4);
         xmlc.xml_INSERT(CO1, CO3);
         //==========================================================================================
-        if(getClinicalDocument().getDoctorHistoric().getContent() != null) {
-            TAG COMP10 = xmlc.xml_CREATE("component","");
-            TAG COMP11 = xmlc.xml_CREATE("section","");
-            TAG COMP12 = xmlc.xml_CREATE("title","Histórico médico passado");
-            TAG COMP13 = xmlc.xml_CREATE("text","");
-            TAG COMP14 = xmlc.xml_CREATE("list","");
-            TAG COMP15 = xmlc.xml_CREATE("",xmlc.xml_content(getClinicalDocument().getDoctorHistoric().getContent()));
-            //==============================
-            xmlc.xml_INSERT(COMP14, COMP15);
-            xmlc.xml_INSERT(COMP13, COMP14);
-            xmlc.xml_INSERT(COMP11, COMP13);
-            xmlc.xml_INSERT(COMP11, COMP12);
-            xmlc.xml_INSERT(COMP10, COMP11);
-            xmlc.xml_INSERT(CO1,    COMP10);
-        }
+        TAG COMP10 = xmlc.xml_CREATE("component","");
+        TAG COMP11 = xmlc.xml_CREATE("section","");
+        TAG COMP12 = xmlc.xml_CREATE("title","Histórico médico passado");
+        TAG COMP13 = xmlc.xml_CREATE("text","");
+        TAG COMP14 = xmlc.xml_CREATE("list","");
+        TAG COMP15 = xmlc.xml_CREATE("",xmlc.xml_content(getClinicalDocument().getDoctorHistoric().getContent()));
+        //==============================
+        xmlc.xml_INSERT(COMP14, COMP15);
+        xmlc.xml_INSERT(COMP13, COMP14);
+        xmlc.xml_INSERT(COMP11, COMP13);
+        xmlc.xml_INSERT(COMP11, COMP12);
+        xmlc.xml_INSERT(COMP10, COMP11);
+        xmlc.xml_INSERT(CO1,    COMP10);
         //==========================================================================================
         TAG COMP20 = xmlc.xml_CREATE("component","");
         TAG COMP21 = xmlc.xml_CREATE("section","");
