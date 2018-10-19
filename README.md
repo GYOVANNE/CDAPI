@@ -2,7 +2,7 @@
 # Cliente HL7 CDA Orientação
 =========
 Introdução
-=========
+
 
 Esta API cliente pretende mostrar um simples exemplo  do Hl7 CDA Orientação.
 
@@ -21,7 +21,6 @@ Este cliente é liberado com um arquivo .jar Java não executável. É necessár
 
 =================================
 DESCRIÇÃO DE SAÍDA DA CONSTRUÇÃO
-=================================
 
 
 É necessário incluir o arquivo DocumentaçãoHL7CDA.zip junto ao arquivo não executável e setar na aplicação para fazer uso da documentação da API.
