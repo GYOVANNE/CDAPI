@@ -23,19 +23,19 @@ public class SimpleTag {
      * [3] (text =" "/)<br>
      * [4] (...extension=" "/)<br>
      * @param file
-     * @param TagBegin
-     * @param TagFinish
+     * @param tagBegin
+     * @param tagFinish
      * @param info
      * @param op
      * @return
      */
-    public String TAG (File file,String TagBegin,String TagFinish,String info,int op){
+    public String TAG (File file,String tagBegin,String tagFinish,String info,int op){
     String linha;
     StringTokenizer st;
     try(FileReader fr = new FileReader(file);BufferedReader br = new BufferedReader(new FileReader(file));){
 
     while((linha = br.readLine()) != null){
-        if(linha.contains("<"+TagBegin+""))
+        if(linha.contains("<"+tagBegin+""))
         {
             while((linha = br.readLine()) != null){
             String dados;
@@ -67,9 +67,9 @@ public class SimpleTag {
                     }
                 }else break;
             }
-                if(TagFinish != null && linha.contains("<"+TagFinish+">")) break;
+                if(tagFinish != null && linha.contains("<"+tagFinish+">")) break;
             }
-        }if(linha.contains("</"+TagFinish+">")) break;
+        }if(linha.contains("</"+tagFinish+">")) break;
     }
     fr.close();
     br.close();

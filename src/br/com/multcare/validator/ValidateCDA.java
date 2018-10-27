@@ -17,7 +17,7 @@ public class ValidateCDA {
 
     private File xmlFile;
     private File xsdFile;
-    private String notificacao;
+    private String notification;
     
     /**
      * Retorna uma representação String do objeto. Em geral, o método
@@ -35,12 +35,11 @@ public class ValidateCDA {
      * @return  uma String para fins de representação.
      */
     public String getNotification() {
-        return notificacao;
+        return notification;
     }
     private File getXmlFile() {
         return xmlFile;
     }
-
     private void setXmlFile(File xmlFile) {
         this.xmlFile = xmlFile;
     }
@@ -165,20 +164,20 @@ public class ValidateCDA {
     }
 
     private void setNotification(File xml,boolean value,String menssage,String detail) {
-        this.notificacao = "Relatório de validação para "+xml.getName()+
+        this.notification = "Relatório de validação para "+xml.getName()+
                            "\nValidando: esquema XML CDA"+
                            "\nData de validação: "+getValidationDate()+
                            "\nResultado do teste: "+value;
          
-        if(value)this.notificacao += "\n\nValidado\nNenhum problema encontrado!";
-        else this.notificacao += "\n\nErro de Validação!\n\nMensagem:\n"+menssage+
+        if(value)this.notification += "\n\nValidado\nNenhum problema encontrado!";
+        else this.notification += "\n\nErro de Validação!\n\nMensagem:\n"+menssage+
                                  "\n"+detail;
     }
 
-    private String local(String filename){
+    private String local(String fileName){
         File direct = new File("");
         File file = new File(""+direct.getAbsolutePath()+"/XML_FILES");
         file.mkdir();
-        return file.getAbsolutePath()+"/"+filename;
+        return file.getAbsolutePath()+"/"+fileName;
     }
 }

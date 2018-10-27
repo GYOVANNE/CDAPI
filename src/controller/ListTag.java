@@ -15,18 +15,18 @@ public class ListTag {
     /**
      * 
      * @param file
-     * @param Title
+     * @param title
      * @param content
      * @return Retorna um ArrayList com conteúdo da TAG.
      * @throws java.io.IOException
      */
-    public ArrayList <String> TAG (File file,String Title,String content) throws IOException{
+    public ArrayList <String> TAG (File file,String title,String content) throws IOException{
         ArrayList <String> list = new ArrayList <>();
         String line;
             StringTokenizer st;
             try(FileReader fr = new FileReader(file);BufferedReader br = new BufferedReader(new FileReader(file));){
                 while((line = br.readLine()) != null){
-                    if(line.contains(Title))
+                    if(line.contains(title))
                     {
                     while((line = br.readLine()) != null){
                         String dados;

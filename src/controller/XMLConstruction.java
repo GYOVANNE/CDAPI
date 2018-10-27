@@ -119,14 +119,14 @@ public class XMLConstruction {
     /**
      * Cria uma nova TAG na árvore
      * ao passar como parâmetros o nome da TAG seguido de seu conteúdo
-     * @param TAG_NAME
-     * @param TAG_CONTENT
+     * @param tagName
+     * @param tagContent
      * @return
      */
-    public TAG xml_CREATE(String TAG_NAME,String TAG_CONTENT) {
+    public TAG xmlCreate(String tagName,String tagContent) {
             TAG n = new TAG();
-            n.setInfo(TAG_NAME);
-            n.setContent(TAG_CONTENT);
+            n.setInfo(tagName);
+            n.setContent(tagContent);
             n.setFirst(null);
             n.setNext(null);
             return n;
@@ -136,72 +136,72 @@ public class XMLConstruction {
      * Deleta o arquivo ao qual foi passado como nome no parâmetro do método.
      * @param xml
      */
-    public void xml_CLEAN(File xml) {
+    public void xmlClean(File xml) {
             try {
                 boolean del = xml.delete();
             }catch(Exception ex) {
-                System.out.println("ErroR: "+ex);
+                System.err.println(ex.getLocalizedMessage());
             }
     }
 
     /**
      * Organização dos nós para contrução da árvore.
      * Essa inserção se dá por inserir a sub-TAG na TAG pai.
-     * @param TAG
-     * @param SUB_TAG
+     * @param tag
+     * @param subTag
      */
-    public void xml_INSERT(TAG TAG,TAG SUB_TAG) {
-            SUB_TAG.setNext(TAG.getFirst());
-            TAG.setFirst(SUB_TAG);
+    public void xmlInsert(TAG tag,TAG subTag) {
+            subTag.setNext(tag.getFirst());
+            tag.setFirst(subTag);
     }
     
     /**
      * Impressão da árvore XML.
      * Na chamada desse método, é necessário passar como parâmetro
      * a TAG principal, a qual está contida todo o conteúdo da árvore.
-     * @param TAG
+     * @param tag
      * @param fw
      */    
-    public void xml_PRINT(TAG TAG,FileWriter fw) {
+    public void xmlPrint(TAG tag,FileWriter fw) {
         try {
         setTagSpace(getTagSpace());
-        if(TAG.getFirst() == null && TAG.getContent().equals("")) {
+        if(tag.getFirst() == null && tag.getContent().equals("")) {
             //WRITE JUST ONE LINE <CONTENT/>
-            fw.write(String.format("\n"+getSpace()+"<%s/>",TAG.getInfo()));
-        }else if(TAG.getFirst() == null && TAG.getInfo().equals("")) {
-            fw.write(String.format("\n%s",TAG.getInfo()));
+            fw.write(String.format("\n"+getSpace()+"<%s/>",tag.getInfo()));
+        }else if(tag.getFirst() == null && tag.getInfo().equals("")) {
+            fw.write(String.format("\n%s",tag.getInfo()));
         }else {
-            fw.write(String.format("\n"+getSpace()+"<%s>",TAG.getInfo()));
+            fw.write(String.format("\n"+getSpace()+"<%s>",tag.getInfo()));
         }
         //WRITE CONTENT
-        fw.write(String.format("%s",TAG.getContent()));
+        fw.write(String.format("%s",tag.getContent()));
         setTagSpace(getTagSpace()+1);//advance row
         
         }catch(IOException ex) {
-            System.out.println("ErroR: "+ex);
+            System.err.println(ex.getLocalizedMessage());
         }
 
-        for(TAG p = TAG.getFirst();p != null; p = p.getNext())
-            xml_PRINT(p,fw);
+        for(TAG p = tag.getFirst();p != null; p = p.getNext())
+            xmlPrint(p,fw);
 
-        int pos = TAG.getInfo().indexOf(' ');//CHECKS SPACE IN <TAG>
+        int pos = tag.getInfo().indexOf(' ');//CHECKS SPACE IN <TAG>
 
         try {
             setTagSpace(getTagSpace()-1);//back row
-            if(TAG.getFirst() != null) {
+            if(tag.getFirst() != null) {
                 if(pos!=-1) // SPACE IN THE </TAG_>
-                    fw.write(String.format("\n"+getSpace()+"</%s>",TAG.getInfo().substring(0,pos)));
+                    fw.write(String.format("\n"+getSpace()+"</%s>",tag.getInfo().substring(0,pos)));
                 else //NO SPACE IN THE </TAG>
-                    fw.write(String.format("\n"+getSpace()+"</%s>",TAG.getInfo()));
-            }else if(TAG.getFirst() == null && TAG.getInfo().equals("")){
-                fw.write(String.format("%s",TAG.getInfo()));
-            }else if(TAG.getFirst() == null && !TAG.getContent().equals(""))
+                    fw.write(String.format("\n"+getSpace()+"</%s>",tag.getInfo()));
+            }else if(tag.getFirst() == null && tag.getInfo().equals("")){
+                fw.write(String.format("%s",tag.getInfo()));
+            }else if(tag.getFirst() == null && !tag.getContent().equals(""))
                 if(pos!=-1) // SPACE IN THE </TAG_>
-                    fw.write(String.format(getSpace()+"</%s>",TAG.getInfo().substring(0,pos)));
+                    fw.write(String.format(getSpace()+"</%s>",tag.getInfo().substring(0,pos)));
                 else //NO SPACE IN THE </TAG>
-                    fw.write(String.format("</%s>",TAG.getInfo()));
+                    fw.write(String.format("</%s>",tag.getInfo()));
         }catch(IOException ex) {
-                System.out.println("ErroR: "+ex);
+                System.err.println(ex.getLocalizedMessage());
         }
     }
 
@@ -210,7 +210,7 @@ public class XMLConstruction {
      * @param info
      * @return
      */
-    public String xml_content(ArrayList <String> info) {
+    public String xmlContent(ArrayList <String> info) {
         String list ="";
         setTagSpace(7);
         if(info!=null){

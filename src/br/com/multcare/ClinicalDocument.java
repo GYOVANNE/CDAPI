@@ -115,14 +115,14 @@ public class ClinicalDocument {
         this.xmlFile = xmlFile;
     }
 
-    private static String local(String filename){
+    private static String local(String fileName){
         File direct = new File("");
         File file = new File(""+direct.getAbsolutePath()+"/XML_FILES");
         file.mkdir();
-        return file.getAbsolutePath()+"/"+filename+".xml";
+        return file.getAbsolutePath()+"/"+fileName+".xml";
     }
 
-    private static String DATE() {
+    private static String date() {
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         Calendar today = Calendar.getInstance();
         return(format.format(today.getTime()));
@@ -162,7 +162,7 @@ public class ClinicalDocument {
      * @param header
      */
     public void setHeader(Header header) {
-        if(header.getEfetiveTime()==null)header.setEfetiveTime(DATE());
+        if(header.getEfetiveTime()==null)header.setEfetiveTime(date());
         this.header = header;
     }
     
