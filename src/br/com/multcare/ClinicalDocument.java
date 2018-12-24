@@ -3,7 +3,7 @@ package br.com.multcare;
 import br.com.multcare.bean.*;
 import br.com.multcare.validator.ValidateCDA;
 import controller.DocumentStructure;
-import controller.ReadTag;
+import controller.XMLRead;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -49,7 +49,7 @@ public class ClinicalDocument {
             ValidateCDA vcda = new ValidateCDA();
             try {
                 if(vcda.validationCDAFile(xml)){
-                    new ReadTag(this,xml).read();
+                    new XMLRead(this,xml).read();
                 }else{
                     System.err.println("Arquivo nao pode ser lido, pois ocorreu um erro de validacao!\n");
                     System.err.println(vcda.getNotification());
