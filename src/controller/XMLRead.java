@@ -1,7 +1,7 @@
 package controller;
 
-import br.com.multcare.ClinicalDocument;
-import br.com.multcare.bean.*;
+import br.com.CDApi.bean.*;
+import br.com.CDApi.ClinicalDocument;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -53,8 +53,13 @@ public class XMLRead{
         Header header = new Header();
 
         header.setRealmCode(simpleTag("ClinicalDocument", "recordTarget","realmCode", 3));
-        header.setRealmCode(simpleTag("ClinicalDocument", "recordTarget","realmCode", 3));
+        header.setTypeId(simpleTag("ClinicalDocument", "recordTarget", "typeId", 2));
+        header.setExtension1(simpleTag("ClinicalDocument", "recordTarget", "extension", 4));
+        header.setTemplate(simpleTag("ClinicalDocument", "recordTarget", "templateId", 3));
         header.setIdRoot(simpleTag("ClinicalDocument", "recordTarget","id root=", 2));
+        header.setDisplayName(simpleTag("ClinicalDocument", "recordTarget", "displayName", 5));
+        header.setCodeSystem(simpleTag("ClinicalDocument", "recordTarget", "codeSystem", 6));
+        header.setCodeSystemName(simpleTag("ClinicalDocument", "recordTarget", "codeSystemName", 7));
         header.setExtension2(simpleTag("ClinicalDocument", "recordTarget","id root", 4));
         header.setCode(simpleTag("ClinicalDocument", "recordTarget","code code=", 2));
         header.setEfetiveTime(simpleTag("ClinicalDocument", "recordTarget","effectiveTime ", 3));
@@ -91,6 +96,25 @@ public class XMLRead{
         author.setFamily(simpleTag("author",null,"family", 1));
 
         getClinicalDocument().setAuthor(author);
+
+        ResponsibleParty responsibleParty = new ResponsibleParty();
+        
+        responsibleParty.setIdRoot(simpleTag("encompassingEncounter", "responsibleParty", "id root", 2));
+        responsibleParty.setExtension(simpleTag("encompassingEncounter","responsibleParty", "extension", 4));
+        responsibleParty.setDate(simpleTag("encompassingEncounter","responsibleParty","value", 3));
+        responsibleParty.setId(simpleTag("assignedEntity",null,"id nullFlavor", 3));
+        responsibleParty.setState(simpleTag("responsibleParty", null,"state",1));
+        responsibleParty.setCity(simpleTag("responsibleParty", null, "city", 1));
+        responsibleParty.setPostal(simpleTag("responsibleParty", null, "postalCode", 1));
+        responsibleParty.setStreet(simpleTag("responsibleParty", null,"streetAddressLine", 1));
+        responsibleParty.setPhone(simpleTag("responsibleParty", null, "telecom value", 2));
+        responsibleParty.setUse(simpleTag("responsibleParty", null, "use", 8));
+        responsibleParty.setFamily(simpleTag("responsibleParty", null, "family", 1));
+        responsibleParty.setName(simpleTag("responsibleParty", null, "given", 1));
+        responsibleParty.setSuffixe(simpleTag("responsibleParty", null, "suffix", 1));
+        responsibleParty.setLocation(simpleTag("location", null, "name", 1));
+
+        getClinicalDocument().setResponsibleParty(responsibleParty);
 
         Authenticator authenticator = new Authenticator();
 
@@ -165,54 +189,71 @@ public class XMLRead{
             System.err.println(ex.getLocalizedMessage());
         }
     }
-    private String simpleTag (String tagBegin,String tagFinish,String info,int op){
-    String linha;
-    StringTokenizer st;
-    try(FileReader fr = new FileReader(getFile());BufferedReader br = new BufferedReader(new FileReader(getFile()));){
 
-    while((linha = br.readLine()) != null){
-        if(linha.contains("<"+tagBegin+""))
-        {
-            while((linha = br.readLine()) != null){
-            String dados;
-            st = new StringTokenizer(linha,"\n");
-            while(st.hasMoreTokens()){
-                dados = st.nextToken();
-                if(dados.contains(info)){
-                    switch(op) {
-                    case 0:
-                        fr.close();
-                        br.close();
-                        return (dados.substring(dados.indexOf("=")+2,dados.indexOf(">", dados.indexOf("="))-1));
-                    case 1:
-                        fr.close();
-                        br.close();
-                        return (dados.substring(dados.indexOf(">")+1,dados.indexOf("</", dados.indexOf(">"))));
-                    case 2:
-                        fr.close();
-                        br.close();
-                        return (dados.substring(dados.indexOf("=")+2,dados.indexOf(" ", dados.indexOf("="))-1));
-                    case 3:
-                        fr.close();
-                        br.close();
-                        return (dados.substring(dados.indexOf("=")+2,dados.indexOf("/>", dados.indexOf("="))-1));
-                    case 4:
-                        fr.close();
-                        br.close();
-                        return (dados.substring(dados.indexOf("n=")+3,dados.indexOf("/>", dados.indexOf("n="))-1));
-                    }
-                }else break;
-            }
-                if(tagFinish != null && linha.contains("<"+tagFinish+">")) break;
-            }
-        }if(linha.contains("</"+tagFinish+">")) break;
-    }
-    fr.close();
-    br.close();
-    }catch(IOException ex){
-        System.err.println(ex.getLocalizedMessage());
-    }
-    return null;
+    private String simpleTag (String tagBegin,String tagFinish,String info,int op){
+        String linha;
+        StringTokenizer st;
+        try(FileReader fr = new FileReader(getFile());BufferedReader br = new BufferedReader(new FileReader(getFile()));){
+
+        while((linha = br.readLine()) != null){
+            if(linha.contains("<"+tagBegin+""))
+            {
+                while((linha = br.readLine()) != null){
+                String dados;
+                st = new StringTokenizer(linha,"\n");
+                while(st.hasMoreTokens()){
+                    dados = st.nextToken();
+                    if(dados.contains(info)){
+                        switch(op) {
+                        case 0:
+                            fr.close();
+                            br.close();
+                            return (dados.substring(dados.indexOf("=")+2,dados.indexOf(">", dados.indexOf("="))-1));
+                        case 1:
+                            fr.close();
+                            br.close();
+                            return (dados.substring(dados.indexOf(">")+1,dados.indexOf("</", dados.indexOf(">"))));
+                        case 2:
+                            fr.close();
+                            br.close();
+                            return (dados.substring(dados.indexOf("=")+2,dados.indexOf(" ", dados.indexOf("="))-1));
+                        case 3:
+                            fr.close();
+                            br.close();
+                            return (dados.substring(dados.indexOf("=")+2,dados.indexOf("/>", dados.indexOf("="))-1));
+                        case 4:
+                            fr.close();
+                            br.close();
+                            return (dados.substring(dados.indexOf("n=")+3,dados.indexOf("/>", dados.indexOf("n="))-1));
+                        case 5:
+                            fr.close();
+                            br.close();
+                            return (dados.substring(dados.indexOf("me=")+4,dados.indexOf(" code", dados.indexOf("me="))-1));
+                        case 6:
+                            fr.close();
+                            br.close();
+                            return (dados.substring(dados.indexOf("em=")+4,dados.indexOf(" ", dados.indexOf("em="))-1));
+                        case 7:
+                            fr.close();
+                            br.close();
+                            return (dados.substring(dados.indexOf("SystemName=")+12,dados.indexOf("/>", dados.indexOf("SystemName="))-1));
+                        case 8:
+                            fr.close();
+                            br.close();
+                            return (dados.substring(dados.indexOf("se=")+4,dados.indexOf("/>", dados.indexOf("se="))-1));
+                        }
+                    }else break;
+                }
+                    if(tagFinish != null && linha.contains("<"+tagFinish+">")) break;
+                }
+            }if(linha.contains("</"+tagFinish+">")) break;
+        }
+        fr.close();
+        br.close();
+        }catch(IOException ex){
+            System.err.println(ex.getLocalizedMessage());
+        }
+        return null;
     }
 
     private ArrayList <String> listTag (String title,String content) throws IOException{
@@ -244,7 +285,7 @@ public class XMLRead{
                 br.close();
                 return null;
             }catch(IOException ex){
-                System.out.println(ex.getLocalizedMessage());
+                System.err.println(ex.getLocalizedMessage());
             }
         return null;
     }

@@ -137,11 +137,13 @@ public class XMLConstruction {
      * @param xml
      */
     public void xmlClean(File xml) {
+        if(xml.exists()){
             try {
                 boolean del = xml.delete();
             }catch(Exception ex) {
                 System.err.println(ex.getLocalizedMessage());
             }
+        }
     }
 
     /**

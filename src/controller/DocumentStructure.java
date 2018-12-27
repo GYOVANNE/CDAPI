@@ -1,6 +1,6 @@
 package controller;
 
-import br.com.multcare.ClinicalDocument;
+import br.com.CDApi.ClinicalDocument;
 import controller.XMLConstruction.TAG;
 import java.io.File;
 import java.io.FileWriter;
@@ -54,10 +54,10 @@ public class DocumentStructure {
 
         TAG h[] = new TAG[10];
         h[0] = xmlc.xmlCreate("realmCode code='"+getClinicalDocument().getHeader().getRealmCode()+"'","");
-        h[1] = xmlc.xmlCreate("typeId root='2.16.840.1.113883.1.3' extension='POCD_HD000040'","");/*+h.getTypeid()+*/	/*+h.getExtension1()+*/
-        h[2] = xmlc.xmlCreate("templateId root='2.16.840.1.113883.10.20.1'","");/*+h.getTemplate()+*/
+        h[1] = xmlc.xmlCreate("typeId root='"+getClinicalDocument().getHeader().getTypeId()+"' extension='"+getClinicalDocument().getHeader().getExtension1()+"'","");
+        h[2] = xmlc.xmlCreate("templateId root='"+getClinicalDocument().getHeader().getTemplate()+"'","");
         h[3] = xmlc.xmlCreate("id root='"+getClinicalDocument().getHeader().getIdRoot()+"' extension='"+getClinicalDocument().getHeader().getExtension2()+"'","");
-        h[4] = xmlc.xmlCreate("code code='"+getClinicalDocument().getHeader().getCode()+"' displayName='Diagnostico utilizando Multcare' codeSystem='2.16.840.1.113883.6.103' codeSystemName='ICD-9-CM'","");
+        h[4] = xmlc.xmlCreate("code code='"+getClinicalDocument().getHeader().getCode()+"' displayName='"+getClinicalDocument().getHeader().getDisplayName()+"' codeSystem='"+getClinicalDocument().getHeader().getCodeSystem()+"' codeSystemName='"+getClinicalDocument().getHeader().getCodeSystemName()+"'","");
         h[5] = xmlc.xmlCreate("effectiveTime value=\""+getClinicalDocument().getHeader().getEfetiveTime()+"\"","");
         h[6] = xmlc.xmlCreate("confidentialityCode code=\"N\" displayName='Normal' codeSystem='2.16.840.1.113883.5.25' codeSystemName='Confidentiality'","");
         h[7] = xmlc.xmlCreate("setId extension=\""+getClinicalDocument().getHeader().getId()+"\" root=\""+getClinicalDocument().getHeader().getExtension2()+"\"","");
@@ -103,7 +103,7 @@ public class DocumentStructure {
         TAG CS1 = xmlc.xmlCreate("assignedCustodian","");
         TAG CS2 = xmlc.xmlCreate("representedCustodianOrganization","");
         TAG CS3 = xmlc.xmlCreate("id extension=\""+getClinicalDocument().getPatient().getId()+"\" root=\""+getClinicalDocument().getHeader().getExtension2()+"\"", "");
-        TAG CS4 = xmlc.xmlCreate("name", "MultCare");
+        TAG CS4 = xmlc.xmlCreate("name", ""+getClinicalDocument().getHeader().getDisplayName()+"");
         //==========================================================================================
 
         TAG L0 = xmlc.xmlCreate("legalAuthenticator", "");
@@ -150,7 +150,7 @@ public class DocumentStructure {
         TAG OFF13 =xmlc.xmlCreate("assignedPerson", "");
         TAG OFF14 =xmlc.xmlCreate("name","");
         TAG OFF15 =xmlc.xmlCreate("family", ""+getClinicalDocument().getResponsibleParty().getFamily()+"");
-        TAG OFF16 =xmlc.xmlCreate("given", ""+getClinicalDocument().getResponsibleParty().getName1()+"");
+        TAG OFF16 =xmlc.xmlCreate("given", ""+getClinicalDocument().getResponsibleParty().getName()+"");
         TAG OFF17 =xmlc.xmlCreate("given", ""+getClinicalDocument().getResponsibleParty().getName2()+"");
         TAG OFF18 =xmlc.xmlCreate("suffix", ""+getClinicalDocument().getResponsibleParty().getSuffixe()+"");
         TAG OFF19 =xmlc.xmlCreate("location","");
