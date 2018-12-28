@@ -3,16 +3,15 @@
 
 # Introdução
 
-
-Esta API cliente pretende mostrar um simples exemplo  do Hl7 CDA Orientação.
+A CDApi (Clinical Document Architecture Programming Interface) é uma ferramenta orientada a objeto para Java, criada para auxiliar desenvolvedores de software de Sistemas de Informação de Saúde (SIS). A adoção dessa ferramenta  tem o objetivo de tornar mais ágeis os processos entre os sistemas responsáveis pela operacionalização do padrão HL7CDA, fornecendo melhorias no acesso à prontuários clı́nicos atualizados dos pacientes. Através desta API os aplicativos podem transferir dados clínicos entre médicos e pacientes.
 
 É uma API simples de usar, que irá gerar, ler e  validar um documento XML baseado em CDA.
 
 # Configuração
 
-O arquivo .jar está localizado no diretório CDACliente. Se você preferir usar suas próprias cópias desses pacotes, certifique-se de que esse arquivo .jar está localizado no classpath Java.
+O arquivo .jar está localizado no diretório CDApi.
 
-Para validação, é terminantemente necessário que a pasta lib esteja dentro do pacote da aplicação (juntamente com a src).
+Para validação, é terminantemente necessário que a pasta Resources esteja dentro dentro do diretorio src.
 
 Não há  arquivos .jar (dependências externas) necessários.
 
@@ -21,20 +20,17 @@ Este cliente é liberado com um arquivo .jar Java não executável. É necessár
 
 # DESCRIÇÃO DE SAÍDA DA CONSTRUÇÃO
 
-
-
-É necessário incluir o arquivo DocumentaçãoHL7CDA.zip junto ao arquivo não executável e setar na aplicação para fazer uso da documentação da API.
+É necessário incluir o JavaDoc junto ao arquivo não executável e setar na aplicação para fazer uso da documentação da API.
 
 O cliente é um .jar não executável simples que deve ser importado no diretório da aplicação cliente. Não há etapas de configuração adicionais que são necessárias.
 
-O arquivo é validado no momento da escrita do arquivo XML.
-O arquivo é validado no momento da leitura do arquivo XML.
-
-O arquivo pode ser validado independente da escrita e leitura do XML.  
+*O arquivo é validado no momento da escrita do arquivo XML.
+*O arquivo é validado no momento da leitura do arquivo XML.
+*O arquivo pode ser validado independente da escrita e leitura do XML.  
 
 Informações adicionais:
 
-* O arquivo CDA.xsd deve estar dentro da pasta lib, para que o arquivo XML gerado pela aplicação
+* A pasta Resources deve estar dentro da pasta src, para que o arquivo XML gerado pela aplicação
 seja validado corretamente. Implementações futuras irão tornar essa dependência obsoleta, visto
 que a validação se dará por meio de web service (servidor multcare).
 * Se dois arquivos JAR no caminho de classe do projeto tiverem o mesmo nome, somente o primeiro
@@ -55,4 +51,4 @@ nome da classe no elemento manifest Main-Class.
 
 AVISO DE RECONHECIMENTO DE SOFTWARE E REDISTRIBUIÇÃO:
 
-Software disponibilizado apenas para uso com fins de pesquisas.
+Software disponibilizado atualmente apenas para uso com fins de pesquisas.
