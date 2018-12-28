@@ -8,6 +8,9 @@ import java.util.ArrayList;
  */
 public class Allergy {
 
+    /**
+     *
+     */
     protected ArrayList <String> content;
     /**
      *

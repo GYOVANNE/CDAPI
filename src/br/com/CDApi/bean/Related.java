@@ -10,6 +10,9 @@ public class Related {
 	private String extension;
 	private String version;
 
+    /**
+     *
+     */
     public Related() {
         this.code = "nullFlavor";
         this.id = "nullFlavor";

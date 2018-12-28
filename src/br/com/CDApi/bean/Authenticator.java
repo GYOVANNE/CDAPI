@@ -7,6 +7,9 @@ package br.com.CDApi.bean;
 public class Authenticator {
     private String code;
 
+    /**
+     *
+     */
     public Authenticator() {
         this.code = "nullFlavor";
     }

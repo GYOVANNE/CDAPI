@@ -8,6 +8,9 @@ public class LaboratoryExams extends Allergy {
     private String id;
     private String code;
 
+    /**
+     *
+     */
     public LaboratoryExams() {
         this.id = null;
         this.code = null;

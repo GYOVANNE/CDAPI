@@ -38,6 +38,9 @@ public class Patient {
     private String addrBirthPlace;
     private String idExtension;
 
+    /**
+     *
+     */
     public Patient() {
         this.id = 0;
         this.addr = "nullFlavor";

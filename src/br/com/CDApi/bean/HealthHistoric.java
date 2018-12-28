@@ -15,6 +15,9 @@ public class HealthHistoric {
 	private String title;
 	private String text;
 
+    /**
+     *
+     */
     public HealthHistoric() {
         this.section = "nullFlavor";
         this.moodCode = "nullFlavor";

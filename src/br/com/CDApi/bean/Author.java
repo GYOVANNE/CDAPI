@@ -7,6 +7,9 @@ package br.com.CDApi.bean;
 public class Author extends Patient{
     private String crm;
 
+    /**
+     *
+     */
     public Author() {
         this.crm = "nullFlavor";
     }

@@ -22,6 +22,9 @@ public class ResponsibleParty {
 	private String suffixe;
 	private String location;
 
+    /**
+     *
+     */
     public ResponsibleParty() {
         this.idRoot = "nullFlavor";
         this.extension = "nullFlavor";
@@ -231,10 +234,18 @@ public class ResponsibleParty {
 		return name;
 	}
 
+    /**
+     *
+     * @return
+     */
     public String getName2() {
         return name2;
     }
 
+    /**
+     *
+     * @param name2
+     */
     public void setName2(String name2) {
         this.name2 = name2;
     }
