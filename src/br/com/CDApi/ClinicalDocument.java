@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
- * Classe responsavel pela escrita, leitura e validaçao do returnFile.
+ * Classe responsavel pela escrita, leitura e validaçao do Documento CDA.
  * @author Gyovanne
  */
 public class ClinicalDocument {
@@ -33,9 +33,9 @@ public class ClinicalDocument {
     private Tratament tratament;
 
      /**
-     * Contrutor com argumento necessário para leitura do returnFile.
-     * <br>Necessário informar o returnFile ao qual será usado para leitura.
- <br>Exemplo de implementação:<br>
+     * Contrutor com argumento necessário para leitura do ArquivoXML.
+     * <br>Necessário informar o ArquivoXML ao qual será usado para leitura.
+        <br>Exemplo de implementação:<br>
      * <blockquote>
      * <pre>
      * ClinicalDocument cda = new ClinicalDocuement(File file);
@@ -63,8 +63,8 @@ public class ClinicalDocument {
     }
 
     /**
-     * Contrutor com argumento necessário para leitura do returnFile.
-     * <br>Necessário informar o nome do returnFile ao qual será usado para leitura.
+     * Contrutor com argumento necessário para leitura do ArquivoXML.
+     * <br>Necessário informar o nome do ArquivoXML ao qual será usado para leitura.
  <br>Exemplo de implementação:<br>
      * <blockquote>
      * <pre>
@@ -78,9 +78,9 @@ public class ClinicalDocument {
     }
 
     /**
-     * Contrutor com argumento necessário para leitura do returnFile.
-     * <br>Necessário informar o Id do paciente, que será usado como identificador do returnFile
- <br>Exemplo de implementação:<br>
+     * Contrutor com argumento necessário para leitura do ArquivoXML.
+     * <br>Necessário informar o Id do paciente, que será usado como identificador do ArquivoXML
+        <br>Exemplo de implementação:<br>
      * <blockquote>
      * <pre>
      * ClinicalDocument cda = new ClinicalDocuement(12345);
@@ -95,7 +95,7 @@ public class ClinicalDocument {
     /**
      * Contrutor sem  argumento.
      * <br>Não é necessário informar nenhum parâmetro, pois a instância do objeto
- a partir deste construtor é usado para acessar os métodos de escrita do returnFile.
+ a partir deste construtor é usado para acessar os métodos de escrita do ArquivoXML.
  <br>Exemplo de implementação:<br>
      * <blockquote>
      * <pre>
@@ -691,7 +691,7 @@ public class ClinicalDocument {
     /**
      * Retorna uma representação boolean do objeto. Em geral, o método
      * {@code generateCDAFile} retorna um boolean, sendo true para a criação e validação
- bem sucedida do returnFile XML e false caso não tenha gerado ou validado com sucesso.
+ bem sucedida do ArquivoXML e false caso não tenha gerado ou validado com sucesso.
  <p>
      * O método {@code generateCDAFile} para a classe {@code ClinicalDocument}
  recebe um diretório como parâmetro onde será salvo o returnFile gerado no local indicado e retorna um valor booleano, 
@@ -740,7 +740,7 @@ public class ClinicalDocument {
     /**
      * Retorna uma representação boolean do objeto. Em geral, o método
      * {@code generateCDAFile} retorna um boolean, sendo true para a criação e validação
- bem sucedida do returnFile XML e false caso não tenha gerado ou validado com sucesso.
+ bem sucedida do ArquivoXML e false caso não tenha gerado ou validado com sucesso.
  <p>
      * O método {@code generateCDAFile} para a classe {@code ClinicalDocument}
      * retorna um valor booleano, que indica o resultado da criação e validação de 
