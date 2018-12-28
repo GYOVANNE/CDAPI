@@ -7,7 +7,9 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import org.xml.sax.SAXException;
 /**
  *
@@ -16,7 +18,7 @@ import org.xml.sax.SAXException;
 public class ValidateCDA {
 
     private File xmlFile;
-    private File xsdFile;
+    private URL xsdFile;
     private String notification;
 
     /**
@@ -48,32 +50,29 @@ public class ValidateCDA {
      *
      * @param xsdFile
      */
-    private void setXsdFile(File xsdFile) {
+    private void setXsdFile(URL xsdFile) {
         this.xsdFile = xsdFile;
     }
 
-    private File getXsdFile() {
+    private URL getXsdFile() {
        return xsdFile; 
     }
-    private File localFile() throws IOException {
-        File file ;
-        return new File("lib/CDA.xsd");
+    private URL localFile() throws IOException {
+        return ValidateCDA.class.getResource("/Resources/CDA.xsd");
     }
     private boolean validate(File xml) throws IOException{
         setXsdFile(localFile());
 
-        if(getXsdFile()==null && !getXsdFile().exists()){
+        if(getXsdFile()==null){
             setNotification(xml,false,"Arquivo XSD não encontrado!","Não foi possivel encontrar o arquivo XSD de origem."
-                                     +"\nVerifique se o arquivo está na pasta lib da aplicação.");
+                                     +"\nVerifique se a pasta Resources está no diretorio src da aplicação.");
             return false;
         }
 
         try {
-        File f = new File(xml.getAbsolutePath());
- 
             SchemaFactory schemafactory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
 
-            File schemaLocation = getXsdFile();
+            URL schemaLocation = getXsdFile();
             Schema schema = schemafactory.newSchema(schemaLocation);
             Validator validator = schema.newValidator();
 
