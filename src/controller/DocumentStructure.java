@@ -8,7 +8,7 @@ import java.io.IOException;
 
 /**
  * Classe que contém o conteúdo do documento CDA, representado em XML.
- * @author Gyovanne
+ * @author Gyovanne Cavalcanti
  */
 public class DocumentStructure {
 
@@ -16,37 +16,20 @@ public class DocumentStructure {
     private final File file; 
     private final ClinicalDocument clinicalDocument;
 
-    /**
-     *
-     * @return
-     */
     private File getFile() {
         return file;
     }
 
-    /**
-     *
-     * @return
-     */
     private ClinicalDocument getClinicalDocument() {
         return clinicalDocument;
     }
 
-    /**
-     *
-     * @param file
-     * @param clinicalDocument
-     */
     public DocumentStructure(File file, ClinicalDocument clinicalDocument) {
         this.file = file;
         this.clinicalDocument = clinicalDocument;
         this.xmlc = new XMLConstruction();
     }
 
-    /**
-     *
-     * @return
-     */
     public boolean generateContent() {
         //STRUCTURE HEADER
         //==========================================================================================
@@ -54,20 +37,20 @@ public class DocumentStructure {
 
         TAG h[] = new TAG[10];
         h[0] = xmlc.xmlCreate("realmCode code='"+getClinicalDocument().getHeader().getRealmCode()+"'","");
-        h[1] = xmlc.xmlCreate("typeId root='"+getClinicalDocument().getHeader().getTypeId()+"' extension='"+getClinicalDocument().getHeader().getExtension1()+"'","");
-        h[2] = xmlc.xmlCreate("templateId root='"+getClinicalDocument().getHeader().getTemplate()+"'","");
-        h[3] = xmlc.xmlCreate("id root='"+getClinicalDocument().getHeader().getIdRoot()+"' extension='"+getClinicalDocument().getHeader().getExtension2()+"'","");
+        h[1] = xmlc.xmlCreate("typeId root='2.16.840.1.113883.1.3' extension='POCD_HD000040'","");
+        h[2] = xmlc.xmlCreate("templateId root='2.16.840.1.113883.10.20.1'","");
+        h[3] = xmlc.xmlCreate("id root='"+getClinicalDocument().getHeader().getIdRoot()+"' extension='"+getClinicalDocument().getHeader().getExtension()+"'","");
         h[4] = xmlc.xmlCreate("code code='"+getClinicalDocument().getHeader().getCode()+"' displayName='"+getClinicalDocument().getHeader().getDisplayName()+"' codeSystem='"+getClinicalDocument().getHeader().getCodeSystem()+"' codeSystemName='"+getClinicalDocument().getHeader().getCodeSystemName()+"'","");
         h[5] = xmlc.xmlCreate("effectiveTime value=\""+getClinicalDocument().getHeader().getEfetiveTime()+"\"","");
         h[6] = xmlc.xmlCreate("confidentialityCode code=\"N\" displayName='Normal' codeSystem='2.16.840.1.113883.5.25' codeSystemName='Confidentiality'","");
-        h[7] = xmlc.xmlCreate("setId extension=\""+getClinicalDocument().getHeader().getId()+"\" root=\""+getClinicalDocument().getHeader().getExtension2()+"\"","");
+        h[7] = xmlc.xmlCreate("setId extension=\""+getClinicalDocument().getHeader().getId()+"\" root=\""+getClinicalDocument().getHeader().getExtension()+"\"","");
         h[8] = xmlc.xmlCreate("versionNumber value=\""+getClinicalDocument().getHeader().getVersion()+"\"","");
         h[9] =xmlc.xmlCreate("copyTime value='"+getClinicalDocument().getHeader().getEfetiveTime()+"'","");
         //==========================================================================================
         //STRUCTURE PATIENT
         TAG P19 =xmlc.xmlCreate("recordTarget","");
         TAG P20 =xmlc.xmlCreate("patientRole","");
-        TAG P0 = xmlc.xmlCreate("id extension=\""+getClinicalDocument().getPatient().getId()+"\" root=\""+getClinicalDocument().getHeader().getExtension2()+"\"","");
+        TAG P0 = xmlc.xmlCreate("id extension=\""+getClinicalDocument().getPatient().getId()+"\" root=\""+getClinicalDocument().getHeader().getExtension()+"\"","");
         TAG P1 = xmlc.xmlCreate("addr",""+getClinicalDocument().getPatient().getAddr()+"");
         TAG P2 = xmlc.xmlCreate("telecom value=\""+getClinicalDocument().getPatient().getPhone()+"\"","");
         TAG P3 = xmlc.xmlCreate("patient","");
@@ -85,13 +68,13 @@ public class DocumentStructure {
         TAG P13 =xmlc.xmlCreate("name",""+getClinicalDocument().getPatient().getBirthPlace()+"");
         TAG P14 =xmlc.xmlCreate("addr", ""+getClinicalDocument().getPatient().getAddrBirthPlace()+"");
         TAG P15 =xmlc.xmlCreate("providerOrganization","");
-        TAG P16 =xmlc.xmlCreate("id extension=\""+getClinicalDocument().getPatient().getIdExtension()+"\" root=\""+getClinicalDocument().getHeader().getExtension2()+"\"","");
+        TAG P16 =xmlc.xmlCreate("id extension=\""+getClinicalDocument().getPatient().getIdExtension()+"\" root=\""+getClinicalDocument().getHeader().getExtension()+"\"","");
         //STRUCTURE AUTHOR
         //==========================================================================================
         TAG A0 = xmlc.xmlCreate("author","");
         TAG A1 = xmlc.xmlCreate("time value = \""+getClinicalDocument().getHeader().getEfetiveTime()+"\"", "");
         TAG A2 = xmlc.xmlCreate("assignedAuthor","");
-        TAG A3 = xmlc.xmlCreate("id root='"+getClinicalDocument().getHeader().getExtension2()+"' extension='"+getClinicalDocument().getAuthor().getCrm()+"'", "");
+        TAG A3 = xmlc.xmlCreate("id root='"+getClinicalDocument().getHeader().getExtension()+"' extension='"+getClinicalDocument().getAuthor().getCrm()+"'", "");
         TAG A4 = xmlc.xmlCreate("addr", ""+getClinicalDocument().getAuthor().getAddr()+"");
         TAG A5 = xmlc.xmlCreate("telecom value = '"+getClinicalDocument().getAuthor().getPhone()+"'","");
         TAG A6 = xmlc.xmlCreate("assignedPerson", "");
@@ -102,7 +85,7 @@ public class DocumentStructure {
         TAG CS0 = xmlc.xmlCreate("custodian", "");
         TAG CS1 = xmlc.xmlCreate("assignedCustodian","");
         TAG CS2 = xmlc.xmlCreate("representedCustodianOrganization","");
-        TAG CS3 = xmlc.xmlCreate("id extension=\""+getClinicalDocument().getPatient().getId()+"\" root=\""+getClinicalDocument().getHeader().getExtension2()+"\"", "");
+        TAG CS3 = xmlc.xmlCreate("id extension=\""+getClinicalDocument().getPatient().getId()+"\" root=\""+getClinicalDocument().getHeader().getExtension()+"\"", "");
         TAG CS4 = xmlc.xmlCreate("name", ""+getClinicalDocument().getHeader().getDisplayName()+"");
         //==========================================================================================
 
@@ -111,7 +94,7 @@ public class DocumentStructure {
         TAG L1 = xmlc.xmlCreate("time value=\""+getClinicalDocument().getHeader().getEfetiveTime()+"\"", "");
         TAG L2 = xmlc.xmlCreate("signatureCode code=\""+getClinicalDocument().getAuthenticator().getCode()+"\"","");
         TAG L3 = xmlc.xmlCreate("assignedEntity", "");
-        TAG L4 = xmlc.xmlCreate("id extension=\""+getClinicalDocument().getPatient().getIdExtension()+"\" root=\""+getClinicalDocument().getHeader().getExtension2()+"\"","");
+        TAG L4 = xmlc.xmlCreate("id extension=\""+getClinicalDocument().getPatient().getIdExtension()+"\" root=\""+getClinicalDocument().getHeader().getExtension()+"\"","");
         TAG L5 = xmlc.xmlCreate("assignedPerson","");
         TAG L6 = xmlc.xmlCreate("name","");
         TAG L7 = xmlc.xmlCreate("given", ""+getClinicalDocument().getAuthor().getName()+"");
@@ -128,8 +111,8 @@ public class DocumentStructure {
         //==========================================================================================
         TAG R0 = xmlc.xmlCreate("relatedDocument typeCode=\""+getClinicalDocument().getRelated().getCode()+"\"", "");
         TAG R1 = xmlc.xmlCreate("parentDocument","");
-        TAG R2 = xmlc.xmlCreate("id extension=\""+getClinicalDocument().getRelated().getId()+"\" root=\""+getClinicalDocument().getHeader().getExtension2()+"\"", "");
-        TAG R3 = xmlc.xmlCreate("setId extension=\""+getClinicalDocument().getRelated().getExtension()+"\" root=\""+getClinicalDocument().getHeader().getExtension2()+"\"", "");
+        TAG R2 = xmlc.xmlCreate("id extension=\""+getClinicalDocument().getRelated().getId()+"\" root=\""+getClinicalDocument().getHeader().getExtension()+"\"", "");
+        TAG R3 = xmlc.xmlCreate("setId extension=\""+getClinicalDocument().getRelated().getExtension()+"\" root=\""+getClinicalDocument().getHeader().getExtension()+"\"", "");
         TAG R4 = xmlc.xmlCreate("versionNumber value=\""+getClinicalDocument().getRelated().getVersion()+"\"", "");
         //=====================================================================================
 

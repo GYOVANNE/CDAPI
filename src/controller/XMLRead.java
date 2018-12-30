@@ -11,57 +11,38 @@ import java.util.StringTokenizer;
 
 /**
  * Classe responsável por ler o conteúdo do arquivo XML.
- * @author Gyovanne
+ * @author Gyovanne Cavalcanti
  */
 public class XMLRead{
 
     private final ClinicalDocument clinicalDocument;
     private final File file;
 
-    /**
-     *
-     * @return
-     */
     private ClinicalDocument getClinicalDocument() {
         return clinicalDocument;
     }
 
-    /**
-     *
-     * @return
-     */
     private File getFile() {
         return file;
     }
 
-    /**
-     *
-     * @param clinicalDocument
-     * @param file
-     */
     public XMLRead(ClinicalDocument clinicalDocument, File file) {
         this.clinicalDocument = clinicalDocument;
         this.file = file;
     }
 
-    /**
-     *
-     */
     public void read(){
 
         try{
         Header header = new Header();
 
         header.setRealmCode(simpleTag("ClinicalDocument", "recordTarget","realmCode", 3));
-        header.setTypeId(simpleTag("ClinicalDocument", "recordTarget", "typeId", 2));
-        header.setExtension1(simpleTag("ClinicalDocument", "recordTarget", "extension", 4));
-        header.setTemplate(simpleTag("ClinicalDocument", "recordTarget", "templateId", 3));
         header.setIdRoot(simpleTag("ClinicalDocument", "recordTarget","id root=", 2));
+        header.setExtension(simpleTag("ClinicalDocument", "recordTarget","id root", 4));
+        header.setCode(simpleTag("ClinicalDocument", "recordTarget","code code=", 2));
         header.setDisplayName(simpleTag("ClinicalDocument", "recordTarget", "displayName", 5));
         header.setCodeSystem(simpleTag("ClinicalDocument", "recordTarget", "codeSystem", 6));
         header.setCodeSystemName(simpleTag("ClinicalDocument", "recordTarget", "codeSystemName", 7));
-        header.setExtension2(simpleTag("ClinicalDocument", "recordTarget","id root", 4));
-        header.setCode(simpleTag("ClinicalDocument", "recordTarget","code code=", 2));
         header.setEfetiveTime(simpleTag("ClinicalDocument", "recordTarget","effectiveTime ", 3));
         header.setId(simpleTag("ClinicalDocument", "recordTarget","setId extension=", 2));
         header.setVersion(Integer.parseInt(simpleTag("ClinicalDocument", "recordTarget","versionNumber ", 3)));

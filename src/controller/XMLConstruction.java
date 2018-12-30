@@ -6,21 +6,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- *
- * @author Gyovanne
+ * Classe responsável por escrever o conteúdo XML no arquivo.
+ * @author Gyovanne Cavalcanti
  */
 public class XMLConstruction {
 
-    /**
-     *
-     */
     public XMLConstruction() {
 
     }
 
-    /**
-     *
-     */
     private int tagSpace;
     private String space;
     
@@ -41,76 +35,41 @@ public class XMLConstruction {
             newline += "   ";
         setSpace(newline);
     }
-    
-    /**
-     *
-     */
+
     public class TAG{
     private String info;
     private String content;
     private TAG first;
     private TAG next;
 
-        /**
-         *
-         * @return
-         */
         public String getInfo() {
             return info;
         }
 
-        /**
-         *
-         * @param info
-         */
         public void setInfo(String info) {
             this.info = info;
         }
 
-        /**
-         *
-         * @return
-         */
         public String getContent() {
             return content;
         }
 
-        /**
-         *
-         * @param content
-         */
         public void setContent(String content) {
             this.content = content;
         }
 
-        /**
-         *
-         * @return
-         */
         public TAG getFirst() {
             return first;
         }
 
-        /**
-         *
-         * @param first
-         */
         public void setFirst(TAG first) {
             this.first = first;
         }
 
-        /**
-         *
-         * @return
-         */
         public TAG getNext() {
             return next;
         }
 
-        /**
-         *
-         * @param next
-         */
         public void setNext(TAG next) {
             this.next = next;
         }
@@ -207,11 +166,6 @@ public class XMLConstruction {
         }
     }
 
-    /**
-     *
-     * @param info
-     * @return
-     */
     public String xmlContent(ArrayList <String> info) {
         String list ="";
         setTagSpace(7);
