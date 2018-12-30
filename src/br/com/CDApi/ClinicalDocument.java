@@ -11,7 +11,7 @@ import java.util.Calendar;
 
 /**
  * Classe responsavel pela escrita, leitura e validaçao do Documento CDA.
- * @author Gyovanne
+ * @author Gyovanne Cavalcanti
  */
 public class ClinicalDocument {
     private boolean status;
@@ -33,15 +33,15 @@ public class ClinicalDocument {
     private Tratament tratament;
 
      /**
-     * Contrutor com argumento necessário para leitura do ArquivoXML.
-     * <br>Necessário informar o ArquivoXML ao qual será usado para leitura.
-        <br>Exemplo de implementação:<br>
+     * Contrutor com argumento necessário para leitura do Arquivo XML.
+     * <br>Necessário informar o Arquivo XML ao qual será usado para leitura.
+       <br>Exemplo de implementação:<br>
      * <blockquote>
      * <pre>
      * ClinicalDocument cda = new ClinicalDocuement(File file);
      * </pre>
      * </blockquote>
-     * @param xml
+     * @param xml Arquivo xml que sera lido.
      */
     public ClinicalDocument(File xml) {
         this.status = true;
@@ -51,52 +51,22 @@ public class ClinicalDocument {
                 if(vcda.validationCDAFile(xml)){
                     new XMLRead(this,xml).read();
                 }else{
-                    System.err.println("Arquivo nao pode ser lido, pois ocorreu um erro de validacao!\n");
+                    System.err.println("Arquivo não pode ser lido, pois ocorreu um erro de validação!\n");
                     System.err.println(vcda.getNotification());
                 }
             } catch (IOException ex) {
                 System.err.println(ex.getLocalizedMessage());
             }
         } else {
-            System.err.println("File not found");
+            System.err.println("Arquivo não encontrado!");
         }
     }
 
     /**
-     * Contrutor com argumento necessário para leitura do ArquivoXML.
-     * <br>Necessário informar o nome do ArquivoXML ao qual será usado para leitura.
- <br>Exemplo de implementação:<br>
-     * <blockquote>
-     * <pre>
-     * ClinicalDocument cda = new ClinicalDocuement("12345");
-     * </pre>
-     * </blockquote>
-     * @param fileName
-     */
-    public ClinicalDocument(String fileName){
-        this(new File(local(fileName)));
-    }
-
-    /**
-     * Contrutor com argumento necessário para leitura do ArquivoXML.
-     * <br>Necessário informar o Id do paciente, que será usado como identificador do ArquivoXML
-        <br>Exemplo de implementação:<br>
-     * <blockquote>
-     * <pre>
-     * ClinicalDocument cda = new ClinicalDocuement(12345);
-     * </pre>
-     * </blockquote>
-     * @param Patientid
-     */
-    public ClinicalDocument(int Patientid) {
-        this(""+Patientid);
-    }
-    
-    /**
      * Contrutor sem  argumento.
      * <br>Não é necessário informar nenhum parâmetro, pois a instância do objeto
- a partir deste construtor é usado para acessar os métodos de escrita do ArquivoXML.
- <br>Exemplo de implementação:<br>
+        a partir deste construtor é usada para acessar os métodos de escrita do Arquivo XML.
+        <br>Exemplo de implementação:<br>
      * <blockquote>
      * <pre>
      * ClinicalDocument cda = new ClinicalDocuement();
@@ -117,13 +87,13 @@ public class ClinicalDocument {
 
     private static String local(String fileName){
         File direct = new File("");
-        File file = new File(""+direct.getAbsolutePath()+"/XML_FILES");
+        File file = new File(""+direct.getAbsolutePath()+"/XML");
         file.mkdir();
         return file.getAbsolutePath()+"/"+fileName+".xml";
     }
 
     private static String date() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
         Calendar today = Calendar.getInstance();
         return(format.format(today.getTime()));
     }
@@ -691,19 +661,17 @@ public class ClinicalDocument {
     /**
      * Retorna uma representação boolean do objeto. Em geral, o método
      * {@code generateCDAFile} retorna um boolean, sendo true para a criação e validação
- bem sucedida do ArquivoXML e false caso não tenha gerado ou validado com sucesso.
+ bem sucedida do Arquivo XML e false caso não tenha gerado ou validado com sucesso.
  <p>
      * O método {@code generateCDAFile} para a classe {@code ClinicalDocument}
- recebe um diretório como parâmetro onde será salvo o returnFile gerado no local indicado e retorna um valor booleano, 
- que indica o resultado da criação e validação de 
- um documento CDA. Após o método ser chamado ele gera um documento CDA no diretório da aplicação,
- ao mesmo tempo que valida com o validador da própria aplicação, para que seus campos corresponda ao padrão HL7 CDA.
- O método deve ser instanciado como mostrado na implementação:
+ recebe um diretório como parâmetro onde será salvo o Arquivo XML gerado no local indicado. Retorna um valor booleano
+ que indica o resultado da criação e validação de documento CDA. Esse documento sera Validado com o validador da própria aplicação, para 
+ que seus campos corresponda ao padrão HL7 CDA. O método deve ser instanciado como mostrado na implementação:
  <blockquote>
-     * <pre>getClass().generateCDAFile(String local);</pre>
+     * <pre>clinicalDocument.generateCDAFile(String local);</pre>
      * </blockquote>
      *
-     * @param local
+     * @param local local para onde sera escrito o arquivo XML
      * @return  um valor booleano para fins de verificação.
      */
     public boolean generateCDAFile(String local){
@@ -732,19 +700,20 @@ public class ClinicalDocument {
                     }
                 }else value = false;
         }else{
-            System.err.println("Para gerar o arquivo o contrutor da classe ClinicalDocument nao pode haver parametros!");
+            System.err.println("Para gerar o arquivo o contrutor da classe ClinicalDocument não pode conter parametros!");
             value = false;
         }
         return value;
     }
+    
     /**
      * Retorna uma representação boolean do objeto. Em geral, o método
      * {@code generateCDAFile} retorna um boolean, sendo true para a criação e validação
- bem sucedida do ArquivoXML e false caso não tenha gerado ou validado com sucesso.
+ bem sucedida do Arquivo XML e false caso não tenha gerado ou validado com sucesso.
  <p>
      * O método {@code generateCDAFile} para a classe {@code ClinicalDocument}
      * retorna um valor booleano, que indica o resultado da criação e validação de 
-     * um documento CDA. Após o método ser chamado ele gera um documento CDA no diretório da aplicação,
+     * um documento CDA. Após o método ser chamado ele gera um documento CDA dentro da pasta XML, no diretório da aplicação,
      * ao mesmo tempo que valida com o validador da própria aplicação, para que seus campos corresponda ao padrão HL7 CDA.
      * O método deve ser instanciado como mostrado na implementação:
      * <blockquote>

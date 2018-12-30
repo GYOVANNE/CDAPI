@@ -9,11 +9,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
-import javax.swing.JOptionPane;
 import org.xml.sax.SAXException;
 /**
- *
- * @author Gyovanne
+ * Classe responsável por validar o conteúdo XML.
+ * @author Gyovanne Cavalcanti
  */
 public class ValidateCDA {
 
@@ -46,10 +45,6 @@ public class ValidateCDA {
         this.xmlFile = xmlFile;
     }
 
-    /**
-     *
-     * @param xsdFile
-     */
     private void setXsdFile(URL xsdFile) {
         this.xsdFile = xsdFile;
     }
@@ -107,59 +102,12 @@ public class ValidateCDA {
      * <pre>getClass().validationCDAFile(File xml);</pre>
      * </blockquote>
      *
-     * @param xml
+     * @param xml Arquivo xml ao qual sera validado.
      * @return  um valor booleano para fins de verificação.
      * @throws java.io.IOException
      */
     public boolean validationCDAFile(File xml) throws IOException{
         return validate(xml);
-    }
-
-    /**
-     * Retorna uma representação boolean do objeto. Em geral, o método
-     * {@code validationCDAFile} retorna um boolean, sendo true para uma validação
-     * bem sucedida e false caso não tenha validado com sucesso.
-     * <p>
-     * O método {@code validationCDAFile} para a classe {@code ValidateCDA}
-     * retorna um valor booleano, que indica o resultado da validação de 
-     * um documento CDA. Após o método receber uma {@code String} como parâmetro,
-     * ele verifica se todos os campos do esquema XML corresponde ao padrão HL7 CDA,
-     * de acordo com um XSD válido dentro da aplicação.
-     * O método deve ser instanciado como mostrado na implementação:
-     * <blockquote>
-     * <pre>getClass().validationCDAFile(String xmlFileName);</pre>
-     * </blockquote>
-     *
-     * @param xmlFileName
-     * @return  um valor booleano para fins de verificação.
-     * @throws java.io.IOException
-     */
-    public boolean validationCDAFile(String xmlFileName) throws IOException{
-        setXmlFile(new File(local(xmlFileName)));
-        return validationCDAFile(getXmlFile()); 
-    }
-
-    /**
-     * Retorna uma representação boolean do objeto. Em geral, o método
-     * {@code validationCDAFile} retorna um boolean, sendo true para uma validação
-     * bem sucedida e false caso não tenha validado com sucesso.
-     * <p>
-     * O método {@code validationCDAFile} para a classe {@code ValidateCDA}
-     * retorna um valor booleano, que indica o resultado da validação de 
-     * um documento CDA. Após o método receber um {@code integer} carrespondente ao id do paciente como parâmetro,
-     * ele verifica se todos os campos do esquema XML corresponde ao padrão HL7 CDA,
-     * de acordo com um XSD válido dentro da aplicação.
-     * O método deve ser instanciado como mostrado na implementação:
-     * <blockquote>
-     * <pre>getClass().validationCDAFile(int idPatient);</pre>
-     * </blockquote>
-     *
-     * @param IdPatient
-     * @return  um valor booleano para fins de verificação.
-     * @throws java.io.IOException
-     */
-    public boolean validationCDAFile(int IdPatient) throws IOException{
-        return validationCDAFile(IdPatient+".xml");
     }
 
     private void setNotification(File xml,boolean value,String menssage,String detail) {
@@ -171,12 +119,5 @@ public class ValidateCDA {
         if(value)this.notification += "\n\nValidado\nNenhum problema encontrado!";
         else this.notification += "\n\nErro de Validação!\n\nMensagem:\n"+menssage+
                                  "\n"+detail;
-    }
-
-    private String local(String fileName){
-        File direct = new File("");
-        File file = new File(""+direct.getAbsolutePath()+"/XML_FILES");
-        file.mkdir();
-        return file.getAbsolutePath()+"/"+fileName;
     }
 }
