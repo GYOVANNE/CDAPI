@@ -1,8 +1,8 @@
 package br.com.CDApi.bean;
 
 /**
- *
- * @author Gyovanne
+ *Classe responsavel por gerenciar as informaçoes referentes ao historico de saude do paciente.
+ * @author Gyovanne Cavalcanti
  */
 public class HealthHistoric {
 	private String section;

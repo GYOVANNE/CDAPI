@@ -2,7 +2,7 @@ package br.com.CDApi.bean;
 
 /**
  *
- * @author Gyovanne
+ * @author Gyovanne Cavalcanti
  */
 public class ResponsibleParty {
 	

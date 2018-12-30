@@ -2,31 +2,14 @@ package br.com.CDApi.bean;
 
 /**
  *
- * @author Gyovanne
+ * @author Gyovanne Cavalcanti
  */
 public class Patient {
-    
-    private long      id;
-
-    /**
-     *
-     */
-    protected String addr;
-
-    /**
-     *
-     */
-    protected String phone;
-
-    /**
-     *
-     */
-    protected String name;
-
-    /**
-     *
-     */
-    protected String family;
+    private long   id;
+    private String addr;
+    private String phone;
+    private String name;
+    private String family;
     private String admin;
     private String codeSystem;
     private String birth;
@@ -292,7 +275,7 @@ public class Patient {
     }
 
     /**
-     *
+     * 
      * @param idExtension
      */
     public void setIdExtension(String idExtension) {

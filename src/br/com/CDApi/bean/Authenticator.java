@@ -1,8 +1,8 @@
 package br.com.CDApi.bean;
 
 /**
- *
- * @author Gyovanne
+ * Classe responsavel por gerenciar as informaçoes referentes a autenticidade do paciente.
+ * @author Gyovanne Cavalcanti
  */
 public class Authenticator {
     private String code;
