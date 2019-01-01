@@ -30,7 +30,7 @@ public class ValidateCDA {
      * um documento CDA, conforme o padrão HL7 CDA.
      * O método deve ser instanciado como mostrado na implementação:
      * <blockquote>
-     * <pre>getClass().getNotification();</pre>
+     * <pre>{@code getClass().getNotification();}</pre>
      * </blockquote>
      *
      * @return  uma String para fins de representação.
@@ -99,7 +99,7 @@ public class ValidateCDA {
      * de acordo com um XSD válido dentro da aplicação.
      * O método deve ser instanciado como mostrado na implementação:
      * <blockquote>
-     * <pre>getClass().validationCDAFile(File xml);</pre>
+     * <pre>{@code getClass().validationCDAFile(File xml);}</pre>
      * </blockquote>
      *
      * @param xml Arquivo xml ao qual sera validado.
