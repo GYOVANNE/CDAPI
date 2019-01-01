@@ -18,7 +18,6 @@ public class ResponsibleParty {
 	private String use;
 	private String family;
 	private String name;
-        private String name2;
 	private String suffixe;
 	private String location;
 
@@ -233,22 +232,6 @@ public class ResponsibleParty {
     public String getName() {
 		return name;
 	}
-
-    /**
-     *
-     * @return
-     */
-    public String getName2() {
-        return name2;
-    }
-
-    /**
-     *
-     * @param name2
-     */
-    public void setName2(String name2) {
-        this.name2 = name2;
-    }
 
     /**
      *

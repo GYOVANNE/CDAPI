@@ -1,7 +1,7 @@
 package br.com.CDApi.bean;
 
 /**
- *
+ *  Classe responsavel por gerenciar as informaçoes referentes ao paciente.
  * @author Gyovanne Cavalcanti
  */
 public class Patient {
@@ -10,7 +10,7 @@ public class Patient {
     private String phone;
     private String name;
     private String family;
-    private String admin;
+    private String gender;
     private String codeSystem;
     private String birth;
     private String maritalStatus;
@@ -30,7 +30,7 @@ public class Patient {
         this.phone = "nullFlavor";
         this.name = "nullFlavor";
         this.family = "nullFlavor";
-        this.admin = "nullFlavor";
+        this.gender = "nullFlavor";
         this.codeSystem = "nullFlavor";
         this.birth = "nullFlavor";
         this.maritalStatus = "nullFlavor";
@@ -43,103 +43,103 @@ public class Patient {
     }
 
     /**
-     *
-     * @return
+     * Retorna o identificador do paciente.
+     * @return Id do paciente.
      */
     public long getId() {
         return id;
     }
 
     /**
-     *
-     * @param id
+     * Inserir o identificador do paciente.
+     * @param id Id do paciente.
      */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
-     *
-     * @return
+     * Retorna o endereço do paciente.
+     * @return Endereço do paciente
      */
     public String getAddr() {
         return addr;
     }
 
     /**
-     *
-     * @param addr
+     * Inserir o endereço do paciente.
+     * @param addr Endereço do paciente.
      */
     public void setAddr(String addr) {
         this.addr = addr;
     }
 
     /**
-     *
-     * @return
+     * Retorna o telefone de contato do paciente.
+     * @return Telefone do paciente.
      */
     public String getPhone() {
         return phone;
     }
 
     /**
-     *
-     * @param phone
+     * Inserir o telefone de contato do paciente.
+     * @param phone Telefone do paciente.
      */
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
     /**
-     *
-     * @return
+     * Retorna o primeiro nome do paciente.
+     * @return Primeiro nome do paciente.
      */
     public String getName() {
         return name;
     }
 
     /**
-     *
-     * @param name
+     * Inserir o primeiro nome do paciente.
+     * @param name Nome do paciente.
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     *
-     * @return
+     * Retorna o sobrenome do paciente.
+     * @return Sobrenome do paciente.
      */
     public String getFamily() {
         return family;
     }
 
     /**
-     *
-     * @param family
+     * Inserir o sobrenome do paciente.
+     * @param family Sobrenome do paciente.
      */
     public void setFamily(String family) {
         this.family = family;
     }
 
     /**
-     *
-     * @return
+     * Retorna caracter correspondente ao genero do paciente.
+     * @return Genero do paciente.
      */
-    public String getAdmin() {
-        return admin;
+    public String getGender() {
+        return gender;
     }
 
     /**
-     *
-     * @param admin
+     * Inserir caracter correspondente ao genero do paciente. Ex: M ou F.
+     * @param gender Genero do paciente.
      */
-    public void setAdmin(String admin) {
-        this.admin = admin;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     /**
-     *
+     * 
      * @return
      */
     public String getCodeSystem() {
@@ -155,119 +155,150 @@ public class Patient {
     }
 
     /**
-     *
-     * @return
+     * Retorna a data de aniversario do paciente.
+     * @return Data de aniversario.
      */
     public String getBirth() {
         return birth;
     }
 
     /**
-     *
-     * @param birth
+     * Inserir uma data de aniversario do paciente.
+     * Exemplo de entrada: setBirth("19901212");
+     * @param birth Data de aniversario.
      */
     public void setBirth(String birth) {
         this.birth = birth;
     }
 
     /**
-     *
-     * @return
+     * Retorna o estado civil do paciente.
+     * @return Estado civil.
      */
     public String getMaritalStatus() {
         return maritalStatus;
     }
 
     /**
-     *
-     * @param maritalStatus
+     * Inserir estado civil do paciente.
+     * @param maritalStatus Estado civil.
      */
     public void setMaritalStatus(String maritalStatus) {
         this.maritalStatus = maritalStatus;
     }
 
     /**
-     *
-     * @return
+     * Retorna a religiao do paciente.
+     * @return Regiliao do paciente.
      */
     public String getReligious() {
         return religious;
     }
 
     /**
-     *
-     * @param religious
+     * Inserir a religiao do paciente.
+     * @param religious Religiao do paciente.
      */
     public void setReligious(String religious) {
         this.religious = religious;
     }
 
     /**
-     *
-     * @return
+     * Retorna a afiliaçao racial do paciente.
+     * (Informações sobre raça e etnia
+     * podem ser usado para ajudar a avaliar o risco de um paciente em relação a
+     * condições particulares. Em alguns locais (por exemplo, os EUA), essas
+     * informações também podem ser usadas operacionalmente para detectar
+     * disparidades étnicas na forma como os pacientes são tratados. Em outros,
+     * transmissão desta informação em um registro médico é proibido.)
+     * @return Afiliaçao racial do paciente.
      */
     public String getRace() {
         return race;
     }
 
     /**
-     *
-     * @param race
+     * Inserir a afiliaçao racial do paciente.
+     * (Informações sobre raça e etnia
+     * podem ser usado para ajudar a avaliar o risco de um paciente em relação a
+     * condições particulares. Em alguns locais (por exemplo, os EUA), essas
+     * informações também podem ser usadas operacionalmente para detectar
+     * disparidades étnicas na forma como os pacientes são tratados. Em outros,
+     * transmissão desta informação em um registro médico é proibido.)
+     * @param race Afiliaçao racial do paciente.
      */
     public void setRace(String race) {
         this.race = race;
     }
 
     /**
-     *
-     * @return
+     * Retorna o grupo etnico do paciente.
+     * (Informações sobre raça e etnia
+     * podem ser usado para ajudar a avaliar o risco de um paciente em relação a
+     * condições particulares. Em alguns locais (por exemplo, os EUA), essas
+     * informações também podem ser usadas operacionalmente para detectar
+     * disparidades étnicas na forma como os pacientes são tratados. Em outros,
+     * transmissão desta informação em um registro médico é proibido.)
+     * @return Grupo etnico do paciente.
      */
     public String getEthnicGroup() {
         return ethnicGroup;
     }
 
     /**
-     *
-     * @param ethnicGroup
+     * Inserir o grupo etnico do paciente.
+     * (Informações sobre raça e etnia
+     * podem ser usado para ajudar a avaliar o risco de um paciente em relação a
+     * condições particulares. Em alguns locais (por exemplo, os EUA), essas
+     * informações também podem ser usadas operacionalmente para detectar
+     * disparidades étnicas na forma como os pacientes são tratados. Em outros,
+     * transmissão desta informação em um registro médico é proibido.)
+     * @param ethnicGroup Grupo etnico do paciente.
      */
     public void setEthnicGroup(String ethnicGroup) {
         this.ethnicGroup = ethnicGroup;
     }
 
-    /**
-     *
-     * @return
+    /**Retorna o local de nascimento do paciente.
+     * (O local de nascimento do paciente é registrado como uma associação de
+     * papéis entre a classe de naturalidade. A classe de associação do local de
+     * nascimento liga a classe do paciente a classe de lugar.)
+     * @return Local de nascimento do paciente.
      */
     public String getBirthPlace() {
         return birthPlace;
     }
 
     /**
-     *
-     * @param birthPlace
+    /* Inserir o local de nascimento do paciente.
+     * (O local de nascimento do
+     * paciente é registrado como uma associação de papéis entre a classe de
+     * naturalidade. A classe de associação do local de nascimento liga a classe
+     * do paciente a classe de lugar.)
+     * @param birthPlace Local de nascimento do paciente.
      */
     public void setBirthPlace(String birthPlace) {
         this.birthPlace = birthPlace;
     }
 
     /**
-     *
-     * @return
+     * Retorna o endereço do local de nascimento do paciente.
+     * @return Endereço do local de nascimento.
      */
     public String getAddrBirthPlace() {
         return addrBirthPlace;
     }
 
     /**
-     *
-     * @param addrBirthPlace
+     * Inserir o endereço do local de nascimento do paciente.
+     * @param addrBirthPlace Endereço local de nascimento.
      */
     public void setAddrBirthPlace(String addrBirthPlace) {
         this.addrBirthPlace = addrBirthPlace;
     }
 
     /**
-     *
+     * 
      * @return
      */
     public String getIdExtension() {
