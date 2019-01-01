@@ -56,7 +56,7 @@ public class XMLRead{
         patient.setPhone(simpleTag("patientRole",null, "telecom value",3));
         patient.setName(simpleTag("patient",null, "given",1));
         patient.setFamily(simpleTag("patient",null, "family",1));
-        patient.setAdmin(simpleTag("patient",null, "administrativeGenderCode code",2));
+        patient.setGender(simpleTag("patient",null, "administrativeGenderCode code",2));
         patient.setBirth(simpleTag("patient",null, "birthTime",3));
         patient.setMaritalStatus(simpleTag("patient",null, "maritalStatusCode",3));
         patient.setReligious(simpleTag("patient",null, "religiousAffiliationCode",3));
@@ -75,7 +75,7 @@ public class XMLRead{
         author.setPhone(simpleTag("author",null,"telecom", 3));
         author.setName(simpleTag("author",null,"given", 1));
         author.setFamily(simpleTag("author",null,"family", 1));
-
+        
         getClinicalDocument().setAuthor(author);
 
         ResponsibleParty responsibleParty = new ResponsibleParty();
@@ -112,61 +112,13 @@ public class XMLRead{
 
         getClinicalDocument().setRelated(related);
 
-        Tratament tratament = new Tratament();
-
-        tratament.setContent(listTag("Tratamento","content"));
-
-        getClinicalDocument().setTratament(tratament);
-
-        Diagnostic diagnostic = new Diagnostic();
-
-        diagnostic.setContent(listTag("Diagnóstico","content"));
-
-        getClinicalDocument().setDiagnostic(diagnostic);
-
-        LaboratoryExams laboratoryExams = new LaboratoryExams();
-
-        laboratoryExams.setContent(listTag("Exames de laboratório","content"));
-
-        getClinicalDocument().setLaboratoryExams(laboratoryExams);
-
-        Exams exams = new Exams();
-
-        exams.setContent(listTag("Exame/Métrica físico","content"));
-
-        getClinicalDocument().setExams(exams);
-
-        FamilyHistoric familyHistoric = new FamilyHistoric();
-
-        familyHistoric.setContent(listTag("Histórico familiar","content"));
-
-        getClinicalDocument().setFamilyHistoric(familyHistoric);
-
-        Allergy allergy = new Allergy();
-
-        allergy.setContent(listTag("Alergias","content"));
-
-        getClinicalDocument().setAllergy(allergy);
-
-        Medicines medicines = new Medicines();
-
-        medicines.setContent(listTag("Medicamentos","content"));
-
-        getClinicalDocument().setMedicines(medicines);
-
-        DoctorHistoric doctorHistoric = new DoctorHistoric();
-
-        doctorHistoric.setContent(listTag("Histórico médico passado","content"));
-
-        getClinicalDocument().setDoctorHistoric(doctorHistoric);
-
-        HealthHistoric healthHistoric = new HealthHistoric();
-
-        healthHistoric.setText((listTag("Histórico da doença atual","text")).get(0));
-
-        getClinicalDocument().setHealthHistoric(healthHistoric);
-
-        }catch(IOException | NumberFormatException ex){
+        try {
+            getClinicalDocument().setComponents(componentList());
+        } catch (IOException ex) {
+            System.err.println(ex.getLocalizedMessage());
+        }
+        
+        }catch(NumberFormatException ex){
             System.err.println(ex.getLocalizedMessage());
         }
     }
@@ -237,34 +189,40 @@ public class XMLRead{
         return null;
     }
 
-    private ArrayList <String> listTag (String title,String content) throws IOException{
-        ArrayList <String> list = new ArrayList <>();
+    private ArrayList <Component> componentList () throws IOException{
+        ArrayList <Component> component = new ArrayList<>();
         String line;
             StringTokenizer st;
             try(FileReader fr = new FileReader(getFile());BufferedReader br = new BufferedReader(new FileReader(getFile()));){
                 while((line = br.readLine()) != null){
-                    if(line.contains(title))
-                    {
-                    while((line = br.readLine()) != null){
-                        String dados;
-                        st = new StringTokenizer(line,"\n");
-                        while(st.hasMoreTokens()){
-                            dados = st.nextToken();
-                            if(dados.contains("<"+content+">")){
-                                list.add(dados.substring(dados.indexOf(">")+1,
-                                dados.indexOf("</", dados.indexOf(">"))));
-                            }else break;
+                    if(line.contains("<structuredBody>")){
+                        while((line = br.readLine()) != null){
+                            if(line.contains("</structuredBody>")) break;
+                            else if(line.contains("<component>")){
+                                ArrayList content = new ArrayList <>();
+                                String title = null;
+                                while((line = br.readLine()) != null){
+                                    if(line.contains("</component>")) break;
+                                    String dados;
+                                    st = new StringTokenizer(line,"\n");
+                                    while(st.hasMoreTokens()){
+                                        dados = st.nextToken();
+                                        if(dados.contains("<title>")){
+                                            title = dados.substring(dados.indexOf(">")+1,dados.indexOf("</", dados.indexOf(">")));
+                                        }
+                                        if(dados.contains("<content>")){
+                                            content.add(dados.substring(dados.indexOf(">")+1,dados.indexOf("</", dados.indexOf(">"))));
+                                        }else break;
+                                    }
+                                }
+                                component.add(new Component(title,content));
+                            }
                         }
-                        if(line.contains("</component>")) break;
-                    }
                     fr.close();
                     br.close();
-                    return list;
+                    return component;
                     }
                 }
-                fr.close();
-                br.close();
-                return null;
             }catch(IOException ex){
                 System.err.println(ex.getLocalizedMessage());
             }

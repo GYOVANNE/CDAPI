@@ -5,6 +5,7 @@ import controller.XMLConstruction.TAG;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Classe que contém o conteúdo do documento CDA, representado em XML.
@@ -24,12 +25,21 @@ public class DocumentStructure {
         return clinicalDocument;
     }
 
+    /**
+     *
+     * @param file
+     * @param clinicalDocument
+     */
     public DocumentStructure(File file, ClinicalDocument clinicalDocument) {
         this.file = file;
         this.clinicalDocument = clinicalDocument;
         this.xmlc = new XMLConstruction();
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean generateContent() {
         //STRUCTURE HEADER
         //==========================================================================================
@@ -45,7 +55,7 @@ public class DocumentStructure {
         h[6] = xmlc.xmlCreate("confidentialityCode code=\"N\" displayName='Normal' codeSystem='2.16.840.1.113883.5.25' codeSystemName='Confidentiality'","");
         h[7] = xmlc.xmlCreate("setId extension=\""+getClinicalDocument().getHeader().getId()+"\" root=\""+getClinicalDocument().getHeader().getExtension()+"\"","");
         h[8] = xmlc.xmlCreate("versionNumber value=\""+getClinicalDocument().getHeader().getVersion()+"\"","");
-        h[9] =xmlc.xmlCreate("copyTime value='"+getClinicalDocument().getHeader().getEfetiveTime()+"'","");
+        h[9] = xmlc.xmlCreate("copyTime value='"+getClinicalDocument().getHeader().getEfetiveTime()+"'","");
         //==========================================================================================
         //STRUCTURE PATIENT
         TAG P19 =xmlc.xmlCreate("recordTarget","");
@@ -57,7 +67,7 @@ public class DocumentStructure {
         TAG P4 = xmlc.xmlCreate("name","");
         TAG P17 =xmlc.xmlCreate("given",""+getClinicalDocument().getPatient().getName()+"");
         TAG P18 =xmlc.xmlCreate("family",""+getClinicalDocument().getPatient().getFamily()+"");
-        TAG P5 = xmlc.xmlCreate("administrativeGenderCode code=\""+getClinicalDocument().getPatient().getAdmin()+"\" codeSystem=\""+getClinicalDocument().getPatient().getCodeSystem()+"\"",""); 
+        TAG P5 = xmlc.xmlCreate("administrativeGenderCode code=\""+getClinicalDocument().getPatient().getGender()+"\" codeSystem=\""+getClinicalDocument().getPatient().getCodeSystem()+"\"",""); 
         TAG P6 = xmlc.xmlCreate("birthTime value=\""+getClinicalDocument().getPatient().getBirth()+"\"","");
         TAG P7 = xmlc.xmlCreate("maritalStatusCode code='"+getClinicalDocument().getPatient().getMaritalStatus()+"'","");
         TAG P8 = xmlc.xmlCreate("religiousAffiliationCode code='"+getClinicalDocument().getPatient().getReligious()+"'","");
@@ -134,7 +144,7 @@ public class DocumentStructure {
         TAG OFF14 =xmlc.xmlCreate("name","");
         TAG OFF15 =xmlc.xmlCreate("family", ""+getClinicalDocument().getResponsibleParty().getFamily()+"");
         TAG OFF16 =xmlc.xmlCreate("given", ""+getClinicalDocument().getResponsibleParty().getName()+"");
-        TAG OFF17 =xmlc.xmlCreate("given", ""+getClinicalDocument().getResponsibleParty().getName2()+"");
+//        TAG OFF17 =xmlc.xmlCreate("given", ""+getClinicalDocument().getResponsibleParty().getName()+"");
         TAG OFF18 =xmlc.xmlCreate("suffix", ""+getClinicalDocument().getResponsibleParty().getSuffixe()+"");
         TAG OFF19 =xmlc.xmlCreate("location","");
         TAG OFF20 =xmlc.xmlCreate("healthCareFacility", "");
@@ -157,7 +167,7 @@ public class DocumentStructure {
         xmlc.xmlInsert(OFF20,OFF21);
         xmlc.xmlInsert(OFF19,OFF20);
         xmlc.xmlInsert(OFF14,OFF18);
-        xmlc.xmlInsert(OFF14,OFF17);
+//        xmlc.xmlInsert(OFF14,OFF17);
         xmlc.xmlInsert(OFF14,OFF16);
         xmlc.xmlInsert(OFF14,OFF15);
         xmlc.xmlInsert(OFF13,OFF14);
@@ -178,140 +188,10 @@ public class DocumentStructure {
         //==========================================================================================
         //STRUCTURE DOCTOR HISTORIC
         TAG CO0 =	xmlc.xmlCreate("component", "");
-        TAG CO1 =	xmlc.xmlCreate("structuredBody", "");
+        TAG component =	xmlc.xmlCreate("structuredBody", "");
         TAG CO2 =	xmlc.xmlCreate("languageCode code=\'pt-BR\'","");
-        TAG CO3 = 	xmlc.xmlCreate("component", "");
-        TAG CO4 = 	xmlc.xmlCreate("section classCode=\""+getClinicalDocument().getHealthHistoric().getSection()+"\" moodCode=\""+getClinicalDocument().getHealthHistoric().getMoodCode()+"\"","");
-        TAG CO5 = 	xmlc.xmlCreate("templateId root=\""+getClinicalDocument().getHealthHistoric().getTemplateId()+"\"", ""); 
-        TAG CO6 = 	xmlc.xmlCreate("code code=\""+getClinicalDocument().getHealthHistoric().getCode()+"\" codeSystem=\""+getClinicalDocument().getHealthHistoric().getCodeSystem()+"\" codeSystemName=\""+getClinicalDocument().getHealthHistoric().getCodeName()+"\" displayName=\"Problema atual\"","");
-        TAG CO7 =	xmlc.xmlCreate("title", "Histórico da doença atual"); 
-        TAG CO8 =	xmlc.xmlCreate("text", ""+getClinicalDocument().getHealthHistoric().getText()+"");
         //==============================
-        xmlc.xmlInsert(CO4, CO8);
-        xmlc.xmlInsert(CO4, CO7);
-        xmlc.xmlInsert(CO4, CO6);
-        xmlc.xmlInsert(CO4, CO5);
-        xmlc.xmlInsert(CO3, CO4);
-        xmlc.xmlInsert(CO1, CO3);
-        //==============================
-        TAG COMP10 = xmlc.xmlCreate("component","");
-        TAG COMP11 = xmlc.xmlCreate("section","");
-        TAG COMP12 = xmlc.xmlCreate("title","Histórico médico passado");
-        TAG COMP13 = xmlc.xmlCreate("text","");
-        TAG COMP14 = xmlc.xmlCreate("list","");
-        TAG COMP15 = xmlc.xmlCreate("",xmlc.xmlContent(getClinicalDocument().getDoctorHistoric().getContent()));
-        //==============================
-        xmlc.xmlInsert(COMP14, COMP15);
-        xmlc.xmlInsert(COMP13, COMP14);
-        xmlc.xmlInsert(COMP11, COMP13);
-        xmlc.xmlInsert(COMP11, COMP12);
-        xmlc.xmlInsert(COMP10, COMP11);
-        xmlc.xmlInsert(CO1,    COMP10);
-        //==============================
-        TAG COMP20 = xmlc.xmlCreate("component","");
-        TAG COMP21 = xmlc.xmlCreate("section","");
-        TAG COMP22 = xmlc.xmlCreate("title","Medicamentos");
-        TAG COMP23 = xmlc.xmlCreate("text","");
-        TAG COMP24 = xmlc.xmlCreate("list","");
-        TAG COMP25 = xmlc.xmlCreate("",xmlc.xmlContent(getClinicalDocument().getMedicines().getContent()));
-        //==============================
-        xmlc.xmlInsert(COMP24, COMP25);
-        xmlc.xmlInsert(COMP23, COMP24);
-        xmlc.xmlInsert(COMP21, COMP23);
-        xmlc.xmlInsert(COMP21, COMP22);
-        xmlc.xmlInsert(COMP20, COMP21);
-        xmlc.xmlInsert(CO1,    COMP20);
-        //==============================
-        TAG COMP30 = xmlc.xmlCreate("component","");
-        TAG COMP31 = xmlc.xmlCreate("section classCode=\""+getClinicalDocument().getHealthHistoric().getSection()+"\" moodCode=\""+getClinicalDocument().getHealthHistoric().getMoodCode()+"\"","");
-        TAG COMP32 = xmlc.xmlCreate("title","Alergias");
-        TAG COMP33 = xmlc.xmlCreate("text","");
-        TAG COMP34 = xmlc.xmlCreate("list","");
-        TAG COMP35 = xmlc.xmlCreate("",xmlc.xmlContent(getClinicalDocument().getAllergy().getContent()));
-        //==============================
-        xmlc.xmlInsert(COMP34, COMP35);
-        xmlc.xmlInsert(COMP33, COMP34);
-        xmlc.xmlInsert(COMP31, COMP33);
-        xmlc.xmlInsert(COMP31, COMP32);
-        xmlc.xmlInsert(COMP30, COMP31);
-        xmlc.xmlInsert(CO1, COMP30);
-        //==============================
-        TAG COMP40 = xmlc.xmlCreate("component","");
-        TAG COMP41 = xmlc.xmlCreate("section","");
-        TAG COMP42 = xmlc.xmlCreate("title","Histórico familiar");
-        TAG COMP43 = xmlc.xmlCreate("text","");
-        TAG COMP44 = xmlc.xmlCreate("list","");
-        TAG COMP45 = xmlc.xmlCreate("",xmlc.xmlContent(getClinicalDocument().getFamilyHistoric().getContent()));
-        //==============================
-        xmlc.xmlInsert(COMP44, COMP45);
-        xmlc.xmlInsert(COMP43, COMP44);
-        xmlc.xmlInsert(COMP41, COMP43);
-        xmlc.xmlInsert(COMP41, COMP42);
-        xmlc.xmlInsert(COMP40, COMP41);
-        xmlc.xmlInsert(CO1,    COMP40);
-        //==============================
-        TAG COMP50 = xmlc.xmlCreate("component","");
-        TAG COMP51 = xmlc.xmlCreate("section","");
-        TAG COMP52 = xmlc.xmlCreate("title","Exame/Métrica físico");
-        TAG COMP53 = xmlc.xmlCreate("text","");
-        TAG COMP54 = xmlc.xmlCreate("list","");
-        TAG COMP55 = xmlc.xmlCreate("",xmlc.xmlContent(getClinicalDocument().getExams().getContent()));
-        //==============================
-        xmlc.xmlInsert(COMP54, COMP55);
-        xmlc.xmlInsert(COMP53, COMP54);
-        xmlc.xmlInsert(COMP51, COMP53);
-        xmlc.xmlInsert(COMP51, COMP52);
-        xmlc.xmlInsert(COMP50, COMP51);
-        xmlc.xmlInsert(CO1,    COMP50);
-        //==============================
-        TAG COMP60 = xmlc.xmlCreate("component","");
-        TAG COMP61 = xmlc.xmlCreate("section classCode=\""+getClinicalDocument().getHealthHistoric().getSection()+"\" moodCode=\""+getClinicalDocument().getHealthHistoric().getMoodCode()+"\"","");
-        TAG COMP62 = xmlc.xmlCreate("templateId root=\"2.16.840.1.113883."+getClinicalDocument().getLaboratoryExams().getId()+"\"","");  
-        TAG COMP63 = xmlc.xmlCreate("code code=\""+getClinicalDocument().getLaboratoryExams().getCode()+"\" codeSystem=\""+getClinicalDocument().getHealthHistoric().getCodeSystem()+"\" codeSystemName=\""+getClinicalDocument().getHealthHistoric().getCodeName()+"\" displayName=\"Exames de laboratório\"",""); 
-        TAG COMP64 =  xmlc.xmlCreate("title","Exames de laboratório");
-        TAG COMP65 =  xmlc.xmlCreate("text","");
-        TAG COMP66 =  xmlc.xmlCreate("list","");
-        TAG COMP67 =  xmlc.xmlCreate("",xmlc.xmlContent(getClinicalDocument().getLaboratoryExams().getContent()));
-        //==============================
-        xmlc.xmlInsert(COMP66, COMP67);
-        xmlc.xmlInsert(COMP65, COMP66);
-        xmlc.xmlInsert(COMP61, COMP65);
-        xmlc.xmlInsert(COMP61, COMP64);
-        xmlc.xmlInsert(COMP61, COMP63);
-        xmlc.xmlInsert(COMP61, COMP62);
-        xmlc.xmlInsert(COMP60, COMP61);
-        xmlc.xmlInsert(CO1,    COMP60);
-        //==============================
-        TAG COMP70 = xmlc.xmlCreate("component","");
-        TAG COMP71 = xmlc.xmlCreate("section","");
-        TAG COMP72 = xmlc.xmlCreate("title","Diagnóstico");
-        TAG COMP73 = xmlc.xmlCreate("text","");
-        TAG COMP74 = xmlc.xmlCreate("list","");
-        TAG COMP75 = xmlc.xmlCreate("",xmlc.xmlContent(getClinicalDocument().getDiagnostic().getContent()));
-        //==============================
-        xmlc.xmlInsert(COMP74, COMP75);
-        xmlc.xmlInsert(COMP73, COMP74);
-        xmlc.xmlInsert(COMP71, COMP73);
-        xmlc.xmlInsert(COMP71, COMP72);
-        xmlc.xmlInsert(COMP70, COMP71);
-        xmlc.xmlInsert(CO1,    COMP70);
-        //==============================
-        TAG COMP80 = xmlc.xmlCreate("component","");
-        TAG COMP81 = xmlc.xmlCreate("section","");
-        TAG COMP82 = xmlc.xmlCreate("title","Tratamento");
-        TAG COMP83 = xmlc.xmlCreate("text","");
-        TAG COMP84 = xmlc.xmlCreate("list","");
-        TAG COMP85 = xmlc.xmlCreate("",xmlc.xmlContent(getClinicalDocument().getTratament().getContent()));
-        //==============================
-        xmlc.xmlInsert(COMP84, COMP85);
-        xmlc.xmlInsert(COMP83, COMP84);
-        xmlc.xmlInsert(COMP81, COMP83);
-        xmlc.xmlInsert(COMP81, COMP82);
-        xmlc.xmlInsert(COMP80, COMP81);
-        xmlc.xmlInsert(CO1,    COMP80);
-        //==============================
-        xmlc.xmlInsert(CO0, CO1);
-        xmlc.xmlInsert(CO1, CO2);
+        xmlc.xmlInsert(CO0, component);
         //==============================
         xmlc.xmlInsert(P15,P16);
         xmlc.xmlInsert(P20,P15);
@@ -365,6 +245,21 @@ public class DocumentStructure {
         for(int i = 9; i >= 0; i--){
             xmlc.xmlInsert(rootTag,h[i]);
         }
+        
+        int x = getClinicalDocument().getComponents().size();
+      
+        if(x!=0){
+            TAG componentes[] = new TAG[x];
+
+            for(int i = 0; i < x; i++){
+                componentes[i] = xmlc.xmlCreate("component",
+                itemsCreate(getClinicalDocument().getComponents().get(i).getTitle(),getClinicalDocument().getComponents().get(i).getContent()));
+            }
+            for(int i = x-1; i >=0; i--){
+                xmlc.xmlInsert(component,componentes[i]);
+            }
+        }
+        xmlc.xmlInsert(component, CO2);
         //DELETES FILE CDA TO OVERWRITE A NEW
         xmlc.xmlClean(getFile());
 
@@ -379,5 +274,58 @@ public class DocumentStructure {
             System.err.println("Error writing file:\n"+ex.getLocalizedMessage());
             return false;
         }
+    }
+    private int tagSpace;
+    private String space;
+    private void setSpace(String line){
+        this.space = line;
+    }
+    private String getSpace(){
+        return space;
+    }
+    private int getTagSpace(){
+        return tagSpace;
+    }
+    private void setTagSpace(int tagSpace) {
+        this.tagSpace = tagSpace;
+        String newline="";
+        for(int i = 0 ; i < getTagSpace() ; i++)
+            newline += "   ";
+        setSpace(newline);
+    }
+
+    /**
+     *
+     * @param title
+     * @param content
+     * @return
+     */
+    public String itemsCreate(String title, ArrayList <Object> content){
+            setTagSpace(4);
+            String component;
+            component =    "\n"+getSpace()+"<section>\n"+
+                                getSpace()+"<title>"+title+"</title>\n"+
+                                getSpace()+"   <text>\n"+
+                                getSpace()+"      <list>\n";
+            component +=        getItens(content)+"\n";
+            setTagSpace(4);
+            return component += getSpace()+"      </list>\n"+ 
+                                getSpace()+"   </text>\n"+
+                                getSpace()+"</section>";
+    }
+    private String getItens(ArrayList <Object> content) {
+        String list ="";
+        setTagSpace(7);
+        if(content!=null){
+            for(int i =0; i< content.size();i++) {
+                list +=getSpace()+"<item>"
+                     +"\n"+getSpace()+"  <content>"+content.get(i)+"</content>\n"
+                     +((i!=content.size()-1)?getSpace()+"</item>\n":getSpace()+"</item>");
+            }
+        }else list = getSpace()+"<item>"+
+                "\n"+getSpace()+"  <content>nullFlavor</content>\n"
+                    +getSpace()+"</item>";
+        setTagSpace(0);
+        return list;
     }
 }
