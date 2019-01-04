@@ -4,8 +4,10 @@ import br.com.CDApi.bean.*;
 import br.com.CDApi.ClinicalDocument;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -126,7 +128,7 @@ public class XMLRead{
     private String simpleTag (String tagBegin,String tagFinish,String info,int op){
         String linha;
         StringTokenizer st;
-        try(FileReader fr = new FileReader(getFile());BufferedReader br = new BufferedReader(new FileReader(getFile()));){
+        try(FileReader fr = new FileReader(getFile());BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(getFile()), "UTF-8"));){
 
         while((linha = br.readLine()) != null){
             if(linha.contains("<"+tagBegin+""))
@@ -193,7 +195,7 @@ public class XMLRead{
         ArrayList <Component> component = new ArrayList<>();
         String line;
             StringTokenizer st;
-            try(FileReader fr = new FileReader(getFile());BufferedReader br = new BufferedReader(new FileReader(getFile()));){
+            try(FileReader fr = new FileReader(getFile());BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(getFile()), "UTF-8"));){
                 while((line = br.readLine()) != null){
                     if(line.contains("<structuredBody>")){
                         while((line = br.readLine()) != null){
