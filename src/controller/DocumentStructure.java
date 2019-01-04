@@ -86,7 +86,7 @@ public class DocumentStructure {
         TAG A2 = xmlc.xmlCreate("assignedAuthor","");
         TAG A3 = xmlc.xmlCreate("id root='"+getClinicalDocument().getHeader().getExtension()+"' extension='"+getClinicalDocument().getAuthor().getCrm()+"'", "");
         TAG A4 = xmlc.xmlCreate("addr", ""+getClinicalDocument().getAuthor().getAddr()+"");
-        TAG A5 = xmlc.xmlCreate("telecom value = '"+getClinicalDocument().getAuthor().getPhone()+"'","");
+        TAG A5 = xmlc.xmlCreate("telecom value='"+getClinicalDocument().getAuthor().getPhone()+"'","");
         TAG A6 = xmlc.xmlCreate("assignedPerson", "");
         TAG A7 = xmlc.xmlCreate("name","");
         TAG A8 = xmlc.xmlCreate("given",""+getClinicalDocument().getAuthor().getName()+"");
