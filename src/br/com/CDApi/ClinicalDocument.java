@@ -1,7 +1,7 @@
 package br.com.CDApi;
 
 import br.com.CDApi.bean.*;
-import br.com.CDApi.validator.ValidateCDA;
+import br.com.CDApi.validator.ValidationCDA;
 import controller.DocumentStructure;
 import controller.XMLRead;
 import java.io.File;
@@ -39,9 +39,9 @@ public class ClinicalDocument {
     public ClinicalDocument(File xml) {
         this.status = true;
         if(xml.exists()) {
-            ValidateCDA vcda = new ValidateCDA();
+            ValidationCDA vcda = new ValidationCDA();
             try {
-                if(vcda.validationCDAFile(xml)){
+                if(vcda.toValidate(xml)){
                     new XMLRead(this,xml).read();
                 }else{
                     System.err.println("Arquivo não pode ser lido, pois ocorreu um erro de validação!\n");
@@ -371,21 +371,21 @@ public class ClinicalDocument {
     
     /**
      * Retorna uma representação boolean do objeto. Em geral, o método
-     * {@code generateCDAFile} retorna um boolean, sendo true para a criação e validação
+     * {@code toGenerateCDAFile} retorna um boolean, sendo true para a criação e validação
         bem sucedida do Arquivo XML e false caso não tenha gerado ou validado com sucesso.
         <p>
-            * O método {@code generateCDAFile} para a classe {@code ClinicalDocument}
+     * O método {@code toGenerateCDAFile} para a classe {@code ClinicalDocument}
         recebe um diretório como parâmetro onde será salvo o Arquivo XML gerado no local indicado. Retorna um valor booleano
         que indica o resultado da criação e validação de documento CDA. Esse documento sera Validado com o validador da própria aplicação, para 
         que seus campos corresponda ao padrão HL7 CDA. O método deve ser instanciado como mostrado na implementação:
         <blockquote>
-     * <pre>{@code clinicalDocument.generateCDAFile(String local);}</pre>
+     * <pre>{@code clinicalDocument.toGenerateCDAFile(String local);}</pre>
      * </blockquote>
      *
      * @param local local para onde sera escrito o arquivo XML
      * @return  um valor booleano para fins de verificação.
      */
-    public boolean generateCDAFile(String local){
+    public boolean toGenerateCDAFile(String local){
         boolean value = false;
         if(this.status==false){
             InitializeObjects();
@@ -393,16 +393,16 @@ public class ClinicalDocument {
             if(patient.getId()==0)
                 idFile= "ArquivoSemNome";
             else 
-                idFile = "" + patient.getId();
+                idFile = "" + patient.getName() + "_" + patient.getFamily() + "_"+ patient.getId();
 
             if(local != null) {
                 setXmlFile(new File(local+idFile));
             }else setXmlFile(new File(local(idFile)));
 
                 if(new DocumentStructure(getXmlFile(),this).generateContent()){
-                    ValidateCDA vcda = new ValidateCDA();
+                    ValidationCDA vcda = new ValidationCDA();
                     try {
-                        if(vcda.validationCDAFile(getXmlFile())){
+                        if(vcda.toValidate(getXmlFile())){
                             value = true;
                         }else System.err.println(vcda.getNotification());
                     } catch (IOException ex) {
@@ -419,22 +419,22 @@ public class ClinicalDocument {
     
     /**
      * Retorna uma representação boolean do objeto. Em geral, o método
-     * {@code generateCDAFile} retorna um boolean, sendo true para a criação e validação
+     * {@code toGenerateCDAFile} retorna um boolean, sendo true para a criação e validação
         bem sucedida do Arquivo XML e false caso não tenha gerado ou validado com sucesso.
         <p>
-     * O método {@code generateCDAFile} para a classe {@code ClinicalDocument}
+     * O método {@code toGenerateCDAFile} para a classe {@code ClinicalDocument}
      * retorna um valor booleano, que indica o resultado da criação e validação de 
      * um documento CDA. Após o método ser chamado ele gera um documento CDA dentro da pasta XML, no diretório da aplicação,
      * ao mesmo tempo que valida com o validador da própria aplicação, para que seus campos corresponda ao padrão HL7 CDA.
      * O método deve ser instanciado como mostrado na implementação:
      * <blockquote>
-     * <pre>{@code clinicalDocument.generateCDAFile();}</pre>
+     * <pre>{@code clinicalDocument.toGenerateCDAFile();}</pre>
      * </blockquote>
      *
      * @return  um valor booleano para fins de verificação.
      */
-    public boolean generateCDAFile(){
-        return generateCDAFile(null);
+    public boolean toGenerateCDAFile(){
+        return toGenerateCDAFile(null);
     }
 
     private void InitializeObjects(){
