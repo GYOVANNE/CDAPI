@@ -14,7 +14,7 @@ import org.xml.sax.SAXException;
  * Classe responsável por validar o conteúdo XML.
  * @author Gyovanne Cavalcanti
  */
-public class ValidateCDA {
+public class ValidationCDA {
 
     private File xmlFile;
     private URL xsdFile;
@@ -25,7 +25,7 @@ public class ValidateCDA {
      * {@code getNotification} retorna uma String representando o resultado do processamento 
      * de validação do arquivo, se foi bem sucedida ou não.
      * <p>
-     * O método {@code getNotification} para a classe {@code ValidateCDA}
+     * O método {@code getNotification} para a classe {@code ValidationCDA}
      * retorna uma String, que indica o resultado da validação de 
      * um documento CDA, conforme o padrão HL7 CDA.
      * O método deve ser instanciado como mostrado na implementação:
@@ -53,7 +53,7 @@ public class ValidateCDA {
        return xsdFile; 
     }
     private URL localFile() throws IOException {
-        return ValidateCDA.class.getResource("/Resources/CDA.xsd");
+        return ValidationCDA.class.getResource("/Resources/CDA.xsd");
     }
     private boolean validate(File xml) throws IOException{
         setXsdFile(localFile());
@@ -89,24 +89,24 @@ public class ValidateCDA {
 
     /**
      * Retorna uma representação boolean do objeto. Em geral, o método
-     * {@code validationCDAFile} retorna um boolean, sendo true para uma validação
+     * {@code toValidate} retorna um boolean, sendo true para uma validação
      * bem sucedida e false caso não tenha validado com sucesso.
      * <p>
-     * O método {@code validationCDAFile} para a classe {@code ValidateCDA}
+     * O método {@code toValidate} para a classe {@code ValidationCDA}
      * retorna um valor booleano, que indica o resultado da validação de 
      * um documento CDA. Após o método receber o arquivo {@code File} como parâmetro,
      * ele verifica se todos os campos do esquema XML corresponde ao padrão HL7 CDA,
      * de acordo com um XSD válido dentro da aplicação.
      * O método deve ser instanciado como mostrado na implementação:
      * <blockquote>
-     * <pre>{@code getClass().validationCDAFile(File xml);}</pre>
+     * <pre>{@code getClass().toValidate(File xml);}</pre>
      * </blockquote>
      *
      * @param xml Arquivo xml ao qual sera validado.
      * @return  um valor booleano para fins de verificação.
      * @throws java.io.IOException
      */
-    public boolean validationCDAFile(File xml) throws IOException{
+    public boolean toValidate(File xml) throws IOException{
         return validate(xml);
     }
 
