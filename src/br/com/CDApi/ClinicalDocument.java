@@ -42,7 +42,7 @@ public class ClinicalDocument {
             ValidationCDA vcda = new ValidationCDA();
             try {
                 if(vcda.toValidate(xml)){
-                    new XMLRead(this,xml).read();
+                    new XMLRead(this,xml).toRead();
                 }else{
                     System.err.println("Arquivo não pode ser lido, pois ocorreu um erro de validação!\n");
                     System.err.println(vcda.getNotification());

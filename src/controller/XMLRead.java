@@ -33,89 +33,89 @@ public class XMLRead{
         this.file = file;
     }
 
-    public void read(){
+    public void toRead(){
 
         try{
         Header header = new Header();
 
-        header.setRealmCode(simpleTag("ClinicalDocument", "recordTarget","realmCode", 3));
-        header.setIdRoot(simpleTag("ClinicalDocument", "recordTarget","id root=", 2));
-        header.setExtension(simpleTag("ClinicalDocument", "recordTarget","id root", 4));
-        header.setCode(simpleTag("ClinicalDocument", "recordTarget","code code=", 2));
-        header.setDisplayName(simpleTag("ClinicalDocument", "recordTarget", "displayName", 5));
-        header.setCodeSystem(simpleTag("ClinicalDocument", "recordTarget", "codeSystem", 6));
-        header.setCodeSystemName(simpleTag("ClinicalDocument", "recordTarget", "codeSystemName", 7));
-        header.setEfetiveTime(simpleTag("ClinicalDocument", "recordTarget","effectiveTime ", 3));
-        header.setId(simpleTag("ClinicalDocument", "recordTarget","setId extension=", 2));
-        header.setVersion(Integer.parseInt(simpleTag("ClinicalDocument", "recordTarget","versionNumber ", 3)));
+        header.setRealmCode(getTag("ClinicalDocument", "recordTarget","realmCode", 3));
+        header.setIdRoot(getTag("ClinicalDocument", "recordTarget","id root=", 2));
+        header.setExtension(getTag("ClinicalDocument", "recordTarget","id root", 4));
+        header.setCode(getTag("ClinicalDocument", "recordTarget","code code=", 2));
+        header.setDisplayName(getTag("ClinicalDocument", "recordTarget", "displayName", 5));
+        header.setCodeSystem(getTag("ClinicalDocument", "recordTarget", "codeSystem", 6));
+        header.setCodeSystemName(getTag("ClinicalDocument", "recordTarget", "codeSystemName", 7));
+        header.setEfetiveTime(getTag("ClinicalDocument", "recordTarget","effectiveTime ", 3));
+        header.setId(getTag("ClinicalDocument", "recordTarget","setId extension=", 2));
+        header.setVersion(Integer.parseInt(getTag("ClinicalDocument", "recordTarget","versionNumber ", 3)));
 
         getClinicalDocument().setHeader(header);
 
         Patient patient = new Patient();
 
-        patient.setId(Integer.parseInt(simpleTag("patientRole",null,"id extension",2)));
-        patient.setAddr(simpleTag("patientRole",null, "addr",1));
-        patient.setPhone(simpleTag("patientRole",null, "telecom value",3));
-        patient.setName(simpleTag("patient",null, "given",1));
-        patient.setFamily(simpleTag("patient",null, "family",1));
-        patient.setGender(simpleTag("patient",null, "administrativeGenderCode code",2));
-        patient.setBirth(simpleTag("patient",null, "birthTime",3));
-        patient.setMaritalStatus(simpleTag("patient",null, "maritalStatusCode",3));
-        patient.setReligious(simpleTag("patient",null, "religiousAffiliationCode",3));
-        patient.setRace(simpleTag("patient",null, "raceCode",3));
-        patient.setEthnicGroup(simpleTag("patient",null, "ethnicGroupCode",3));
-        patient.setBirthPlace(simpleTag("birthplace",null,"name",1));
-        patient.setAddrBirthPlace(simpleTag("birthplace",null,"addr",1));
-        patient.setIdExtension(simpleTag("providerOrganization",null, "id extension",2));
+        patient.setId(Integer.parseInt(getTag("patientRole",null,"id extension",2)));
+        patient.setAddr(getTag("patientRole",null, "addr",1));
+        patient.setPhone(getTag("patientRole",null, "telecom value",3));
+        patient.setName(getTag("patient",null, "given",1));
+        patient.setFamily(getTag("patient",null, "family",1));
+        patient.setGender(getTag("patient",null, "administrativeGenderCode code",2));
+        patient.setBirth(getTag("patient",null, "birthTime",3));
+        patient.setMaritalStatus(getTag("patient",null, "maritalStatusCode",3));
+        patient.setReligious(getTag("patient",null, "religiousAffiliationCode",3));
+        patient.setRace(getTag("patient",null, "raceCode",3));
+        patient.setEthnicGroup(getTag("patient",null, "ethnicGroupCode",3));
+        patient.setBirthPlace(getTag("birthplace",null,"name",1));
+        patient.setAddrBirthPlace(getTag("birthplace",null,"addr",1));
+        patient.setIdExtension(getTag("providerOrganization",null, "id extension",2));
 
         getClinicalDocument().setPatient(patient);
 
         Author author = new Author();
 
-        author.setCrm(simpleTag("author",null,"id root", 4));
-        author.setAddr(simpleTag("author",null,"addr", 1));
-        author.setPhone(simpleTag("author",null,"telecom", 3));
-        author.setName(simpleTag("author",null,"given", 1));
-        author.setFamily(simpleTag("author",null,"family", 1));
+        author.setCrm(getTag("author",null,"id root", 4));
+        author.setAddr(getTag("author",null,"addr", 1));
+        author.setPhone(getTag("author",null,"telecom", 3));
+        author.setName(getTag("author",null,"given", 1));
+        author.setFamily(getTag("author",null,"family", 1));
         
         getClinicalDocument().setAuthor(author);
 
         ResponsibleParty responsibleParty = new ResponsibleParty();
         
-        responsibleParty.setIdRoot(simpleTag("encompassingEncounter", "responsibleParty", "id root", 2));
-        responsibleParty.setExtension(simpleTag("encompassingEncounter","responsibleParty", "extension", 4));
-        responsibleParty.setDate(simpleTag("encompassingEncounter","responsibleParty","value", 3));
-        responsibleParty.setId(simpleTag("assignedEntity",null,"id nullFlavor", 3));
-        responsibleParty.setState(simpleTag("responsibleParty", null,"state",1));
-        responsibleParty.setCity(simpleTag("responsibleParty", null, "city", 1));
-        responsibleParty.setPostal(simpleTag("responsibleParty", null, "postalCode", 1));
-        responsibleParty.setStreet(simpleTag("responsibleParty", null,"streetAddressLine", 1));
-        responsibleParty.setPhone(simpleTag("responsibleParty", null, "telecom value", 2));
-        responsibleParty.setUse(simpleTag("responsibleParty", null, "use", 8));
-        responsibleParty.setFamily(simpleTag("responsibleParty", null, "family", 1));
-        responsibleParty.setName(simpleTag("responsibleParty", null, "given", 1));
-        responsibleParty.setSuffixe(simpleTag("responsibleParty", null, "suffix", 1));
-        responsibleParty.setLocation(simpleTag("location", null, "name", 1));
+        responsibleParty.setIdRoot(getTag("encompassingEncounter", "responsibleParty", "id root", 2));
+        responsibleParty.setExtension(getTag("encompassingEncounter","responsibleParty", "extension", 4));
+        responsibleParty.setDate(getTag("encompassingEncounter","responsibleParty","value", 3));
+        responsibleParty.setId(getTag("assignedEntity",null,"id nullFlavor", 3));
+        responsibleParty.setState(getTag("responsibleParty", null,"state",1));
+        responsibleParty.setCity(getTag("responsibleParty", null, "city", 1));
+        responsibleParty.setPostal(getTag("responsibleParty", null, "postalCode", 1));
+        responsibleParty.setStreet(getTag("responsibleParty", null,"streetAddressLine", 1));
+        responsibleParty.setPhone(getTag("responsibleParty", null, "telecom value", 2));
+        responsibleParty.setUse(getTag("responsibleParty", null, "use", 8));
+        responsibleParty.setFamily(getTag("responsibleParty", null, "family", 1));
+        responsibleParty.setName(getTag("responsibleParty", null, "given", 1));
+        responsibleParty.setSuffixe(getTag("responsibleParty", null, "suffix", 1));
+        responsibleParty.setLocation(getTag("location", null, "name", 1));
 
         getClinicalDocument().setResponsibleParty(responsibleParty);
 
         Authenticator authenticator = new Authenticator();
 
-        authenticator.setCode(simpleTag("legalAuthenticator", null,"signatureCode", 3));
+        authenticator.setCode(getTag("legalAuthenticator", null,"signatureCode", 3));
 
         getClinicalDocument().setAuthenticator(authenticator);
 
         Related related = new Related();
 
-        related.setCode(simpleTag("/legalAuthenticator", "relatedDocument","relatedDocument", 0));
-        related.setID(simpleTag("relatedDocument", null,"id", 2));
-        related.setExtension(simpleTag("relatedDocument", null,"setId", 2));
-        related.setVersion(simpleTag("relatedDocument", null,"versionNumber", 3));
+        related.setCode(getTag("/legalAuthenticator", "relatedDocument","relatedDocument", 0));
+        related.setID(getTag("relatedDocument", null,"id", 2));
+        related.setExtension(getTag("relatedDocument", null,"setId", 2));
+        related.setVersion(getTag("relatedDocument", null,"versionNumber", 3));
 
         getClinicalDocument().setRelated(related);
 
         try {
-            getClinicalDocument().setComponents(componentList());
+            getClinicalDocument().setComponents(getList());
         } catch (IOException ex) {
             System.err.println(ex.getLocalizedMessage());
         }
@@ -125,7 +125,7 @@ public class XMLRead{
         }
     }
 
-    private String simpleTag (String tagBegin,String tagFinish,String info,int op){
+    private String getTag (String tagBegin,String tagFinish,String info,int op){
         String linha;
         StringTokenizer st;
         try(FileReader fr = new FileReader(getFile());BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(getFile()), "UTF-8"));){
@@ -191,7 +191,7 @@ public class XMLRead{
         return null;
     }
 
-    private ArrayList <Component> componentList () throws IOException{
+    private ArrayList <Component> getList () throws IOException{
         ArrayList <Component> component = new ArrayList<>();
         String line;
             StringTokenizer st;

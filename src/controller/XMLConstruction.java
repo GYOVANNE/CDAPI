@@ -10,9 +10,6 @@ import java.io.IOException;
  */
 public class XMLConstruction {
 
-    /**
-     *
-     */
     public XMLConstruction() {
 
     }
@@ -38,75 +35,40 @@ public class XMLConstruction {
         setSpace(newline);
     }
 
-    /**
-     *
-     */
     public class TAG{
     private String info;
     private String content;
     private TAG first;
     private TAG next;
 
-        /**
-         *
-         * @return
-         */
         public String getInfo() {
             return info;
         }
 
-        /**
-         *
-         * @param info
-         */
         public void setInfo(String info) {
             this.info = info;
         }
 
-        /**
-         *
-         * @return
-         */
         public String getContent() {
             return content;
         }
 
-        /**
-         *
-         * @param content
-         */
         public void setContent(String content) {
             this.content = content;
         }
 
-        /**
-         *
-         * @return
-         */
         public TAG getFirst() {
             return first;
         }
 
-        /**
-         *
-         * @param first
-         */
         public void setFirst(TAG first) {
             this.first = first;
         }
 
-        /**
-         *
-         * @return
-         */
         public TAG getNext() {
             return next;
         }
 
-        /**
-         *
-         * @param next
-         */
         public void setNext(TAG next) {
             this.next = next;
         }
@@ -119,7 +81,7 @@ public class XMLConstruction {
      * @param tagContent
      * @return
      */
-    public TAG xmlCreate(String tagName,String tagContent) {
+    public TAG toCreate(String tagName,String tagContent) {
             TAG n = new TAG();
             n.setInfo(tagName);
             n.setContent(tagContent);
@@ -132,7 +94,7 @@ public class XMLConstruction {
      * Deleta o arquivo ao qual foi passado como nome no parâmetro do método.
      * @param xml
      */
-    public void xmlClean(File xml) {
+    public void toClean(File xml) {
         if(xml.exists()){
             try {
                 boolean del = xml.delete();
@@ -148,7 +110,7 @@ public class XMLConstruction {
      * @param tag
      * @param subTag
      */
-    public void xmlInsert(TAG tag,TAG subTag) {
+    public void toInsert(TAG tag,TAG subTag) {
             subTag.setNext(tag.getFirst());
             tag.setFirst(subTag);
     }
@@ -160,7 +122,7 @@ public class XMLConstruction {
      * @param tag
      * @param fw
      */    
-    public void xmlPrint(TAG tag,FileWriter fw) {
+    public void toPrint(TAG tag,FileWriter fw) {
         try {
         setTagSpace(getTagSpace());
         if(tag.getFirst() == null && tag.getContent().equals("")) {
@@ -180,7 +142,7 @@ public class XMLConstruction {
         }
 
         for(TAG p = tag.getFirst();p != null; p = p.getNext())
-            xmlPrint(p,fw);
+            toPrint(p,fw);
 
         int pos = tag.getInfo().indexOf(' ');//CHECKS SPACE IN <TAG>
 

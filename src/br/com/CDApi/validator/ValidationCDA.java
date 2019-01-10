@@ -110,14 +110,14 @@ public class ValidationCDA {
         return validate(xml);
     }
 
-    private void setNotification(File xml,boolean value,String menssage,String detail) {
+    private void setNotification(File xml,boolean value,String message,String detail) {
         this.notification = "Relatório de validação para "+xml.getName()+
                            "\nValidando: esquema XML CDA"+
                            "\nData de validação: "+getValidationDate()+
                            "\nResultado do teste: "+value;
          
         if(value)this.notification += "\n\nValidado\nNenhum problema encontrado!";
-        else this.notification += "\n\nErro de Validação!\n\nMensagem:\n"+menssage+
+        else this.notification += "\n\nErro de Validação!\n\nMensagem:\n"+message+
                                  "\n"+detail;
     }
 }

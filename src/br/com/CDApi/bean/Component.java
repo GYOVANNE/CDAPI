@@ -22,7 +22,7 @@ public class Component {
     }
 
     /**
-     *
+     * Retorna um ArrayList com o conteudo do componente.
      * @return
      */
     public ArrayList<Object> getContent() {
@@ -30,7 +30,7 @@ public class Component {
     }
 
     /**
-     *
+     * Retorna o titulo do componente
      * @return
      */
     public String getTitle() {
