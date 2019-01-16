@@ -17,7 +17,7 @@ public class Related {
         this.code = "nullFlavor";
         this.id = "nullFlavor";
         this.extension = "nullFlavor";
-        this.version = "nullFlavor";
+        this.version = "0";
     }
 	
     /**

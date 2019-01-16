@@ -8,6 +8,8 @@ import javax.xml.validation.Validator;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import org.xml.sax.SAXException;
 /**
@@ -83,8 +85,10 @@ public class ValidationCDA {
         }
     }
 
-    private static Date getValidationDate(){
-        return new Date();
+    private static String getValidationDate(){
+        SimpleDateFormat format = new SimpleDateFormat("dd 'de' MMMM 'de' yyyy HH:mm:ss");
+        Calendar today = Calendar.getInstance();
+        return(format.format(today.getTime()));
     }
 
     /**

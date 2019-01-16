@@ -1,5 +1,8 @@
 package br.com.CDApi.bean;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  *Classe responsavel por gerenciar as informaçoes referentes ao cabeçalho do documento.
  * @author Gyovanne Cavalcanti
@@ -27,11 +30,15 @@ public class Header {
         this.displayName = "nullFlavor";
         this.codeSystem = "2.16.840.1.113883.6.103";
         this.codeSystemName = "ICD-9-CM";
-        this.efetiveTime = "nullFlavor";
+        this.efetiveTime = date("yyyyMMddHHmmss");
         this.id = "nullFlavor";
         this.version = 0;
     }
-
+    private static String date(String form) {
+        SimpleDateFormat format = new SimpleDateFormat(form);
+        Calendar today = Calendar.getInstance();
+        return(format.format(today.getTime()));
+    }
     /**
      * Retorna informaçao da regiao para qual o conteudo é escrito.
      * @return O código de território.

@@ -27,11 +27,11 @@ public class ResponsibleParty {
     public ResponsibleParty() {
         this.idRoot = "nullFlavor";
         this.extension = "nullFlavor";
-        this.date = "nullFlavor";
+        this.date = "0";
         this.id = "nullFlavor";
         this.state = "nullFlavor";
         this.city = "nullFlavor";
-        this.postal = "nullFlavor";
+        this.postal = "0";
         this.street = "nullFlavor";
         this.phone = "nullFlavor";
         this.use = "nullFlavor";

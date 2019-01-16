@@ -82,11 +82,11 @@ public class ClinicalDocument {
         File direct = new File("");
         File file = new File(""+direct.getAbsolutePath()+"/XML");
         file.mkdir();
-        return file.getAbsolutePath()+"/"+fileName+".xml";
+        return file.getAbsolutePath()+"/"+fileName;
     }
 
-    private static String date() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+    private static String date(String form) {
+        SimpleDateFormat format = new SimpleDateFormat(form);
         Calendar today = Calendar.getInstance();
         return(format.format(today.getTime()));
     }
@@ -125,7 +125,7 @@ public class ClinicalDocument {
      * @param header
      */
     public void setHeader(Header header) {
-        if(header.getEfetiveTime()==null)header.setEfetiveTime(date());
+        if(header.getEfetiveTime()==null)header.setEfetiveTime(date("yyyyMMddHHmmss"));
         this.header = header;
     }
     
@@ -368,7 +368,7 @@ public class ClinicalDocument {
     public void setComponents(ArrayList<Component> components) {
         this.components = components;
     }
-    
+
     /**
      * Retorna uma representação boolean do objeto. Em geral, o método
      * {@code toGenerateCDAFile} retorna um boolean, sendo true para a criação e validação
@@ -379,24 +379,24 @@ public class ClinicalDocument {
         que indica o resultado da criação e validação de documento CDA. Esse documento sera Validado com o validador da própria aplicação, para 
         que seus campos corresponda ao padrão HL7 CDA. O método deve ser instanciado como mostrado na implementação:
         <blockquote>
-     * <pre>{@code clinicalDocument.toGenerateCDAFile(String local);}</pre>
+     * <pre>{@code clinicalDocument.toGenerateCDAFile(String path);}</pre>
      * </blockquote>
      *
-     * @param local local para onde sera escrito o arquivo XML
+     * @param path local para onde sera escrito o arquivo XML
      * @return  um valor booleano para fins de verificação.
      */
-    public boolean toGenerateCDAFile(String local){
+    public boolean toGenerateCDAFile(String path){
         boolean value = false;
         if(this.status==false){
             InitializeObjects();
             String idFile;
             if(patient.getId()==0)
-                idFile= "ArquivoSemNome";
+                idFile= "Sem título" + " "+ date("dd-MM-yyyy_HH:mm:ss") + ".xml";
             else 
-                idFile = "" + patient.getName() + "_" + patient.getFamily() + "_"+ patient.getId();
+                idFile = "" + patient.getName() + " " + patient.getFamily() + "_"+ patient.getId() + " " +date("dd-MM-yyyy_HH:mm:ss")+ ".xml";
 
-            if(local != null) {
-                setXmlFile(new File(local+idFile));
+            if(path != null) {
+                setXmlFile(new File(path + "/" + idFile));
             }else setXmlFile(new File(local(idFile)));
 
                 if(new DocumentStructure(getXmlFile(),this).generateContent()){

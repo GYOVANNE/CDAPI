@@ -32,7 +32,7 @@ public class Patient {
         this.family = "nullFlavor";
         this.gender = "nullFlavor";
         this.codeSystem = "nullFlavor";
-        this.birth = "nullFlavor";
+        this.birth = "0";
         this.maritalStatus = "nullFlavor";
         this.religious = "nullFlavor";
         this.race = "nullFlavor";
