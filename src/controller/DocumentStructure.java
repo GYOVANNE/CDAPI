@@ -129,7 +129,7 @@ public class DocumentStructure {
         TAG OFF0 =xmlc.toCreate("componentOf","");
 
         TAG OFF1 =xmlc.toCreate("encompassingEncounter", "");
-        TAG OFF2 =xmlc.toCreate("id root=\""+getClinicalDocument().getResponsibleParty().getIdRoot()+"\" extension=\""+getClinicalDocument().getResponsibleParty().getExtension()+"\"", "");
+        TAG OFF2 =xmlc.toCreate("id root=\""+getClinicalDocument().getResponsibleParty().getIdRoot()+"\" extension=\""+getClinicalDocument().getResponsibleParty().getDate()+"_"+getClinicalDocument().getResponsibleParty().getExtension()+"\"", "");
         TAG OFF3 =xmlc.toCreate("effectiveTime value=\""+getClinicalDocument().getResponsibleParty().getDate()+"\"","");
         TAG OFF4 =xmlc.toCreate("responsibleParty","");
         TAG OFF5 =xmlc.toCreate("assignedEntity", "");
@@ -148,7 +148,7 @@ public class DocumentStructure {
         TAG OFF18 =xmlc.toCreate("suffix", ""+getClinicalDocument().getResponsibleParty().getSuffixe()+"");
         TAG OFF19 =xmlc.toCreate("location","");
         TAG OFF20 =xmlc.toCreate("healthCareFacility", "");
-        TAG OFF21 =xmlc.toCreate("id root=\""+getClinicalDocument().getResponsibleParty().getIdRoot()+"\" extension=\""+getClinicalDocument().getResponsibleParty().getExtension()+"\"", "");
+        TAG OFF21 =xmlc.toCreate("id root=\""+getClinicalDocument().getResponsibleParty().getIdRoot()+"\" extension=\""+getClinicalDocument().getResponsibleParty().getDate()+"_"+getClinicalDocument().getResponsibleParty().getExtension()+"\"", "");
         TAG OFF22 =xmlc.toCreate("location","");
         TAG OFF23 =xmlc.toCreate("name", ""+getClinicalDocument().getResponsibleParty().getLocation()+"");
         TAG OFF24 =xmlc.toCreate("addr", "");
