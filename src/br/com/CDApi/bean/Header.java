@@ -26,7 +26,7 @@ public class Header {
         this.realmCode = "nullFlavor";
         this.idRoot = "nullFlavor";
         this.extension = "2.16.840.1.113883.3.933";
-        this.code = "nullFlavor";
+        this.code = "0";
         this.displayName = "nullFlavor";
         this.codeSystem = "2.16.840.1.113883.6.103";
         this.codeSystemName = "ICD-9-CM";
