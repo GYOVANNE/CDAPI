@@ -32,7 +32,7 @@ public class Header {
         this.codeSystemName = "ICD-9-CM";
         this.efetiveTime = date("yyyyMMddHHmmss");
         this.id = "nullFlavor";
-        this.version = 0;
+        this.version = 1;
     }
     private static String date(String form) {
         SimpleDateFormat format = new SimpleDateFormat(form);
@@ -122,7 +122,7 @@ public class Header {
     /**
      * O atributo XML {@code displayName} fornece um nome legível para o código. este
      * atributo carrega semântica computável e é simplesmente fornecido como uma
-     * ajuda para humanos interpretação. Em um documento CDA, o displayName deve aparecer normalmente
+     * ajuda para interpretação humana. Em um documento CDA, o displayName deve aparecer normalmente
      * no mesmo idioma que o documento está escrito. No cabeçalho {@code displayName} refere-se ao 
      * nome do sistema que esta sendo utilziado.
      * @param displayName
@@ -146,6 +146,11 @@ public class Header {
      * nullFlavor assume o valor de OTH, o atributo codeSystem é necessário para
      * estar presente para indicar em que sistema de codificação o valor não
      * pôde ser codificado.
+     * Os códigos ICD-9-CM pode ser usado como o valor do atributo.
+     * Um exemplo de entrada para este codeSystem é : <p>
+     * 2.16.840.1.113883.6.103<p>
+     * Código de inscrição OID para códgigos de diagnósticos ICD-9-CM
+     * @see http://oid-info.com/
      * @param codeSystem
      */
     public void setCodeSystem(String codeSystem) {
@@ -154,7 +159,7 @@ public class Header {
 
     /**
      *
-     * @return Nome legivel para o codigo de sistema.
+     * @return Nome legível para o código de sistema.
      */
     public String getCodeSystemName() {
         return codeSystemName;
@@ -173,7 +178,7 @@ public class Header {
 
     /**
      *
-     * @return Data de criaçao do documento clinico.
+     * @return Data de criação do documento clinico.
      */
     public String getEfetiveTime() {
         return efetiveTime;
@@ -191,7 +196,9 @@ public class Header {
      * relançado (com um novo identificador) substituindo uma versão anterior a
      * qualquer momento. o O tempo de criação de um documento clínico deve
      * corresponder ao tempo de participação mais os autores do documento
-     * clínico.
+     * clínico.<p>
+     * Insira o valor {@code null} para que o documento seja formatado com a data e hora atual do sistema,
+     * ou você pode passar um valor data {@code String} no parâmetro.
      * @param efetiveIime
      */
     public void setEfetiveTime(String efetiveIime) {
@@ -200,14 +207,14 @@ public class Header {
 
     /**
      *
-     * @return Identificacao do documento.
+     * @return Identificação do documento.
      */
     public String getId() {
         return id;
     }
 
     /**
-     * O atributo de classe setId e usado para identificar o documento.
+     * O atributo de classe setId é usado para identificar o documento.
      *
      * @param id
      */
@@ -217,14 +224,14 @@ public class Header {
 
     /**
      * 
-     * @return Versao do documento
+     * @return Versão do documento
      */
     public int getVersion() {
         return version;
     }
 
     /**
-     * O atributo de classe version e usados para identificar a versao do documento.
+     * O atributo de classe version é usados para identificar a versão do documento.
      *
      * @param version
      */

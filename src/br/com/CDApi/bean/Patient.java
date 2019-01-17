@@ -31,7 +31,7 @@ public class Patient {
         this.name = "nullFlavor";
         this.family = "nullFlavor";
         this.gender = "nullFlavor";
-        this.codeSystem = "nullFlavor";
+        this.codeSystem = "2.16.840.1.113883.5.1";
         this.birth = "0";
         this.maritalStatus = "nullFlavor";
         this.religious = "nullFlavor";
@@ -39,7 +39,7 @@ public class Patient {
         this.ethnicGroup = "nullFlavor";
         this.birthPlace = "nullFlavor";
         this.addrBirthPlace = "nullFlavor";
-        this.idExtension = "nullFlavor";
+        this.idExtension = "M555";
     }
 
     /**
@@ -140,14 +140,16 @@ public class Patient {
 
     /**
      * 
-     * @return
+     * @return Inscrição OID correspondente ao gênero do paciente.
      */
     public String getCodeSystem() {
         return codeSystem;
     }
 
     /**
-     *
+     * Inserir a inscrição OID correspondente ao gênero do paciente:
+     * <p>Exemplo de inserção: 2.16.840.1.113883.5.1<p>
+     * @see http://oid-info.com/
      * @param codeSystem
      */
     public void setCodeSystem(String codeSystem) {

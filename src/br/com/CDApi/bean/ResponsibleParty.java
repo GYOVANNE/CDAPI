@@ -25,10 +25,10 @@ public class ResponsibleParty {
      *
      */
     public ResponsibleParty() {
-        this.idRoot = "nullFlavor";
-        this.extension = "nullFlavor";
+        this.idRoot = "1.3.6.1.4.1.16517";
+        this.extension = "100^INTERNAL MEDICINE";
         this.date = "0";
-        this.id = "nullFlavor";
+        this.id = "UNK";
         this.state = "nullFlavor";
         this.city = "nullFlavor";
         this.postal = "0";
