@@ -101,4 +101,10 @@ public class Author {
     public String getCrm() {
 		return crm;
     }
+
+    @Override
+    public String toString() {
+        return "addr=" + addr + "\nphone=" + phone + "\nname=" + name + "\nfamily=" + family + "\ncrm=" + crm;
+    }
+    
 }

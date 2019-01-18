@@ -314,5 +314,10 @@ public class Patient {
     public void setIdExtension(String idExtension) {
         this.idExtension = idExtension;
     }
+
+    @Override
+    public String toString() {
+        return "id=" + id + "\naddr=" + addr + "\nphone=" + phone + "\nname=" + name + "\nfamily=" + family + "\ngender=" + gender + "\ncodeSystem=" + codeSystem + "\nbirth=" + birth + "\nmaritalStatus=" + maritalStatus + "\nreligious=" + religious + "\nrace=" + race + "\nethnicGroup=" + ethnicGroup + "\nbirthPlace=" + birthPlace + "\naddrBirthPlace=" + addrBirthPlace + "\nidExtension=" + idExtension;
+    }
     
 }

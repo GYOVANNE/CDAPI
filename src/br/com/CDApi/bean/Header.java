@@ -238,5 +238,10 @@ public class Header {
     public void setVersion(int version) {
         this.version = version;
     }
-	
+
+    @Override
+    public String toString() {
+        return "realmCode=" + realmCode + "\n idRoot=" + idRoot + "\n extension=" + extension + "\n code=" + code + "\n displayName=" + displayName + "\n codeSystem=" + codeSystem + "\n codeSystemName=" + codeSystemName + "\n efetiveTime=" + efetiveTime + "\n id=" + id + "\n version=" + version;
+    }
+    
 }

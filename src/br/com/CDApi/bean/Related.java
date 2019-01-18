@@ -83,4 +83,10 @@ public class Related {
     public String getVersion() {
 		return version;
 	}
+
+    @Override
+    public String toString() {
+        return "code=" + code + "\nid=" + id + "\nextension=" + extension + "\nversion=" + version;
+    }
+    
 }

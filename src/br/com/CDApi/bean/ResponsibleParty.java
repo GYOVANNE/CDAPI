@@ -263,5 +263,11 @@ public class ResponsibleParty {
      */
     public String getLocation() {
 		return location;
-	}
+    }
+
+    @Override
+    public String toString() {
+        return "idRoot=" + idRoot + "\nextension=" + extension + "\ndate=" + date + "\nid=" + id + "\nstate=" + state + "\ncity=" + city + "\npostal=" + postal + "\nstreet=" + street + "\nphone=" + phone + "\nuse=" + use + "\nfamily=" + family + "\nname=" + name + "\nsuffixe=" + suffixe + "\nlocation=" + location;
+    }
+    
 }
