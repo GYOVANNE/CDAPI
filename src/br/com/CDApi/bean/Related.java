@@ -5,10 +5,11 @@ package br.com.CDApi.bean;
  * @author Gyovanne Cavalcanti
  */
 public class Related {
-	private String code;
-	private String id;
-	private String extension;
-	private String version;
+
+    private String code;
+    private String id;
+    private String extension;
+    private String version;
 
     /**
      *
@@ -19,74 +20,74 @@ public class Related {
         this.extension = "nullFlavor";
         this.version = "0";
     }
-	
+
     /**
      *
      * @param code
      */
     public void setCode(String code) {
-		this.code = code;
-	}
+        this.code = code;
+    }
 
     /**
      *
      * @return
      */
     public String getCode() {
-		return code;
-	}
+        return code;
+    }
 
     /**
      *
      * @param id
      */
     public void setID(String id) {
-		this.id = id;
-	}
+        this.id = id;
+    }
 
     /**
      *
      * @return
      */
     public String getId() {
-		return id;
-	}
+        return id;
+    }
 
     /**
      *
      * @param extension
      */
     public void setExtension(String extension) {
-		this.extension= extension;
-	}
+        this.extension = extension;
+    }
 
     /**
      *
      * @return
      */
     public String getExtension() {
-		return extension;
-	}
+        return extension;
+    }
 
     /**
      *
      * @param version
      */
     public void setVersion(String version) {
-		this.version= version;
-	}
+        this.version = version;
+    }
 
     /**
      *
      * @return
      */
     public String getVersion() {
-		return version;
-	}
+        return version;
+    }
 
     @Override
     public String toString() {
         return "code=" + code + "\nid=" + id + "\nextension=" + extension + "\nversion=" + version;
     }
-    
+
 }

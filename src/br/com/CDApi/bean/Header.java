@@ -4,20 +4,23 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
- *Classe responsavel por gerenciar as informaçoes referentes ao cabeçalho do documento.
+ * Classe responsavel por gerenciar as informaçoes referentes ao cabeçalho do
+ * documento.
+ *
  * @author Gyovanne Cavalcanti
  */
 public class Header {
-	private String realmCode;
-	private String idRoot;
-	private String extension;
-	private String code;
-        private String displayName;
-        private String codeSystem;
-        private String codeSystemName;
-	private String efetiveTime;
-	private String id;
-	private int version;
+
+    private String realmCode;
+    private String idRoot;
+    private String extension;
+    private String code;
+    private String displayName;
+    private String codeSystem;
+    private String codeSystemName;
+    private String efetiveTime;
+    private String id;
+    private int version;
 
     /**
      *
@@ -34,13 +37,16 @@ public class Header {
         this.id = "nullFlavor";
         this.version = 1;
     }
+
     private static String date(String form) {
         SimpleDateFormat format = new SimpleDateFormat(form);
         Calendar today = Calendar.getInstance();
-        return(format.format(today.getTime()));
+        return (format.format(today.getTime()));
     }
+
     /**
      * Retorna informaçao da regiao para qual o conteudo é escrito.
+     *
      * @return O código de território.
      */
     public String getRealmCode() {
@@ -48,15 +54,17 @@ public class Header {
     }
 
     /**
-     * O elemento {@code realmCode} é opcional.
-     * Quando aparece, declara a regiao(ou regioes, como pode repetir) para o qual o conteúdo é escrito.
-     * O código de território geralmente é usado para indicar quais políticas regionais são aplicáveis ao conteúdo.
+     * O elemento {@code realmCode} é opcional. Quando aparece, declara a
+     * regiao(ou regioes, como pode repetir) para o qual o conteúdo é escrito. O
+     * código de território geralmente é usado para indicar quais políticas
+     * regionais são aplicáveis ao conteúdo.
+     *
      * @param realmCode
      */
     public void setRealmCode(String realmCode) {
         this.realmCode = realmCode;
     }
-    
+
     /**
      *
      * @return Identidade do documento clinico.
@@ -66,11 +74,12 @@ public class Header {
     }
 
     /**
-     *. O atributo Id fornece uma identidade única para o documento
-     * clínico. Dois documentos com o mesmo Id gravado no interior devem
-     * ser idênticos respeito ao conteúdo. Os bytes usados para representar o
-     * XML podem ser diferentes (por exemplo, um em EBCDIC e outro em UCS-16),
-     * mas o conteúdo deve ser o mesmo.
+     * . O atributo Id fornece uma identidade única para o documento clínico.
+     * Dois documentos com o mesmo Id gravado no interior devem ser idênticos
+     * respeito ao conteúdo. Os bytes usados para representar o XML podem ser
+     * diferentes (por exemplo, um em EBCDIC e outro em UCS-16), mas o conteúdo
+     * deve ser o mesmo.
+     *
      * @param idRoot
      */
     public void setIdRoot(String idRoot) {
@@ -95,16 +104,17 @@ public class Header {
 
     /**
      *
-     * @return 
+     * @return
      */
     public String getCode() {
         return code;
     }
 
     /**
-     * O atributo {@code code} identifica um conceito específico dentro desse conjunto,
-     * assim como o atributo {@code extension} identifica uma instância específica de um
-     * identificador dentro do tipo de dados II.
+     * O atributo {@code code} identifica um conceito específico dentro desse
+     * conjunto, assim como o atributo {@code extension} identifica uma
+     * instância específica de um identificador dentro do tipo de dados II.
+     *
      * @param code
      */
     public void setCode(String code) {
@@ -120,11 +130,13 @@ public class Header {
     }
 
     /**
-     * O atributo XML {@code displayName} fornece um nome legível para o código. este
-     * atributo carrega semântica computável e é simplesmente fornecido como uma
-     * ajuda para interpretação humana. Em um documento CDA, o displayName deve aparecer normalmente
-     * no mesmo idioma que o documento está escrito. No cabeçalho {@code displayName} refere-se ao 
-     * nome do sistema que esta sendo utilziado.
+     * O atributo XML {@code displayName} fornece um nome legível para o código.
+     * este atributo carrega semântica computável e é simplesmente fornecido
+     * como uma ajuda para interpretação humana. Em um documento CDA, o
+     * displayName deve aparecer normalmente no mesmo idioma que o documento
+     * está escrito. No cabeçalho {@code displayName} refere-se ao nome do
+     * sistema que esta sendo utilziado.
+     *
      * @param displayName
      */
     public void setDisplayName(String displayName) {
@@ -140,16 +152,18 @@ public class Header {
     }
 
     /**
-     * O atributo {@code codeSystem} identifica um conjunto (ou espaço de nomes) de
-     * conceitos, assim como o atributo {@code root} do tipo de dados II identifica um
-     * conjunto (ou namespace) de identificadores.Quando
+     * O atributo {@code codeSystem} identifica um conjunto (ou espaço de nomes)
+     * de conceitos, assim como o atributo {@code root} do tipo de dados II
+     * identifica um conjunto (ou namespace) de identificadores.Quando
      * nullFlavor assume o valor de OTH, o atributo codeSystem é necessário para
      * estar presente para indicar em que sistema de codificação o valor não
-     * pôde ser codificado.
-     * Os códigos ICD-9-CM pode ser usado como o valor do atributo.
-     * Um exemplo de entrada para este codeSystem é : <p>
-     * 2.16.840.1.113883.6.103<p>
+     * pôde ser codificado. Os códigos ICD-9-CM pode ser usado como o valor do
+     * atributo. Um exemplo de entrada para este codeSystem é :
+     * <p>
+     * 2.16.840.1.113883.6.103
+     * <p>
      * Código de inscrição OID para códgigos de diagnósticos ICD-9-CM
+     *
      * @see http://oid-info.com/
      * @param codeSystem
      */
@@ -166,9 +180,9 @@ public class Header {
     }
 
     /**
-     * O atributo XML {@code codeSystemName} fornece um nome legível para o sistema de
-     * código. Este atributo não carrega semântica computável e é simplesmente
-     * fornecido como uma ajuda para a interpretação humana.
+     * O atributo XML {@code codeSystemName} fornece um nome legível para o
+     * sistema de código. Este atributo não carrega semântica computável e é
+     * simplesmente fornecido como uma ajuda para a interpretação humana.
      *
      * @param codeSystemName
      */
@@ -197,8 +211,10 @@ public class Header {
      * qualquer momento. o O tempo de criação de um documento clínico deve
      * corresponder ao tempo de participação mais os autores do documento
      * clínico.<p>
-     * Insira o valor {@code null} para que o documento seja formatado com a data e hora atual do sistema,
-     * ou você pode passar um valor data {@code String} no parâmetro.
+     * Insira o valor {@code null} para que o documento seja formatado com a
+     * data e hora atual do sistema, ou você pode passar um valor data
+     * {@code String} no parâmetro.
+     *
      * @param efetiveIime
      */
     public void setEfetiveTime(String efetiveIime) {
@@ -223,7 +239,7 @@ public class Header {
     }
 
     /**
-     * 
+     *
      * @return Versão do documento
      */
     public int getVersion() {
@@ -231,7 +247,8 @@ public class Header {
     }
 
     /**
-     * O atributo de classe version é usados para identificar a versão do documento.
+     * O atributo de classe version é usados para identificar a versão do
+     * documento.
      *
      * @param version
      */
@@ -243,5 +260,5 @@ public class Header {
     public String toString() {
         return "realmCode=" + realmCode + "\n idRoot=" + idRoot + "\n extension=" + extension + "\n code=" + code + "\n displayName=" + displayName + "\n codeSystem=" + codeSystem + "\n codeSystemName=" + codeSystemName + "\n efetiveTime=" + efetiveTime + "\n id=" + id + "\n version=" + version;
     }
-    
+
 }

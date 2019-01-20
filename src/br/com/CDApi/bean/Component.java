@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class Component {
 
-    private final ArrayList <Object> content;
+    private final ArrayList<Object> content;
     private final String title;
 
     /**
@@ -23,6 +23,7 @@ public class Component {
 
     /**
      * Retorna um ArrayList com o conteudo do componente.
+     *
      * @return
      */
     public ArrayList<Object> getContent() {
@@ -31,6 +32,7 @@ public class Component {
 
     /**
      * Retorna o titulo do componente
+     *
      * @return
      */
     public String getTitle() {
@@ -40,10 +42,10 @@ public class Component {
     @Override
     public String toString() {
         String cont = "";
-        for(int i =0; i < content.size();i++){
+        for (int i = 0; i < content.size(); i++) {
             cont += content.get(i).toString() + "\n";
         }
-        return title+"\n"+cont;
+        return title + "\n" + cont;
     }
-    
+
 }

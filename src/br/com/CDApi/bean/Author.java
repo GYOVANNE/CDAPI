@@ -2,9 +2,11 @@ package br.com.CDApi.bean;
 
 /**
  * Classe responsavel por gerenciar as informaçoes do medico.
+ *
  * @author Gyovanne Cavalcanti
  */
 public class Author {
+
     private String addr;
     private String phone;
     private String name;
@@ -21,9 +23,18 @@ public class Author {
         this.family = "nullFlavor";
         this.crm = "nullFlavor";
     }
- 
+
+    public Author(String addr, String phone, String name, String family, String crm) {
+        this.addr = addr;
+        this.phone = phone;
+        this.name = name;
+        this.family = family;
+        this.crm = crm;
+    }
+
     /**
      * Retorna o endereço do medico.
+     *
      * @return
      */
     public String getAddr() {
@@ -32,6 +43,7 @@ public class Author {
 
     /**
      * Inserir o endereço do medico.
+     *
      * @param addr
      */
     public void setAddr(String addr) {
@@ -40,6 +52,7 @@ public class Author {
 
     /**
      * Retorna o telefone do medico.
+     *
      * @return
      */
     public String getPhone() {
@@ -48,6 +61,7 @@ public class Author {
 
     /**
      * Inserir o telefone do medico.
+     *
      * @param phone
      */
     public void setPhone(String phone) {
@@ -56,6 +70,7 @@ public class Author {
 
     /**
      * Retorna o primeiro nome do medico.
+     *
      * @return
      */
     public String getName() {
@@ -63,7 +78,8 @@ public class Author {
     }
 
     /**
-     *Inserir o primeiro nome do medico.
+     * Inserir o primeiro nome do medico.
+     *
      * @param name
      */
     public void setName(String name) {
@@ -72,6 +88,7 @@ public class Author {
 
     /**
      * Retorna o sobrenome do medico.
+     *
      * @return
      */
     public String getFamily() {
@@ -80,31 +97,34 @@ public class Author {
 
     /**
      * Inserir o sobrenome do medico.
+     *
      * @param family
      */
     public void setFamily(String family) {
         this.family = family;
     }
-    
+
     /**
      * Inserir o numero da CRM do medico.
+     *
      * @param crm
      */
     public void setCrm(String crm) {
-		this.crm = crm;
+        this.crm = crm;
     }
 
     /**
      * Retorna o numero da CRM do medico.
+     *
      * @return
      */
     public String getCrm() {
-		return crm;
+        return crm;
     }
 
     @Override
     public String toString() {
         return "addr=" + addr + "\nphone=" + phone + "\nname=" + name + "\nfamily=" + family + "\ncrm=" + crm;
     }
-    
+
 }

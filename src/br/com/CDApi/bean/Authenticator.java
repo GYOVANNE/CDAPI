@@ -1,10 +1,13 @@
 package br.com.CDApi.bean;
 
 /**
- * Classe responsavel por gerenciar as informaçoes referentes a autenticidade do paciente.
+ * Classe responsavel por gerenciar as informaçoes referentes a autenticidade do
+ * paciente.
+ *
  * @author Gyovanne Cavalcanti
  */
 public class Authenticator {
+
     private String code;
 
     /**
@@ -13,25 +16,30 @@ public class Authenticator {
     public Authenticator() {
         this.code = "nullFlavor";
     }
+
+    public Authenticator(String code) {
+        this.code = code;
+    }
+
     /**
      *
      * @param code
      */
     public void setCode(String code) {
-		this.code = code;
-	}
+        this.code = code;
+    }
 
     /**
      *
      * @return
      */
     public String getCode() {
-		return code;
+        return code;
     }
 
     @Override
     public String toString() {
         return "code=" + code;
     }
-    
+
 }
