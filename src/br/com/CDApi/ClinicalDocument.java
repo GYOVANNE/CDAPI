@@ -15,6 +15,7 @@ import java.util.Calendar;
  *
  * @author Gyovanne Cavalcanti
  * @version 1.0
+ * @see sites.google.com/view/cdapi
  */
 public class ClinicalDocument {
     private static String local(String fileName) {
