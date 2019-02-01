@@ -8,38 +8,38 @@ package br.com.CDApi.bean;
  */
 public class Authenticator {
 
-    private String code;
+	private String code;
 
-    /**
-     *
-     */
-    public Authenticator() {
-        this.code = "nullFlavor";
-    }
+	/**
+	 *
+	 */
+	public Authenticator() {
+		this.code = "nullFlavor";
+	}
 
-    public Authenticator(String code) {
-        this.code = code;
-    }
+	public Authenticator(String code) {
+		this.code = code;
+	}
 
-    /**
-     *
-     * @param code
-     */
-    public void setCode(String code) {
-        this.code = code;
-    }
+	/**
+	 *
+	 * @param code
+	 */
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    /**
-     *
-     * @return
-     */
-    public String getCode() {
-        return code;
-    }
+	/**
+	 *
+	 * @return
+	 */
+	public String getCode() {
+		return code;
+	}
 
-    @Override
-    public String toString() {
-        return "code=" + code;
-    }
+	@Override
+	public String toString() {
+		return "code=" + code;
+	}
 
 }
