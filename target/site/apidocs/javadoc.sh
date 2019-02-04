@@ -1,1 +1,1 @@
-/home/gyovanne/jdk1.8.0_111/jre/../bin/javadoc @options @packages
+/home/ufrn/jdk1.8.0_111/jre/../bin/javadoc @options @packages
