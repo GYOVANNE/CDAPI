@@ -11,173 +11,217 @@ import java.io.IOException;
  */
 public class XMLConstruction {
 
-	public XMLConstruction() {
+    /**
+     *
+     * @param logger
+     */
+    public XMLConstruction(CDApiLogger logger) {
+        this.logger = logger;
+    }
 
-	}
+    private int tagSpace;
+    private String space;
+    private final CDApiLogger logger;
+    
+    private void setSpace(String line) {
+        this.space = line;
+    }
 
-	private int tagSpace;
-	private String space;
+    private String getSpace() {
+        return space;
+    }
 
-	private void setSpace(String line) {
-		this.space = line;
-	}
+    private int getTagSpace() {
+        return tagSpace;
+    }
 
-	private String getSpace() {
-		return space;
-	}
+    private void setTagSpace(int tagSpace) {
+        this.tagSpace = tagSpace;
+        String newline = "";
+        for (int i = 0; i < getTagSpace(); i++) {
+            newline += "   ";
+        }
+        setSpace(newline);
+    }
 
-	private int getTagSpace() {
-		return tagSpace;
-	}
+    /**
+     *
+     */
+    public class TAG {
 
-	private void setTagSpace(int tagSpace) {
-		this.tagSpace = tagSpace;
-		String newline = "";
-		for (int i = 0; i < getTagSpace(); i++) {
-			newline += "   ";
-		}
-		setSpace(newline);
-	}
+        private String info;
+        private String content;
+        private TAG first;
+        private TAG next;
 
-	public class TAG {
+        /**
+         *
+         * @return
+         */
+        public String getInfo() {
+            return info;
+        }
 
-		private String info;
-		private String content;
-		private TAG first;
-		private TAG next;
+        /**
+         *
+         * @param info
+         */
+        public void setInfo(String info) {
+            this.info = info;
+        }
 
-		public String getInfo() {
-			return info;
-		}
+        /**
+         *
+         * @return
+         */
+        public String getContent() {
+            return content;
+        }
 
-		public void setInfo(String info) {
-			this.info = info;
-		}
+        /**
+         *
+         * @param content
+         */
+        public void setContent(String content) {
+            this.content = content;
+        }
 
-		public String getContent() {
-			return content;
-		}
+        /**
+         *
+         * @return
+         */
+        public TAG getFirst() {
+            return first;
+        }
 
-		public void setContent(String content) {
-			this.content = content;
-		}
+        /**
+         *
+         * @param first
+         */
+        public void setFirst(TAG first) {
+            this.first = first;
+        }
 
-		public TAG getFirst() {
-			return first;
-		}
+        /**
+         *
+         * @return
+         */
+        public TAG getNext() {
+            return next;
+        }
 
-		public void setFirst(TAG first) {
-			this.first = first;
-		}
+        /**
+         *
+         * @param next
+         */
+        public void setNext(TAG next) {
+            this.next = next;
+        }
+    }
 
-		public TAG getNext() {
-			return next;
-		}
+    /**
+     * Cria uma nova TAG na árvore ao passar como parâmetros o nome da TAG
+     * seguido de seu conteúdo
+     *
+     * @param tagName
+     * @param tagContent
+     * @return
+     */
+    public TAG toCreate(String tagName, String tagContent) {
+        TAG n = new TAG();
+        n.setInfo(tagName);
+        n.setContent(tagContent);
+        n.setFirst(null);
+        n.setNext(null);
+        return n;
+    }
 
-		public void setNext(TAG next) {
-			this.next = next;
-		}
-	}
+    /**
+     * Deleta o arquivo ao qual foi passado como nome no parâmetro do método.
+     *
+     * @param xml
+     */
+    public void toClean(File xml) {
+        if (xml.exists()) {
+            try {
+                xml.delete();
+            } catch (Exception ex ) {
+                logger.setup();
+                logger.severe(this.getClass().getName(), "toClean", ex.getLocalizedMessage());
+            }
+        }
+    }
 
-	/**
-	 * Cria uma nova TAG na árvore ao passar como parâmetros o nome da TAG seguido
-	 * de seu conteúdo
-	 *
-	 * @param tagName
-	 * @param tagContent
-	 * @return
-	 */
-	public TAG toCreate(String tagName, String tagContent) {
-		TAG n = new TAG();
-		n.setInfo(tagName);
-		n.setContent(tagContent);
-		n.setFirst(null);
-		n.setNext(null);
-		return n;
-	}
+    /**
+     * Organização dos nós para contrução da árvore. Essa inserção se dá por
+     * inserir a sub-TAG na TAG pai.
+     *
+     * @param tag
+     * @param subTag
+     */
+    public void toInsert(TAG tag, TAG subTag) {
+        subTag.setNext(tag.getFirst());
+        tag.setFirst(subTag);
+    }
 
-	/**
-	 * Deleta o arquivo ao qual foi passado como nome no parâmetro do método.
-	 *
-	 * @param xml
-	 */
-	public void toClean(File xml) {
-		if (xml.exists()) {
-			try {
-				xml.delete();
-			} catch (Exception ex) {
-				System.err.println(ex.getLocalizedMessage());
-			}
-		}
-	}
+    /**
+     * Impressão da árvore XML. Na chamada desse método, é necessário passar
+     * como parâmetro a TAG principal, a qual está contida todo o conteúdo da
+     * árvore.
+     *
+     * @param tag
+     * @param fw
+     */
+    public void toPrint(TAG tag, FileWriter fw) {
+        try {
+            setTagSpace(getTagSpace());
+            if (tag.getFirst() == null && tag.getContent().equals("")) {
+                // WRITE JUST ONE LINE <CONTENT/>
+                fw.write(String.format("\n" + getSpace() + "<%s/>", tag.getInfo()));
+            } else if (tag.getFirst() == null && tag.getInfo().equals("")) {
+                fw.write(String.format("\n%s", tag.getInfo()));
+            } else {
+                fw.write(String.format("\n" + getSpace() + "<%s>", tag.getInfo()));
+            }
+            // WRITE CONTENT
+            fw.write(String.format("%s", tag.getContent()));
+            setTagSpace(getTagSpace() + 1);// advance row
 
-	/**
-	 * Organização dos nós para contrução da árvore. Essa inserção se dá por inserir
-	 * a sub-TAG na TAG pai.
-	 *
-	 * @param tag
-	 * @param subTag
-	 */
-	public void toInsert(TAG tag, TAG subTag) {
-		subTag.setNext(tag.getFirst());
-		tag.setFirst(subTag);
-	}
+        } catch (IOException ex) {
+            logger.setup();
+            logger.severe(this.getClass().getName(), "toPrint", ex.getLocalizedMessage());
+        }
 
-	/**
-	 * Impressão da árvore XML. Na chamada desse método, é necessário passar como
-	 * parâmetro a TAG principal, a qual está contida todo o conteúdo da árvore.
-	 *
-	 * @param tag
-	 * @param fw
-	 */
-	public void toPrint(TAG tag, FileWriter fw) {
-		try {
-			setTagSpace(getTagSpace());
-			if (tag.getFirst() == null && tag.getContent().equals("")) {
-				// WRITE JUST ONE LINE <CONTENT/>
-				fw.write(String.format("\n" + getSpace() + "<%s/>", tag.getInfo()));
-			} else if (tag.getFirst() == null && tag.getInfo().equals("")) {
-				fw.write(String.format("\n%s", tag.getInfo()));
-			} else {
-				fw.write(String.format("\n" + getSpace() + "<%s>", tag.getInfo()));
-			}
-			// WRITE CONTENT
-			fw.write(String.format("%s", tag.getContent()));
-			setTagSpace(getTagSpace() + 1);// advance row
+        for (TAG p = tag.getFirst(); p != null; p = p.getNext()) {
+            toPrint(p, fw);
+        }
 
-		} catch (IOException ex) {
-			System.err.println(ex.getLocalizedMessage());
-		}
+        int pos = tag.getInfo().indexOf(' ');// CHECKS SPACE IN <TAG>
 
-		for (TAG p = tag.getFirst(); p != null; p = p.getNext()) {
-			toPrint(p, fw);
-		}
-
-		int pos = tag.getInfo().indexOf(' ');// CHECKS SPACE IN <TAG>
-
-		try {
-			setTagSpace(getTagSpace() - 1);// back row
-			if (tag.getFirst() != null) {
-				if (pos != -1) // SPACE IN THE </TAG_>
-				{
-					fw.write(String.format("\n" + getSpace() + "</%s>", tag.getInfo().substring(0, pos)));
-				} else // NO SPACE IN THE </TAG>
-				{
-					fw.write(String.format("\n" + getSpace() + "</%s>", tag.getInfo()));
-				}
-			} else if (tag.getFirst() == null && tag.getInfo().equals("")) {
-				fw.write(String.format("%s", tag.getInfo()));
-			} else if (tag.getFirst() == null && !tag.getContent().equals("")) {
-				if (pos != -1) // SPACE IN THE </TAG_>
-				{
-					fw.write(String.format(getSpace() + "</%s>", tag.getInfo().substring(0, pos)));
-				} else // NO SPACE IN THE </TAG>
-				{
-					fw.write(String.format("</%s>", tag.getInfo()));
-				}
-			}
-		} catch (IOException ex) {
-			System.err.println(ex.getLocalizedMessage());
-		}
-	}
+        try {
+            setTagSpace(getTagSpace() - 1);// back row
+            if (tag.getFirst() != null) {
+                if (pos != -1) // SPACE IN THE </TAG_>
+                {
+                    fw.write(String.format("\n" + getSpace() + "</%s>", tag.getInfo().substring(0, pos)));
+                } else // NO SPACE IN THE </TAG>
+                {
+                    fw.write(String.format("\n" + getSpace() + "</%s>", tag.getInfo()));
+                }
+            } else if (tag.getFirst() == null && tag.getInfo().equals("")) {
+                fw.write(String.format("%s", tag.getInfo()));
+            } else if (tag.getFirst() == null && !tag.getContent().equals("")) {
+                if (pos != -1) // SPACE IN THE </TAG_>
+                {
+                    fw.write(String.format(getSpace() + "</%s>", tag.getInfo().substring(0, pos)));
+                } else // NO SPACE IN THE </TAG>
+                {
+                    fw.write(String.format("</%s>", tag.getInfo()));
+                }
+            }
+        } catch (IOException ex) {
+            logger.setup();
+            logger.severe(this.getClass().getName(), "toPrint", ex.getLocalizedMessage());
+        }
+    }
 }
