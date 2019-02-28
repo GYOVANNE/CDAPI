@@ -4,7 +4,7 @@ package org.cdapi.bean;
  *
  * @author Gyovanne Cavalcanti
  */
-public class Related {
+public class RelatedDocument {
 
     private String code;
     private String id;
@@ -14,7 +14,7 @@ public class Related {
     /**
      *
      */
-    public Related() {
+    public RelatedDocument() {
         this.code = "nullFlavor";
         this.id = "nullFlavor";
         this.extension = "nullFlavor";

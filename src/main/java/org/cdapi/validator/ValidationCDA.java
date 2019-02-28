@@ -1,6 +1,5 @@
 package org.cdapi.validator;
 
-import org.cdapi.structure.CDApiLogger;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
@@ -17,12 +16,12 @@ import org.xml.sax.SAXException;
  * Classe responsável por validar o conteúdo XML.
  *
  * @author Gyovanne Cavalcanti
+ * @version 1.0
  */
 public class ValidationCDA {
 
     private URL xsdFile;
     private String notification;
-    private CDApiLogger logger;
 
     /**
      * Retorna uma representação String do objeto. Em geral, o método

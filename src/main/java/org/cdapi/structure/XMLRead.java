@@ -2,7 +2,7 @@ package org.cdapi.structure;
 
 import org.cdapi.bean.Component;
 import org.cdapi.bean.ResponsibleParty;
-import org.cdapi.bean.Related;
+import org.cdapi.bean.RelatedDocument;
 import org.cdapi.bean.Authenticator;
 import org.cdapi.bean.Author;
 import org.cdapi.bean.Patient;
@@ -21,6 +21,7 @@ import java.util.StringTokenizer;
  * Classe responsável por ler o conteúdo do arquivo XML.
  *
  * @author Gyovanne Cavalcanti
+ * @version 1.0
  */
 public class XMLRead {
 
@@ -120,7 +121,7 @@ public class XMLRead {
 
             getClinicalDocument().setAuthenticator(authenticator);
 
-            Related related = new Related();
+            RelatedDocument related = new RelatedDocument();
 
             related.setCode(getTag("/legalAuthenticator", "relatedDocument", "relatedDocument", 0));
             related.setID(getTag("relatedDocument", null, "id", 2));
@@ -132,13 +133,11 @@ public class XMLRead {
             try {
                 getClinicalDocument().setComponents(getList());
             } catch (IOException ex) {
-                getClinicalDocument().getLogger().setup();
-                getClinicalDocument().getLogger().severe(this.getClass().getName(),"toRead",ex.getLocalizedMessage());
+                System.err.println(ex.getLocalizedMessage());
             }
 
         } catch (NumberFormatException ex) {
-            getClinicalDocument().getLogger().setup();
-            getClinicalDocument().getLogger().severe(this.getClass().getName(),"toRead",ex.getLocalizedMessage());
+            System.err.println(ex.getLocalizedMessage());
         }
     }
 
@@ -220,8 +219,7 @@ public class XMLRead {
             fr.close();
             br.close();
         } catch (IOException ex) {
-            getClinicalDocument().getLogger().setup();
-            getClinicalDocument().getLogger().severe(this.getClass().getName(),"getTag",ex.getLocalizedMessage());
+            System.err.println(ex.getLocalizedMessage());
         }
         return null;
     }
@@ -270,8 +268,7 @@ public class XMLRead {
                 }
             }
         } catch (IOException ex) {
-            getClinicalDocument().getLogger().setup();
-            getClinicalDocument().getLogger().severe(this.getClass().getName(),"getList",ex.getLocalizedMessage());
+            System.err.println(ex.getLocalizedMessage());
         }
         return null;
     }

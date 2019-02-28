@@ -37,15 +37,16 @@ public class ClinicalDocument {
     private Patient patient;
     private Author author;
     private Authenticator authenticator;
-    private Related related;
+    private RelatedDocument related;
     private ResponsibleParty responsibleParty;
     private ArrayList<Component> components;
-    private CDApiLogger logger;
 
     /**
      * Contrutor com argumento necessário para leitura do Arquivo XML. <br>
-     * Necessário informar o Arquivo XML ao qual será usado para leitura. <br>
-     * Exemplo de implementação:<br>
+     * Necessário informar o Arquivo XML ao qual será usado para leitura.
+     * Instancie um objeto desta classe antes de obter os valores getters de
+     * retorno dos métodos pertencente a esta classe. <br> Exemplo de
+     * implementação:<br>
      * <blockquote>
      *
      * <pre>
@@ -58,7 +59,6 @@ public class ClinicalDocument {
      * @param xml Arquivo xml que sera lido.
      */
     public ClinicalDocument(File xml) {
-        logger = new CDApiLogger();
         this.status = true;
         if (xml.exists()) {
             ValidationCDA vcda = new ValidationCDA();
@@ -66,17 +66,14 @@ public class ClinicalDocument {
                 if (vcda.toValidate(xml)) {
                     new XMLRead(this, xml).toRead();
                 } else {
-                    logger.setup();
-                    logger.warning(this.getClass().getName(), "Constructor", "Arquivo não pode ser lido, pois ocorreu um erro de validação!\n");
+                    System.err.println("Arquivo não pode ser lido, pois ocorreu um erro de validação!\n");
                     System.err.println(vcda.getNotification());
                 }
             } catch (IOException ex) {
-                logger.setup();
-                logger.severe(this.getClass().getName(), "Constructor", ex.getLocalizedMessage());
+                System.err.println(ex.getLocalizedMessage());
             }
         } else {
-            logger.setup();
-            logger.warning(this.getClass().getName(), "Constructor", "Arquivo XML não encontrado!");
+            System.err.println("Arquivo XML não encontrado!");
         }
     }
 
@@ -98,12 +95,7 @@ public class ClinicalDocument {
      * </blockquote>
      */
     public ClinicalDocument() {
-        logger = new CDApiLogger();
         this.status = false;
-    }
-
-    public CDApiLogger getLogger() {
-        return logger;
     }
 
     private File getXmlFile() {
@@ -291,14 +283,14 @@ public class ClinicalDocument {
     }
 
     /**
-     * Retorna uma representação Related do objeto. Em geral, o método
-     * {@code getRelated} retorna um Related que representa este objeto.
+     * Retorna uma representação RelatedDocument do objeto. Em geral, o método
+     * {@code getRelated} retorna um RelatedDocument que representa este objeto.
      * <p>
      * O método {@code getRelated} para a classe {@code ClinicalDocument}
-     * retorna um Related consistindo nos dados relacionados do qual o objeto é
-     * uma instância. Em outras palavras, este método deve retornar a informação
-     * contida no método instanciado por este objeto, como mostrado na
-     * implementação: <blockquote>
+     * retorna um RelatedDocument consistindo nos dados relacionados do qual o
+     * objeto é uma instância. Em outras palavras, este método deve retornar a
+     * informação contida no método instanciado por este objeto, como mostrado
+     * na implementação: <blockquote>
      *
      * <pre>
      * {@code
@@ -307,30 +299,30 @@ public class ClinicalDocument {
      *
      * </blockquote>
      *
-     * @return uma representação Related do objeto.
+     * @return uma representação RelatedDocument do objeto.
      */
-    public Related getRelated() {
+    public RelatedDocument getRelated() {
         return related;
     }
 
     /**
-     * Recebe uma representação Related do objeto. O método {@code setRelated}
-     * para a classe {@code ClinicalDocument} deve receber as informações
-     * necessárias de um {@code Related} para que seja preenchido nos campos que
-     * corresponde aos dados de relacionados no documento CDA. Para isto, as
-     * informações devem ser válidas. O método deve ser instanciado como
-     * mostrado na implementação:
+     * Recebe uma representação RelatedDocument do objeto. O método
+     * {@code setRelated} para a classe {@code ClinicalDocument} deve receber as
+     * informações necessárias de um {@code RelatedDocument} para que seja
+     * preenchido nos campos que corresponde aos dados de relacionados no
+     * documento CDA. Para isto, as informações devem ser válidas. O método deve
+     * ser instanciado como mostrado na implementação:
      * <blockquote>
      *
      * <pre>
-     * {@code clinicalDocument.setRelated(Related related);}
+     * {@code clinicalDocument.setRelated(RelatedDocument related);}
      * </pre>
      *
      * </blockquote>
      *
      * @param related
      */
-    public void setRelated(Related related) {
+    public void setRelated(RelatedDocument related) {
         this.related = related;
     }
 
@@ -466,7 +458,7 @@ public class ClinicalDocument {
     public boolean toGenerateCDAFile(String path) {
         boolean value;
         if (this.status == true) {
-            logger.warning(this.getClass().getName(), "Constructor", "Para gerar o arquivo o contrutor da classe ClinicalDocument não pode conter parâmetros!");
+            System.err.println("Para gerar o arquivo o contrutor da classe ClinicalDocument não pode conter parâmetros!");
             return false;
         }
         toInitializeObjects();
@@ -491,11 +483,10 @@ public class ClinicalDocument {
                     value = true;
                 } else {
                     value = false;
-                    logger.severe(this.getClass().getName(), "toGenerateCDAFile", vcda.getNotification());
+                    System.err.println(vcda.getNotification());
                 }
             } catch (IOException ex) {
-                logger.setup();
-                logger.severe(this.getClass().getName(), "toGenerateCDAFile", ex.getLocalizedMessage());
+                System.err.println(ex.getLocalizedMessage());
                 value = false;
             }
         } else {
@@ -545,7 +536,7 @@ public class ClinicalDocument {
             this.authenticator = new Authenticator();
         }
         if (this.related == null) {
-            this.related = new Related();
+            this.related = new RelatedDocument();
         }
         if (this.responsibleParty == null) {
             this.responsibleParty = new ResponsibleParty();

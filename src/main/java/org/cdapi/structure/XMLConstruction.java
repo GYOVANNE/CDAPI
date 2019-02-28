@@ -15,14 +15,12 @@ public class XMLConstruction {
      *
      * @param logger
      */
-    public XMLConstruction(CDApiLogger logger) {
-        this.logger = logger;
+    public XMLConstruction() {
     }
 
     private int tagSpace;
     private String space;
-    private final CDApiLogger logger;
-    
+
     private void setSpace(String line) {
         this.space = line;
     }
@@ -145,9 +143,8 @@ public class XMLConstruction {
         if (xml.exists()) {
             try {
                 xml.delete();
-            } catch (Exception ex ) {
-                logger.setup();
-                logger.severe(this.getClass().getName(), "toClean", ex.getLocalizedMessage());
+            } catch (Exception ex) {
+                System.err.println(ex.getLocalizedMessage());
             }
         }
     }
@@ -188,8 +185,7 @@ public class XMLConstruction {
             setTagSpace(getTagSpace() + 1);// advance row
 
         } catch (IOException ex) {
-            logger.setup();
-            logger.severe(this.getClass().getName(), "toPrint", ex.getLocalizedMessage());
+            System.err.println(ex.getLocalizedMessage());
         }
 
         for (TAG p = tag.getFirst(); p != null; p = p.getNext()) {
@@ -220,8 +216,7 @@ public class XMLConstruction {
                 }
             }
         } catch (IOException ex) {
-            logger.setup();
-            logger.severe(this.getClass().getName(), "toPrint", ex.getLocalizedMessage());
+            System.err.println(ex.getLocalizedMessage());
         }
     }
 }

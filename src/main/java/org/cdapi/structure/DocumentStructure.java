@@ -34,7 +34,7 @@ public class DocumentStructure {
     public DocumentStructure(File file, ClinicalDocument clinicalDocument) {
         this.file = file;
         this.clinicalDocument = clinicalDocument;
-        this.xmlc = new XMLConstruction(getClinicalDocument().getLogger());
+        this.xmlc = new XMLConstruction();
     }
 
     /**
@@ -301,8 +301,7 @@ public class DocumentStructure {
             System.out.println("Success when writing file\n");
             return true;
         } catch (IOException ex) {
-            getClinicalDocument().getLogger().setup();
-            getClinicalDocument().getLogger().severe(this.getClass().getName(), "generateContent", ex.getLocalizedMessage());
+            System.err.println(ex.getLocalizedMessage());
             return false;
         }
     }
