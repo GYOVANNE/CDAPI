@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import javax.swing.JOptionPane;
 import org.xml.sax.SAXException;
 
 /**
@@ -20,8 +21,9 @@ import org.xml.sax.SAXException;
  */
 public class ValidationCDA {
 
-    private URL xsdFile;
+    private URL xsdUrl;
     private String notification;
+    private String notificationHtml;
 
     /**
      * Retorna uma representação String do objeto. Em geral, o método
@@ -45,22 +47,43 @@ public class ValidationCDA {
         return notification;
     }
 
-    private void setXsdFile(URL xsdFile) {
-        this.xsdFile = xsdFile;
+    /**
+     * Retorna uma representação String do objeto. Em geral, o método
+     * {@code getNotification} retorna uma String representando o resultado do
+     * processamento de validação do arquivo, se foi bem sucedida ou não.
+     * <p>
+     * O método {@code getNotification} para a classe {@code ValidationCDA}
+     * retorna uma String, que indica o resultado da validação de um documento
+     * CDA, conforme o padrão HL7 CDA. O método deve ser instanciado como
+     * mostrado na implementação: <blockquote>
+     *
+     * <pre>
+     * {@code getClass().getNotification();}
+     * </pre>
+     *
+     * </blockquote>
+     *
+     * @return uma String para fins de representação.
+     */
+    public String getNotificationHtml() {
+        return notificationHtml;
     }
 
-    private URL getXsdFile() {
-        return xsdFile;
+    private void setXsdUrl(URL xsdUrl) {
+        this.xsdUrl = xsdUrl;
     }
 
     private URL localFile() throws IOException {
         return ValidationCDA.class.getResource("/Resources/CDA.xsd");
     }
 
-    private boolean validate(File xml) throws IOException {
-        setXsdFile(localFile());
+    public URL getXsdUrl() {
+        return xsdUrl;
+    }
 
-        if (getXsdFile() == null) {
+    private boolean validate(File xml) throws IOException {
+        setXsdUrl(localFile());
+        if (getXsdUrl() == null) {
             setNotification(xml, false, "Arquivo XSD não encontrado!",
                     "Não foi possivel encontrar o arquivo XSD de origem."
                     + "\nVerifique se a pasta Resources está no diretorio src da aplicação.");
@@ -68,20 +91,21 @@ public class ValidationCDA {
         }
 
         try {
-            SchemaFactory schemafactory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
-
-            URL schemaLocation = getXsdFile();
-            Schema schema = schemafactory.newSchema(schemaLocation);
+            SchemaFactory factory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
+            URL schemaLocation = getXsdUrl();
+            Schema schema = factory.newSchema(schemaLocation);
             Validator validator = schema.newValidator();
 
             Source source = new StreamSource(xml);
 
             validator.validate(source);
             setNotification(xml, true, null, null);
+            setNotificationHtml(xml, true, null, null);
             return true;
 
         } catch (SAXException | IOException ex) {
             setNotification(xml, false, ex.getLocalizedMessage(), ex.toString());
+            setNotificationHtml(xml, false, ex.getLocalizedMessage(), ex.toString());
             return false;
         }
     }
@@ -126,6 +150,17 @@ public class ValidationCDA {
             this.notification += "\n\nValidado\nNenhum problema encontrado!";
         } else {
             this.notification += "\n\nErro de Validação!\n\nMensagem:\n" + message + "\n" + detail;
+        }
+    }
+
+    private void setNotificationHtml(File xml, boolean value, String message, String detail) {
+        this.notificationHtml = "Relatório de validação para " + xml.getName() + "<br>Validando: esquema XML CDA"
+                + "<br>Data de validação: " + getValidationDate() + "<br>Resultado do teste: " + value;
+
+        if (value) {
+            this.notificationHtml += "<br><br>Validado\nNenhum problema encontrado!";
+        } else {
+            this.notificationHtml += "<br><br>Erro de Validação!<br><br>Mensagem:<br>" + message + "<br>" + detail;
         }
     }
 }
