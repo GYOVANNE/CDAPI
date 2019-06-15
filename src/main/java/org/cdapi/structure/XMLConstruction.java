@@ -13,7 +13,6 @@ public class XMLConstruction {
 
     /**
      *
-     * @param logger
      */
     public XMLConstruction() {
     }

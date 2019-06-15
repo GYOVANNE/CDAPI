@@ -77,6 +77,10 @@ public class ValidationCDA {
         return ValidationCDA.class.getResource("/Resources/CDA.xsd");
     }
 
+    /**
+     *
+     * @return
+     */
     public URL getXsdUrl() {
         return xsdUrl;
     }
