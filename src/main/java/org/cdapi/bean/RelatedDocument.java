@@ -9,7 +9,7 @@ public class RelatedDocument {
     private String code;
     private String id;
     private String extension;
-    private String version;
+    private double version;
 
     /**
      *
@@ -18,7 +18,7 @@ public class RelatedDocument {
         this.code = "nullFlavor";
         this.id = "nullFlavor";
         this.extension = "nullFlavor";
-        this.version = "0";
+        this.version = 0.0;
     }
 
     /**
@@ -73,7 +73,7 @@ public class RelatedDocument {
      *
      * @param version
      */
-    public void setVersion(String version) {
+    public void setVersion(double version) {
         this.version = version;
     }
 
@@ -81,7 +81,7 @@ public class RelatedDocument {
      *
      * @return
      */
-    public String getVersion() {
+    public double getVersion() {
         return version;
     }
 

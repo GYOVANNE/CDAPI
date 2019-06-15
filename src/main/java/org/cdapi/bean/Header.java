@@ -20,7 +20,7 @@ public class Header {
     private String codeSystemName;
     private String efetiveTime;
     private String id;
-    private int version;
+    private double version;
 
     /**
      *
@@ -35,7 +35,7 @@ public class Header {
         this.codeSystemName = "ICD-9-CM";
         this.efetiveTime = date("yyyyMMddHHmmss");
         this.id = "nullFlavor";
-        this.version = 1;
+        this.version = 1.0;
     }
 
     private static String date(String form) {
@@ -243,7 +243,7 @@ public class Header {
      *
      * @return Versão do documento
      */
-    public int getVersion() {
+    public double getVersion() {
         return version;
     }
 
@@ -253,7 +253,7 @@ public class Header {
      *
      * @param version
      */
-    public void setVersion(int version) {
+    public void setVersion(double version) {
         this.version = version;
     }
 

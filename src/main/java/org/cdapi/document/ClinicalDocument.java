@@ -455,11 +455,10 @@ public class ClinicalDocument {
      * @param path local para onde sera escrito o arquivo XML
      * @return um valor booleano para fins de verificação.
      */
-    public boolean toGenerateCDAFile(String path) {
-        boolean value;
+    public File toGenerateCDAFile(String path) {
         if (this.status == true) {
             System.err.println("Para gerar o arquivo o contrutor da classe ClinicalDocument não pode conter parâmetros!");
-            return false;
+            return null;
         }
         toInitializeObjects();
         String idFile;
@@ -469,7 +468,6 @@ public class ClinicalDocument {
             idFile = "" + patient.getName() + " " + patient.getFamily() + "_" + patient.getId() + " "
                     + date("dd-MM-yyyy_HH:mm:ss") + ".xml";
         }
-
         if (path != null) {
             setXmlFile(new File(path + "/" + idFile));
         } else {
@@ -477,22 +475,10 @@ public class ClinicalDocument {
         }
 
         if (new DocumentStructure(getXmlFile(), this).generateContent()) {
-            ValidationCDA vcda = new ValidationCDA();
-            try {
-                if (vcda.toValidate(getXmlFile())) {
-                    value = true;
-                } else {
-                    value = false;
-                    System.err.println(vcda.getNotification());
-                }
-            } catch (IOException ex) {
-                System.err.println(ex.getLocalizedMessage());
-                value = false;
-            }
+            return getXmlFile();
         } else {
-            value = false;
+            return null;
         }
-        return value;
     }
 
     /**
@@ -518,7 +504,7 @@ public class ClinicalDocument {
      *
      * @return um valor booleano para fins de verificação.
      */
-    public boolean toGenerateCDAFile() {
+    public File toGenerateCDAFile() {
         return toGenerateCDAFile(null);
     }
 

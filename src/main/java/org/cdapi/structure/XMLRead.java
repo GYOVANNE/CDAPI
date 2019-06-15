@@ -63,7 +63,7 @@ public class XMLRead {
             header.setCodeSystemName(getTag("ClinicalDocument", "recordTarget", "codeSystemName", 7));
             header.setEfetiveTime(getTag("ClinicalDocument", "recordTarget", "effectiveTime ", 3));
             header.setId(getTag("ClinicalDocument", "recordTarget", "setId extension=", 2));
-            header.setVersion(Integer.parseInt(getTag("ClinicalDocument", "recordTarget", "versionNumber ", 3)));
+            header.setVersion(Double.parseDouble(getTag("ClinicalDocument", "recordTarget", "versionNumber ", 3)));
 
             getClinicalDocument().setHeader(header);
 
@@ -126,7 +126,7 @@ public class XMLRead {
             related.setCode(getTag("/legalAuthenticator", "relatedDocument", "relatedDocument", 0));
             related.setID(getTag("relatedDocument", null, "id", 2));
             related.setExtension(getTag("relatedDocument", null, "setId", 2));
-            related.setVersion(getTag("relatedDocument", null, "versionNumber", 3));
+            related.setVersion(Double.parseDouble(getTag("relatedDocument", null, "versionNumber", 3)));
 
             getClinicalDocument().setRelated(related);
 
