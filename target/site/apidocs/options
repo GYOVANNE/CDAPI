@@ -1,0 +1,22 @@
+-encoding
+'UTF-8'
+-protected
+-sourcepath
+'/home/ufrn/Dropbox/Projects JAVA/cda/CDA/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2019. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'/home/ufrn/Dropbox/Projects JAVA/cda/CDA/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'CDApi 1.0 API'
+-linkoffline
+'https://docs.oracle.com/javase/8/docs/api' '/home/ufrn/Dropbox/Projects JAVA/cda/CDA/target/javadoc-bundle-options'
+-use
+-version
+-windowtitle
+'CDApi 1.0 API'
