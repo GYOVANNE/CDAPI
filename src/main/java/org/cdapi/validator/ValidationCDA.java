@@ -24,7 +24,7 @@ public class ValidationCDA {
     private URL xsdUrl;
     private String notification;
     private String notificationHtml;
-
+    private File pathXSD;
     /**
      * Retorna uma representação String do objeto. Em geral, o método
      * {@code getNotification} retorna uma String representando o resultado do
@@ -45,6 +45,18 @@ public class ValidationCDA {
      */
     public String getNotification() {
         return notification;
+    }
+    public ValidationCDA(){
+    }
+    public ValidationCDA(String XsdPath){
+        File xsd = new File(XsdPath);
+        if(xsd.exists()){
+            setPathXSD(xsd);
+        }else{
+            setNotification(xsd, false, "Arquivo XSD não encontrado!",
+                    "Não foi possivel encontrar o arquivo XSD de origem."
+                            + "\nVerifique novamente o local do arquivo no construtor da classe.");
+        }
     }
 
     /**
@@ -69,6 +81,14 @@ public class ValidationCDA {
         return notificationHtml;
     }
 
+    private File getPathXSD() {
+        return pathXSD;
+    }
+
+    private void setPathXSD(File pathXSD) {
+        this.pathXSD = pathXSD;
+    }
+
     private void setXsdUrl(URL xsdUrl) {
         this.xsdUrl = xsdUrl;
     }
@@ -81,23 +101,29 @@ public class ValidationCDA {
      *
      * @return
      */
-    public URL getXsdUrl() {
+    private URL getXsdUrl() {
         return xsdUrl;
     }
 
     private boolean validate(File xml) throws IOException {
         setXsdUrl(localFile());
-        if (getXsdUrl() == null) {
-            setNotification(xml, false, "Arquivo XSD não encontrado!",
-                    "Não foi possivel encontrar o arquivo XSD de origem."
-                    + "\nVerifique se a pasta Resources está no diretorio src da aplicação.");
-            return false;
+        if(getPathXSD()==null){
+            if (getXsdUrl() == null) {
+                setNotification(xml, false, "Arquivo XSD não encontrado!",
+                        "Não foi possivel encontrar o arquivo XSD de origem."
+                        + "\nVerifique se a pasta Resources está no diretorio src da aplicação.");
+                return false;
+            }
         }
-
         try {
             SchemaFactory factory = SchemaFactory.newInstance("http://www.w3.org/2001/XMLSchema");
             URL schemaLocation = getXsdUrl();
-            Schema schema = factory.newSchema(schemaLocation);
+            Schema schema;
+            if(getPathXSD()!=null){
+                schema = factory.newSchema(getPathXSD());
+            }else {
+                schema = factory.newSchema(schemaLocation);
+            }
             Validator validator = schema.newValidator();
 
             Source source = new StreamSource(xml);

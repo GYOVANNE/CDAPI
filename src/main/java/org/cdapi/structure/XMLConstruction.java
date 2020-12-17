@@ -3,6 +3,7 @@ package org.cdapi.structure;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import org.cdapi.structure.Tag;
 
 /**
  * Classe responsável por escrever o conteúdo XML no arquivo.
@@ -42,81 +43,6 @@ public class XMLConstruction {
     }
 
     /**
-     *
-     */
-    public class TAG {
-
-        private String info;
-        private String content;
-        private TAG first;
-        private TAG next;
-
-        /**
-         *
-         * @return
-         */
-        public String getInfo() {
-            return info;
-        }
-
-        /**
-         *
-         * @param info
-         */
-        public void setInfo(String info) {
-            this.info = info;
-        }
-
-        /**
-         *
-         * @return
-         */
-        public String getContent() {
-            return content;
-        }
-
-        /**
-         *
-         * @param content
-         */
-        public void setContent(String content) {
-            this.content = content;
-        }
-
-        /**
-         *
-         * @return
-         */
-        public TAG getFirst() {
-            return first;
-        }
-
-        /**
-         *
-         * @param first
-         */
-        public void setFirst(TAG first) {
-            this.first = first;
-        }
-
-        /**
-         *
-         * @return
-         */
-        public TAG getNext() {
-            return next;
-        }
-
-        /**
-         *
-         * @param next
-         */
-        public void setNext(TAG next) {
-            this.next = next;
-        }
-    }
-
-    /**
      * Cria uma nova TAG na árvore ao passar como parâmetros o nome da TAG
      * seguido de seu conteúdo
      *
@@ -124,8 +50,8 @@ public class XMLConstruction {
      * @param tagContent
      * @return
      */
-    public TAG toCreate(String tagName, String tagContent) {
-        TAG n = new TAG();
+    public Tag toCreate(String tagName, String tagContent) {
+        Tag n = new Tag();
         n.setInfo(tagName);
         n.setContent(tagContent);
         n.setFirst(null);
@@ -155,7 +81,7 @@ public class XMLConstruction {
      * @param tag
      * @param subTag
      */
-    public void toInsert(TAG tag, TAG subTag) {
+    public void toInsert(Tag tag, Tag subTag) {
         subTag.setNext(tag.getFirst());
         tag.setFirst(subTag);
     }
@@ -168,7 +94,7 @@ public class XMLConstruction {
      * @param tag
      * @param fw
      */
-    public void toPrint(TAG tag, FileWriter fw) {
+    public void toPrint(Tag tag, FileWriter fw) {
         try {
             setTagSpace(getTagSpace());
             if (tag.getFirst() == null && tag.getContent().equals("")) {
@@ -187,7 +113,7 @@ public class XMLConstruction {
             System.err.println(ex.getLocalizedMessage());
         }
 
-        for (TAG p = tag.getFirst(); p != null; p = p.getNext()) {
+        for (Tag p = tag.getFirst(); p != null; p = p.getNext()) {
             toPrint(p, fw);
         }
 
