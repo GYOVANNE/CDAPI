@@ -3,6 +3,7 @@ package org.cdapi.document;
 import org.cdapi.bean.*;
 import org.cdapi.validator.ValidationCDA;
 import org.cdapi.structure.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -40,6 +41,7 @@ public class ClinicalDocument {
     private RelatedDocument related;
     private ResponsibleParty responsibleParty;
     private ArrayList<Component> components;
+    private ValidationCDA vcda;
 
     /**
      * Contrutor com argumento necessário para leitura do Arquivo XML. <br>
@@ -58,10 +60,12 @@ public class ClinicalDocument {
      *
      * @param xml Arquivo xml que sera lido.
      */
-    public ClinicalDocument(File xml) {
+    public ClinicalDocument(File xml, String xsdPath) {
         this.status = true;
         if (xml.exists()) {
-            ValidationCDA vcda = new ValidationCDA();
+            if (xsdPath == null)
+                vcda = new ValidationCDA();
+            vcda = new ValidationCDA(xsdPath);
             try {
                 if (vcda.toValidate(xml)) {
                     new XMLRead(this, xml).toRead();
@@ -75,6 +79,32 @@ public class ClinicalDocument {
         } else {
             System.err.println("Arquivo XML não encontrado!");
         }
+    }
+
+    public ClinicalDocument(File xml) {
+        this(xml, null);
+    }
+
+    /**
+     * Construtor com argumento indicando o local do XSD de validação. <br>
+     * É necessário informar o parâmetro, pois a instância do objeto a
+     * partir deste construtor é usada para acessar os métodos de escrita do
+     * Arquivo XML e validar o mesmo através do validador dependente do XSD informado. <br>
+     * Exemplo de implementação:<br>
+     * <blockquote>
+     *
+     * <pre>
+     * {
+     * 	&#64;code
+     * 	ClinicalDocument cda = new ClinicalDocument("c:\\xsdPath");
+     * }
+     * </pre>
+     *
+     * </blockquote>
+     */
+    public ClinicalDocument(String xsdPath) {
+        this.status = false;
+        vcda = new ValidationCDA(xsdPath);
     }
 
     /**
@@ -96,6 +126,7 @@ public class ClinicalDocument {
      */
     public ClinicalDocument() {
         this.status = false;
+        vcda = new ValidationCDA();
     }
 
     private File getXmlFile() {
@@ -463,10 +494,10 @@ public class ClinicalDocument {
         toInitializeObjects();
         String idFile;
         if (patient.getId() == 0) {
-            idFile = "Sem título" + " " + date("dd-MM-yyyy_HH:mm:ss") + ".xml";
+            idFile = "sem_titulo" + " " + date("ddMMyyyy_HHmmss") + ".xml";
         } else {
-            idFile = "" + patient.getName() + " " + patient.getFamily() + "_" + patient.getId() + " "
-                    + date("dd-MM-yyyy_HH:mm:ss") + ".xml";
+            idFile = patient.getId() + "_" + patient.getName() + " " + patient.getFamily() + "_"
+                    + date("ddMMyyyy_HHmmss") + ".xml";
         }
         if (path != null) {
             setXmlFile(new File(path + "/" + idFile));
@@ -475,10 +506,19 @@ public class ClinicalDocument {
         }
 
         if (new DocumentStructure(getXmlFile(), this).generateContent()) {
-            return getXmlFile();
-        } else {
-            return null;
+            try {
+                if (vcda.toValidate(getXmlFile())) {
+                    return getXmlFile();
+                } else {
+                    System.err.println("Arquivo não pode ser lido, pois ocorreu um erro de validação!\n");
+                    System.err.println(vcda.getNotification());
+                }
+            } catch (IOException ex) {
+                System.err.println(ex.getLocalizedMessage());
+            }
+
         }
+        return null;
     }
 
     /**

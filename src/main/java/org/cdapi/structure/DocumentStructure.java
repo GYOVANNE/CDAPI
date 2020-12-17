@@ -1,7 +1,7 @@
 package org.cdapi.structure;
 
 import org.cdapi.document.ClinicalDocument;
-import org.cdapi.structure.XMLConstruction.TAG;
+import org.cdapi.structure.Tag;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -44,11 +44,11 @@ public class DocumentStructure {
     public boolean generateContent() {
         // STRUCTURE HEADER
         // ==========================================================================================
-        TAG rootTag = xmlc.toCreate(
+        Tag rootTag = xmlc.toCreate(
                 "ClinicalDocument xmlns=\"urn:hl7-org:v3\" xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' classCode='DOCCLIN'",
                 "");
 
-        TAG h[] = new TAG[10];
+        Tag h[] = new Tag[10];
         h[0] = xmlc.toCreate("realmCode code='" + getClinicalDocument().getHeader().getRealmCode() + "'", "");
         h[1] = xmlc.toCreate("typeId root='2.16.840.1.113883.1.3' extension='POCD_HD000040'", "");
         h[2] = xmlc.toCreate("templateId root='2.16.840.1.113883.10.20.1'", "");
@@ -68,66 +68,66 @@ public class DocumentStructure {
         h[9] = xmlc.toCreate("copyTime value='" + getClinicalDocument().getHeader().getEfetiveTime() + "'", "");
         // ==========================================================================================
         // STRUCTURE PATIENT
-        TAG P19 = xmlc.toCreate("recordTarget", "");
-        TAG P20 = xmlc.toCreate("patientRole", "");
-        TAG P0 = xmlc.toCreate("id extension=\"" + getClinicalDocument().getPatient().getId() + "\" root=\""
+        Tag P19 = xmlc.toCreate("recordTarget", "");
+        Tag P20 = xmlc.toCreate("patientRole", "");
+        Tag P0 = xmlc.toCreate("id extension=\"" + getClinicalDocument().getPatient().getId() + "\" root=\""
                 + getClinicalDocument().getHeader().getExtension() + "\"", "");
-        TAG P1 = xmlc.toCreate("addr", "" + getClinicalDocument().getPatient().getAddr() + "");
-        TAG P2 = xmlc.toCreate("telecom value=\"" + getClinicalDocument().getPatient().getPhone() + "\"", "");
-        TAG P3 = xmlc.toCreate("patient", "");
-        TAG P4 = xmlc.toCreate("name", "");
-        TAG P17 = xmlc.toCreate("given", "" + getClinicalDocument().getPatient().getName() + "");
-        TAG P18 = xmlc.toCreate("family", "" + getClinicalDocument().getPatient().getFamily() + "");
-        TAG P5 = xmlc.toCreate("administrativeGenderCode code=\"" + getClinicalDocument().getPatient().getGender()
+        Tag P1 = xmlc.toCreate("addr", "" + getClinicalDocument().getPatient().getAddr() + "");
+        Tag P2 = xmlc.toCreate("telecom value=\"" + getClinicalDocument().getPatient().getPhone() + "\"", "");
+        Tag P3 = xmlc.toCreate("patient", "");
+        Tag P4 = xmlc.toCreate("name", "");
+        Tag P17 = xmlc.toCreate("given", "" + getClinicalDocument().getPatient().getName() + "");
+        Tag P18 = xmlc.toCreate("family", "" + getClinicalDocument().getPatient().getFamily() + "");
+        Tag P5 = xmlc.toCreate("administrativeGenderCode code=\"" + getClinicalDocument().getPatient().getGender()
                 + "\" codeSystem=\"" + getClinicalDocument().getPatient().getCodeSystem() + "\"", "");
-        TAG P6 = xmlc.toCreate("birthTime value=\"" + getClinicalDocument().getPatient().getBirth() + "\"", "");
-        TAG P7 = xmlc.toCreate("maritalStatusCode code='" + getClinicalDocument().getPatient().getMaritalStatus() + "'",
+        Tag P6 = xmlc.toCreate("birthTime value=\"" + getClinicalDocument().getPatient().getBirth() + "\"", "");
+        Tag P7 = xmlc.toCreate("maritalStatusCode code='" + getClinicalDocument().getPatient().getMaritalStatus() + "'",
                 "");
-        TAG P8 = xmlc.toCreate(
+        Tag P8 = xmlc.toCreate(
                 "religiousAffiliationCode code='" + getClinicalDocument().getPatient().getReligious() + "'", "");
-        TAG P9 = xmlc.toCreate("raceCode code='" + getClinicalDocument().getPatient().getRace() + "'", "");
-        TAG P10 = xmlc.toCreate("ethnicGroupCode code='" + getClinicalDocument().getPatient().getEthnicGroup() + "'",
+        Tag P9 = xmlc.toCreate("raceCode code='" + getClinicalDocument().getPatient().getRace() + "'", "");
+        Tag P10 = xmlc.toCreate("ethnicGroupCode code='" + getClinicalDocument().getPatient().getEthnicGroup() + "'",
                 "");
-        TAG P11 = xmlc.toCreate("birthplace", "");
-        TAG P12 = xmlc.toCreate("place", "");
-        TAG P13 = xmlc.toCreate("name", "" + getClinicalDocument().getPatient().getBirthPlace() + "");
-        TAG P14 = xmlc.toCreate("addr", "" + getClinicalDocument().getPatient().getAddrBirthPlace() + "");
-        TAG P15 = xmlc.toCreate("providerOrganization", "");
-        TAG P16 = xmlc.toCreate("id extension=\"" + getClinicalDocument().getPatient().getIdExtension() + "\" root=\""
+        Tag P11 = xmlc.toCreate("birthplace", "");
+        Tag P12 = xmlc.toCreate("place", "");
+        Tag P13 = xmlc.toCreate("name", "" + getClinicalDocument().getPatient().getBirthPlace() + "");
+        Tag P14 = xmlc.toCreate("addr", "" + getClinicalDocument().getPatient().getAddrBirthPlace() + "");
+        Tag P15 = xmlc.toCreate("providerOrganization", "");
+        Tag P16 = xmlc.toCreate("id extension=\"" + getClinicalDocument().getPatient().getIdExtension() + "\" root=\""
                 + getClinicalDocument().getHeader().getExtension() + "\"", "");
         // STRUCTURE AUTHOR
         // ==========================================================================================
-        TAG A0 = xmlc.toCreate("author", "");
-        TAG A1 = xmlc.toCreate("time value = \"" + getClinicalDocument().getHeader().getEfetiveTime() + "\"", "");
-        TAG A2 = xmlc.toCreate("assignedAuthor", "");
-        TAG A3 = xmlc.toCreate("id root='" + getClinicalDocument().getHeader().getExtension() + "' extension='"
+        Tag A0 = xmlc.toCreate("author", "");
+        Tag A1 = xmlc.toCreate("time value = \"" + getClinicalDocument().getHeader().getEfetiveTime() + "\"", "");
+        Tag A2 = xmlc.toCreate("assignedAuthor", "");
+        Tag A3 = xmlc.toCreate("id root='" + getClinicalDocument().getHeader().getExtension() + "' extension='"
                 + getClinicalDocument().getAuthor().getCrm() + "'", "");
-        TAG A4 = xmlc.toCreate("addr", "" + getClinicalDocument().getAuthor().getAddr() + "");
-        TAG A5 = xmlc.toCreate("telecom value='" + getClinicalDocument().getAuthor().getPhone() + "'", "");
-        TAG A6 = xmlc.toCreate("assignedPerson", "");
-        TAG A7 = xmlc.toCreate("name", "");
-        TAG A8 = xmlc.toCreate("given", "" + getClinicalDocument().getAuthor().getName() + "");
-        TAG A9 = xmlc.toCreate("family", "" + getClinicalDocument().getAuthor().getFamily() + "");
+        Tag A4 = xmlc.toCreate("addr", "" + getClinicalDocument().getAuthor().getAddr() + "");
+        Tag A5 = xmlc.toCreate("telecom value='" + getClinicalDocument().getAuthor().getPhone() + "'", "");
+        Tag A6 = xmlc.toCreate("assignedPerson", "");
+        Tag A7 = xmlc.toCreate("name", "");
+        Tag A8 = xmlc.toCreate("given", "" + getClinicalDocument().getAuthor().getName() + "");
+        Tag A9 = xmlc.toCreate("family", "" + getClinicalDocument().getAuthor().getFamily() + "");
         // ==========================================================================================
-        TAG CS0 = xmlc.toCreate("custodian", "");
-        TAG CS1 = xmlc.toCreate("assignedCustodian", "");
-        TAG CS2 = xmlc.toCreate("representedCustodianOrganization", "");
-        TAG CS3 = xmlc.toCreate("id extension=\"" + getClinicalDocument().getPatient().getId() + "\" root=\""
+        Tag CS0 = xmlc.toCreate("custodian", "");
+        Tag CS1 = xmlc.toCreate("assignedCustodian", "");
+        Tag CS2 = xmlc.toCreate("representedCustodianOrganization", "");
+        Tag CS3 = xmlc.toCreate("id extension=\"" + getClinicalDocument().getPatient().getId() + "\" root=\""
                 + getClinicalDocument().getHeader().getExtension() + "\"", "");
-        TAG CS4 = xmlc.toCreate("name", "" + getClinicalDocument().getHeader().getDisplayName() + "");
+        Tag CS4 = xmlc.toCreate("name", "" + getClinicalDocument().getHeader().getDisplayName() + "");
         // ==========================================================================================
 
-        TAG L0 = xmlc.toCreate("legalAuthenticator", "");
+        Tag L0 = xmlc.toCreate("legalAuthenticator", "");
 
-        TAG L1 = xmlc.toCreate("time value=\"" + getClinicalDocument().getHeader().getEfetiveTime() + "\"", "");
-        TAG L2 = xmlc.toCreate("signatureCode code=\"" + getClinicalDocument().getAuthenticator().getCode() + "\"", "");
-        TAG L3 = xmlc.toCreate("assignedEntity", "");
-        TAG L4 = xmlc.toCreate("id extension=\"" + getClinicalDocument().getPatient().getIdExtension() + "\" root=\""
+        Tag L1 = xmlc.toCreate("time value=\"" + getClinicalDocument().getHeader().getEfetiveTime() + "\"", "");
+        Tag L2 = xmlc.toCreate("signatureCode code=\"" + getClinicalDocument().getAuthenticator().getCode() + "\"", "");
+        Tag L3 = xmlc.toCreate("assignedEntity", "");
+        Tag L4 = xmlc.toCreate("id extension=\"" + getClinicalDocument().getPatient().getIdExtension() + "\" root=\""
                 + getClinicalDocument().getHeader().getExtension() + "\"", "");
-        TAG L5 = xmlc.toCreate("assignedPerson", "");
-        TAG L6 = xmlc.toCreate("name", "");
-        TAG L7 = xmlc.toCreate("given", "" + getClinicalDocument().getAuthor().getName() + "");
-        TAG L8 = xmlc.toCreate("family", "" + getClinicalDocument().getAuthor().getFamily() + "");
+        Tag L5 = xmlc.toCreate("assignedPerson", "");
+        Tag L6 = xmlc.toCreate("name", "");
+        Tag L7 = xmlc.toCreate("given", "" + getClinicalDocument().getAuthor().getName() + "");
+        Tag L8 = xmlc.toCreate("family", "" + getClinicalDocument().getAuthor().getFamily() + "");
         // ==============================
         xmlc.toInsert(L6, L8);
         xmlc.toInsert(L6, L7);
@@ -138,53 +138,53 @@ public class DocumentStructure {
         xmlc.toInsert(L0, L2);
         xmlc.toInsert(L0, L1);
         // ==========================================================================================
-        TAG R0 = xmlc.toCreate("relatedDocument typeCode=\"" + getClinicalDocument().getRelated().getCode() + "\"", "");
-        TAG R1 = xmlc.toCreate("parentDocument", "");
-        TAG R2 = xmlc.toCreate("id extension=\"" + getClinicalDocument().getRelated().getId() + "\" root=\""
+        Tag R0 = xmlc.toCreate("relatedDocument typeCode=\"" + getClinicalDocument().getRelated().getCode() + "\"", "");
+        Tag R1 = xmlc.toCreate("parentDocument", "");
+        Tag R2 = xmlc.toCreate("id extension=\"" + getClinicalDocument().getRelated().getId() + "\" root=\""
                 + getClinicalDocument().getHeader().getExtension() + "\"", "");
-        TAG R3 = xmlc.toCreate("setId extension=\"" + getClinicalDocument().getRelated().getExtension() + "\" root=\""
+        Tag R3 = xmlc.toCreate("setId extension=\"" + getClinicalDocument().getRelated().getExtension() + "\" root=\""
                 + getClinicalDocument().getHeader().getExtension() + "\"", "");
-        TAG R4 = xmlc.toCreate("versionNumber value=\"" + getClinicalDocument().getRelated().getVersion() + "\"", "");
+        Tag R4 = xmlc.toCreate("versionNumber value=\"" + getClinicalDocument().getRelated().getVersion() + "\"", "");
         // =====================================================================================
 
-        TAG OFF0 = xmlc.toCreate("componentOf", "");
+        Tag OFF0 = xmlc.toCreate("componentOf", "");
 
-        TAG OFF1 = xmlc.toCreate("encompassingEncounter", "");
-        TAG OFF2 = xmlc.toCreate("id root=\"" + getClinicalDocument().getResponsibleParty().getIdRoot()
+        Tag OFF1 = xmlc.toCreate("encompassingEncounter", "");
+        Tag OFF2 = xmlc.toCreate("id root=\"" + getClinicalDocument().getResponsibleParty().getIdRoot()
                 + "\" extension=\"" + getClinicalDocument().getResponsibleParty().getDate() + "_"
                 + getClinicalDocument().getResponsibleParty().getExtension() + "\"", "");
-        TAG OFF3 = xmlc
+        Tag OFF3 = xmlc
                 .toCreate("effectiveTime value=\"" + getClinicalDocument().getResponsibleParty().getDate() + "\"", "");
-        TAG OFF4 = xmlc.toCreate("responsibleParty", "");
-        TAG OFF5 = xmlc.toCreate("assignedEntity", "");
-        TAG OFF6 = xmlc.toCreate("id nullFlavor=\"" + getClinicalDocument().getResponsibleParty().getId() + "\"", "");
-        TAG OFF7 = xmlc.toCreate("addr", "");
-        TAG OFF8 = xmlc.toCreate("state", "" + getClinicalDocument().getResponsibleParty().getState() + "");
-        TAG OFF9 = xmlc.toCreate("city", "" + getClinicalDocument().getResponsibleParty().getCity() + "");
-        TAG OFF10 = xmlc.toCreate("postalCode", "" + getClinicalDocument().getResponsibleParty().getPostal() + "");
-        TAG OFF11 = xmlc.toCreate("streetAddressLine",
+        Tag OFF4 = xmlc.toCreate("responsibleParty", "");
+        Tag OFF5 = xmlc.toCreate("assignedEntity", "");
+        Tag OFF6 = xmlc.toCreate("id nullFlavor=\"" + getClinicalDocument().getResponsibleParty().getId() + "\"", "");
+        Tag OFF7 = xmlc.toCreate("addr", "");
+        Tag OFF8 = xmlc.toCreate("state", "" + getClinicalDocument().getResponsibleParty().getState() + "");
+        Tag OFF9 = xmlc.toCreate("city", "" + getClinicalDocument().getResponsibleParty().getCity() + "");
+        Tag OFF10 = xmlc.toCreate("postalCode", "" + getClinicalDocument().getResponsibleParty().getPostal() + "");
+        Tag OFF11 = xmlc.toCreate("streetAddressLine",
                 "" + getClinicalDocument().getResponsibleParty().getStreet() + "");
-        TAG OFF12 = xmlc.toCreate("telecom value=\"tel:" + getClinicalDocument().getResponsibleParty().getPhone()
+        Tag OFF12 = xmlc.toCreate("telecom value=\"tel:" + getClinicalDocument().getResponsibleParty().getPhone()
                 + "\" use=\"" + getClinicalDocument().getResponsibleParty().getUse() + "\"", "");
-        TAG OFF13 = xmlc.toCreate("assignedPerson", "");
-        TAG OFF14 = xmlc.toCreate("name", "");
-        TAG OFF15 = xmlc.toCreate("family", "" + getClinicalDocument().getResponsibleParty().getFamily() + "");
-        TAG OFF16 = xmlc.toCreate("given", "" + getClinicalDocument().getResponsibleParty().getName() + "");
-        // TAG OFF17 =xmlc.toCreate("given",
+        Tag OFF13 = xmlc.toCreate("assignedPerson", "");
+        Tag OFF14 = xmlc.toCreate("name", "");
+        Tag OFF15 = xmlc.toCreate("family", "" + getClinicalDocument().getResponsibleParty().getFamily() + "");
+        Tag OFF16 = xmlc.toCreate("given", "" + getClinicalDocument().getResponsibleParty().getName() + "");
+        // Tag OFF17 =xmlc.toCreate("given",
         // ""+getClinicalDocument().getResponsibleParty().getName()+"");
-        TAG OFF18 = xmlc.toCreate("suffix", "" + getClinicalDocument().getResponsibleParty().getSuffixe() + "");
-        TAG OFF19 = xmlc.toCreate("location", "");
-        TAG OFF20 = xmlc.toCreate("healthCareFacility", "");
-        TAG OFF21 = xmlc.toCreate("id root=\"" + getClinicalDocument().getResponsibleParty().getIdRoot()
+        Tag OFF18 = xmlc.toCreate("suffix", "" + getClinicalDocument().getResponsibleParty().getSuffixe() + "");
+        Tag OFF19 = xmlc.toCreate("location", "");
+        Tag OFF20 = xmlc.toCreate("healthCareFacility", "");
+        Tag OFF21 = xmlc.toCreate("id root=\"" + getClinicalDocument().getResponsibleParty().getIdRoot()
                 + "\" extension=\"" + getClinicalDocument().getResponsibleParty().getDate() + "_"
                 + getClinicalDocument().getResponsibleParty().getExtension() + "\"", "");
-        TAG OFF22 = xmlc.toCreate("location", "");
-        TAG OFF23 = xmlc.toCreate("name", "" + getClinicalDocument().getResponsibleParty().getLocation() + "");
-        TAG OFF24 = xmlc.toCreate("addr", "");
-        TAG OFF25 = xmlc.toCreate("state", "" + getClinicalDocument().getResponsibleParty().getState() + "");
-        TAG OFF26 = xmlc.toCreate("city", "" + getClinicalDocument().getResponsibleParty().getCity() + "");
-        TAG OFF27 = xmlc.toCreate("postalCode", "" + getClinicalDocument().getResponsibleParty().getPostal() + "");
-        TAG OFF28 = xmlc.toCreate("streetAddressLine",
+        Tag OFF22 = xmlc.toCreate("location", "");
+        Tag OFF23 = xmlc.toCreate("name", "" + getClinicalDocument().getResponsibleParty().getLocation() + "");
+        Tag OFF24 = xmlc.toCreate("addr", "");
+        Tag OFF25 = xmlc.toCreate("state", "" + getClinicalDocument().getResponsibleParty().getState() + "");
+        Tag OFF26 = xmlc.toCreate("city", "" + getClinicalDocument().getResponsibleParty().getCity() + "");
+        Tag OFF27 = xmlc.toCreate("postalCode", "" + getClinicalDocument().getResponsibleParty().getPostal() + "");
+        Tag OFF28 = xmlc.toCreate("streetAddressLine",
                 "" + getClinicalDocument().getResponsibleParty().getStreet() + "");
 
         xmlc.toInsert(OFF24, OFF28);
@@ -217,9 +217,9 @@ public class DocumentStructure {
         xmlc.toInsert(OFF0, OFF1);
         // ==========================================================================================
         // STRUCTURE DOCTOR HISTORIC
-        TAG CO0 = xmlc.toCreate("component", "");
-        TAG component = xmlc.toCreate("structuredBody", "");
-        TAG CO2 = xmlc.toCreate("languageCode code=\'pt-BR\'", "");
+        Tag CO0 = xmlc.toCreate("component", "");
+        Tag component = xmlc.toCreate("structuredBody", "");
+        Tag CO2 = xmlc.toCreate("languageCode code=\'pt-BR\'", "");
         // ==============================
         xmlc.toInsert(CO0, component);
         // ==============================
@@ -279,7 +279,7 @@ public class DocumentStructure {
         int x = getClinicalDocument().getComponents().size();
 
         if (x != 0) {
-            TAG componentes[] = new TAG[x];
+            Tag componentes[] = new Tag[x];
 
             for (int i = 0; i < x; i++) {
                 componentes[i] = xmlc.toCreate("component",
@@ -306,7 +306,7 @@ public class DocumentStructure {
         }
     }
 
-    private int tagSpace;
+    private int TagSpace;
     private String space;
 
     private void setSpace(String line) {
@@ -318,11 +318,11 @@ public class DocumentStructure {
     }
 
     private int getTagSpace() {
-        return tagSpace;
+        return TagSpace;
     }
 
-    private void setTagSpace(int tagSpace) {
-        this.tagSpace = tagSpace;
+    private void setTagSpace(int TagSpace) {
+        this.TagSpace = TagSpace;
         String newline = "";
         for (int i = 0; i < getTagSpace(); i++) {
             newline += "   ";
