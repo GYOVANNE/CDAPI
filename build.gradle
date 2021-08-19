@@ -1,0 +1,78 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.2'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id "org.sonarqube" version "3.3"
+}
+
+group = 'br.ufrn'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+	integrationImplementation.extendsFrom testImplementation
+	integrationRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'mysql:mysql-connector-java'
+	annotationProcessor 'org.projectlombok:lombok'
+	implementation 'org.springdoc:springdoc-openapi-ui:1.5.9'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+sourceSets {
+
+	test {
+		java.srcDirs = ['src/test/java']
+		resources.srcDirs = ['src/test/resources']
+	}
+
+	integration {
+		java.srcDirs = ['src/integration/java']
+		resources.srcDirs = ['src/integration/resources']
+		compileClasspath += sourceSets.main.output + sourceSets.test.output
+		runtimeClasspath += sourceSets.main.output + sourceSets.test.output
+	}
+}
+
+task integration(type:Test, description: 'Integration testing of API', group:'Verification') {
+	testClassesDirs = sourceSets.integration.output.classesDirs
+	classpath = sourceSets.integration.runtimeClasspath
+	outputs.upToDateWhen {false}
+	useJUnitPlatform(){
+		failFast = true
+	}
+}
+
+sonarqube {
+  properties {
+    property "sonar.projectKey", "GYOVANNE_CDAPI"
+    property "sonar.organization", "gyovanne-1"
+    property "sonar.host.url", "https://sonarcloud.io"
+  }
+}
+
+
+test {
+	systemProperty 'cucumber.options', '--plugin junit:target/surefire-reports/cucumber-junit.xml'
+	include '**/*Test.class'
+	useJUnitPlatform()
+}
+
+build.dependsOn integration
+integration.mustRunAfter test
